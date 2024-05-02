@@ -7,7 +7,8 @@ import numpy as np
 import requests
 from io import BytesIO
 
-
+model_path = "discriminator"  # Path to your model file in the GitHub repository
+model = torch.load(model_path, map_location=torch.device('cpu'))
 
 # App title
 st.set_page_config(page_title="🦙💬 Llama 2 Chatbot")
