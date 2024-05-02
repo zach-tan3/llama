@@ -8,9 +8,8 @@ import requests
 from io import BytesIO
 
 # Load the model
-model_path = "https://github.com/zach-tan2/llama/blob/master/discriminator"  # Replace with your GitHub model URL
-response = requests.get(model_path)
-model = torch.load(BytesIO(response.content), map_location=torch.device('cpu'))
+model_path = "discriminator"  # Path to your model file in the GitHub repository
+model = torch.load(model_path, map_location=torch.device('cpu'))
 
 # App title
 st.set_page_config(page_title="Model Prediction")
