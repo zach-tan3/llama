@@ -1,6 +1,16 @@
 import streamlit as st
 import replicate
 import os
+import pandas as pd
+import torch
+import numpy as np
+import requests
+from io import BytesIO
+
+# Load your saved model from GitHub
+model_url = "https://github.com/zach-tan2/llama/blob/master/discriminator"  # Replace with your GitHub model URL
+response = requests.get(model_url)
+model = torch.load(BytesIO(response.content), map_location=torch.device('cpu'))
 
 # App title
 st.set_page_config(page_title="🦙💬 Llama 2 Chatbot")
