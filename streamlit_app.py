@@ -7,39 +7,13 @@ import numpy as np
 import requests
 from io import BytesIO
 
-model_path = "discriminator"  # Path to your model file in the GitHub repository
-model = torch.load(model_path, map_location=torch.device('cpu'))
+# Load the model
+model_path = "https://github.com/zach-tan2/llama/blob/master/discriminator"  # Replace with your GitHub model URL
+response = requests.get(model_path)
+model = torch.load(BytesIO(response.content), map_location=torch.device('cpu'))
 
 # App title
-st.set_page_config(page_title="🦙💬 Llama 2 Chatbot")
-
-# Replicate Credentials
-with st.sidebar:
-    st.title('🦙💬 Llama 2 Chatbot')
-    st.write('This chatbot is created using the open-source Llama 2 LLM model from Meta.')
-    if 'REPLICATE_API_TOKEN' in st.secrets:
-        st.success('API key already provided!', icon='✅')
-        replicate_api = st.secrets['REPLICATE_API_TOKEN']
-    else:
-        replicate_api = st.text_input('Enter Replicate API token:', type='password')
-        if not (replicate_api.startswith('r8_') and len(replicate_api)==40):
-            st.warning('Please enter your credentials!', icon='⚠️')
-        else:
-            st.success('Proceed to entering your prompt message!', icon='👉')
-    os.environ['REPLICATE_API_TOKEN'] = replicate_api
-
-    st.subheader('Models and parameters')
-    selected_model = st.sidebar.selectbox('Choose a Llama2 model', ['Llama2-70B', 'Llama2-13B', 'Llama2-7B'], key='selected_model')
-    if selected_model == 'Llama2-70B':
-        llm = 'replicate/llama70b-v2-chat:e951f18578850b652510200860fc4ea62b3b16fac280f83ff32282f87bbd2e48'
-    elif selected_model == 'Llama2-13B':
-        llm = 'a16z-infra/llama13b-v2-chat:df7690f1994d94e96ad9d568eac121aecf50684a0b0963b25a41cc40061269e5'
-    elif selected_model == 'Llama2-7B':
-        llm = 'a16z-infra/llama7b-v2-chat:4f0a4744c7295c024a1de15e1a63c880d3da035fa1f49bfd344fe076074c8eea'
-    temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=1.0, value=0.1, step=0.01)
-    top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
-    max_length = st.sidebar.slider('max_length', min_value=32, max_value=9999, value=120, step=8)
-    st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
+st.set_page_config(page_title="Model Prediction")
 
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
@@ -64,28 +38,8 @@ def generate_llama2_response(prompt_input, llm):
             string_dialogue += "Assistant: " + dict_message["content"] + "\n\n"
     output = replicate.run(llm, 
                            input={"prompt": f"{string_dialogue} {prompt_input} Assistant: ",
-                                  "temperature":temperature, "top_p":top_p, "max_length":max_length, "repetition_penalty":1})
+                                  "temperature": temperature, "top_p": top_p, "max_length": max_length, "repetition_penalty": 1})
     return output
-
-# User-provided prompt
-if prompt := st.chat_input(disabled=not replicate_api):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.write(prompt)
-
-# Generate a new response if last message is not from assistant
-if st.session_state.messages[-1]["role"] != "assistant":
-    with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
-            response = generate_llama2_response(prompt, llm)
-            placeholder = st.empty()
-            full_response = ''
-            for item in response:
-                full_response += item
-                placeholder.markdown(full_response)
-            placeholder.markdown(full_response)
-    message = {"role": "assistant", "content": full_response}
-    st.session_state.messages.append(message)
 
 if st.sidebar.button('Predict'):
     gender = st.sidebar.selectbox('Gender', ['MALE', 'FEMALE'])
