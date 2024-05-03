@@ -95,6 +95,48 @@ if st.sidebar.button('Predict'):
     age = st.sidebar.slider('Age', 18, 99, 40)
     surgrisk = st.sidebar.selectbox('SurgRisk', ['Low', 'Moderate', 'High'])
     race = st.sidebar.selectbox('Race', ['Chinese', 'Others'])
+
+    age_category = None
+    if age < 30:
+        age_category = '18-29'
+    elif age < 40:
+        age_category = '30-39'
+    elif age < 50:
+        age_category = '40-49'
+    elif age < 60:
+        age_category = '50-59'
+    elif age < 70:
+        age_category = '60-69'
+    elif age < 80:
+        age_category = '70-79'
+    elif age < 90:
+        age_category = '80-89'
+    else:
+        age_category = '90-99'
+
+    prompt = {'gender': gender, 'anaestype': anaestype, 'priority': priority, 'age': age_category, 'surgrisk': surgrisk, 'race': race}
+    
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.write(prompt)
+
+    with st.chat_message("assistant"):
+        with st.spinner("Thinking..."):
+            # Preprocess your input data
+            input_data = pd.DataFrame({'GENDER': [gender],
+                                       'AnaestypeCategory': [anaestype],
+                                       'PriorityCategory': [priority],
+                                       'AGEcategory': [age_category],
+                                       'SurgRiskCategory': [surgrisk],
+                                       'RaceCategory': [race]})
+
+            # Map categorical values
+            input_data['GENDER'] = input_data['GENDER'].map({'MALE': 0, 'FEMALE': 1})
+            input_data['AnaestypeCategory'] = input_data['AnaestypeCategory'].map({'GA': 0, 'EA': 1})
+            input_data['PriorityCategory'] = input_data['PriorityCategory'].map({'Elective': 0, 'Emergency': 1})
+            input_data['AGEcategory'] = input_data['AGEcategory'].map({'18-29': 0, '30-39': 1, '40-49': 2, '50-59': 3, '60-69': 4, '70-79': 5, '80-89': 6, '90-99': 7})
+            input_data['SurgRiskCategory'] = input_data['SurgRiskCategory'].map({'Low': 0, 'Moderate': 1, 'High': 2})
+            input_data['RaceCategory'] = input_data['RaceCategory'].map({'Chinese': 0, 'Others': 1})
     
     prompt = {'gender': gender, 'anaestype': anaestype, 'priority': priority, 'age': age, 'surgrisk': surgrisk, 'race': race}
     
@@ -131,6 +173,6 @@ if st.sidebar.button('Predict'):
             # Display prediction
             st.write(f"Predicted probability: {probability.item():.2f}")
 
-    message = {"role": "assistant", "content": full_response}
+    message = {"role": "assistant", "content": f"Predicted probability: {predicted.item():.2f}"}
     st.session_state.messages.append(message)
 
