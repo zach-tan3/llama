@@ -105,10 +105,10 @@ if st.sidebar.button('Predict'):
             input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
 
             # Generate prediction
-            output = model(input_tensor)
-
-            # Convert output to probability
-            probability = torch.sigmoid(output).item()
+            model.eval()
+            with torch.no_grad():
+                probability = model(dummy_data_tensor)
+                predicted = (probability >= 0.5).float()  # Here, you are using a threshold of 0.5 to determine the class.
             
             # Generate LLM response
             response = generate_llama2_response(prompt, llm)
