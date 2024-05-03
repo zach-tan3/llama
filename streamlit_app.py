@@ -7,10 +7,27 @@ import numpy as np
 import requests
 from io import BytesIO
 
-# Load the model
+class Discriminator(nn.Module):
+    def __init__(self, input_size):
+        super(Discriminator, self).__init__()
+        self.main = nn.Sequential(
+            nn.Linear(input_size, 128),
+            nn.ReLU(True),
+            nn.Linear(128, 1),
+            nn.Sigmoid()
+        )
+
+    def forward(self, input):
+        return self.main(input)
+
+
+
+# Create an instance of the model
 model_path = "discriminator"  # Path to your model file in the GitHub repository
-model = torch.load(model_path, map_location=torch.device('cpu'))
+model = Discriminator(input_size=6)  # Assuming the input size is 6, you need to update it accordingly
+model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
 model.eval()
+
 
 # App title
 st.set_page_config(page_title="Model Prediction")
