@@ -10,6 +10,7 @@ from io import BytesIO
 # Load the model
 model_path = "discriminator"  # Path to your model file in the GitHub repository
 model = torch.load(model_path, map_location=torch.device('cpu'))
+model.eval()
 
 # App title
 st.set_page_config(page_title="Model Prediction")
@@ -105,9 +106,8 @@ if st.sidebar.button('Predict'):
             input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
 
             # Generate prediction
-            model.eval()
             with torch.no_grad():
-                probability = model(dummy_data_tensor)
+                probability = model(input_tensor)
                 predicted = (probability >= 0.5).float()  # Here, you are using a threshold of 0.5 to determine the class.
             
             # Generate LLM response
@@ -120,7 +120,8 @@ if st.sidebar.button('Predict'):
             placeholder.markdown(full_response)
             
             # Display prediction
-            st.write(f"Predicted probability: {probability:.2f}")
+            st.write(f"Predicted probability: {probability.item():.2f}")
 
     message = {"role": "assistant", "content": full_response}
     st.session_state.messages.append(message)
+
