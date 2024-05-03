@@ -128,9 +128,6 @@ if st.sidebar.button('Predict'):
                 probability = model(input_tensor)
                 predicted = (probability >= 0.5).float()  # Here, you are using a threshold of 0.5 to determine the class.
             
-            with st.chat_message("assistant"):
-                st.write(f"Predicted probability: {probability.item():.2f}")
-            
             # Display prediction
             st.write(f"Predicted probability: {probability.item():.2f}")
 
