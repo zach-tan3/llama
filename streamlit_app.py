@@ -128,14 +128,8 @@ if st.sidebar.button('Predict'):
                 probability = model(input_tensor)
                 predicted = (probability >= 0.5).float()  # Here, you are using a threshold of 0.5 to determine the class.
             
-            # Generate LLM response
-            response = generate_llama2_response(prompt, llm)
-            placeholder = st.empty()
-            full_response = ''
-            for item in response:
-                full_response += item
-                placeholder.markdown(full_response)
-            placeholder.markdown(full_response)
+            with st.chat_message("assistant"):
+                st.write(f"Predicted probability: {probability.item():.2f}")
             
             # Display prediction
             st.write(f"Predicted probability: {probability.item():.2f}")
