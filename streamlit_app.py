@@ -6,6 +6,7 @@ import torch
 import numpy as np
 import requests
 from io import BytesIO
+import torch.nn as nn
 
 class Discriminator(nn.Module):
     def __init__(self, input_size):
