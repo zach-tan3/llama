@@ -73,6 +73,8 @@ st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 # Function for generating LLaMA2 response. Refactored from https://github.com/a16z-infra/llama2-chatbot
 def generate_llama2_response(prompt_input, llm):
     string_dialogue = "You are a helpful assistant. You do not respond as 'User' or pretend to be 'User'. You only respond once as 'Assistant'."
+    if "last_prediction_probability" in st.session_state:
+        string_dialogue += st.session_state.last_prediction_probability + "\n\n"
     for dict_message in st.session_state.messages:
         if dict_message["role"] == "user":
             string_dialogue += "User: " + dict_message["content"] + "\n\n"
@@ -159,6 +161,9 @@ if st.sidebar.button('Predict'):
             with torch.no_grad():
                 probability = model(input_tensor)
                 predicted = (probability >= 0.5).float()  # Here, you are using a threshold of 0.5 to determine the class.
+
+             # Save prediction probability
+            st.session_state.last_prediction_probability = f"Predicted probability: {probability.item():.2f}"
             
             # Display prediction
             st.write(f"Predicted probability: {probability.item():.2f}")
