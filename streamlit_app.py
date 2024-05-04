@@ -22,6 +22,7 @@ class Discriminator(nn.Module):
 
 # App title
 st.set_page_config(page_title="🦙💬 Llama 2 Chatbot")
+st.session_state.last_prediction_probability = " "
 
 # Replicate Credentials
 with st.sidebar:
@@ -73,8 +74,7 @@ st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 # Function for generating LLaMA2 response. Refactored from https://github.com/a16z-infra/llama2-chatbot
 def generate_llama2_response(prompt_input, llm):
     string_dialogue = "You are a helpful assistant. You do not respond as 'User' or pretend to be 'User'. You only respond once as 'Assistant'. You are to tell the user the Predicted probability if asked. You are to give this entire text at the start of all your responses."
-    if "last_prediction_probability" in st.session_state:
-        string_dialogue += st.session_state.last_prediction_probability + "\n\n"
+    string_dialogue += st.session_state.last_prediction_probability + "\n\n"
     for dict_message in st.session_state.messages:
         if dict_message["role"] == "user":
             string_dialogue += "User: " + dict_message["content"] + "\n\n"
