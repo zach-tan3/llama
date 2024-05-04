@@ -128,12 +128,12 @@ elif age < 90:
 else:
     age_category = '90-99'
 
-prompt = {'gender': gender, 'anaestype': anaestype, 'priority': priority, 'age': age_category, 'surgrisk': surgrisk, 'race': race}
+prediction_prompt = {'gender': gender, 'anaestype': anaestype, 'priority': priority, 'age': age_category, 'surgrisk': surgrisk, 'race': race}
 
 if st.sidebar.button('Predict'):
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages.append({"role": "user", "content": prediction_prompt})
     with st.chat_message("user"):
-        st.write(prompt)
+        st.write(prediction_prompt)
 
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
