@@ -135,7 +135,7 @@ if st.sidebar.button('Predict'):
     st.session_state.messages.append(message)
 
 # Function for generating LLaMA2 response. Refactored from https://github.com/a16z-infra/llama2-chatbot
-def generate_llama2_response(prompt_input, llm):
+def generate_llama2_response(prompt_input, llm, temperature, top_p, max_length):
     string_dialogue = "You are a helpful assistant. You do not respond as 'User' or pretend to be 'User'. You only respond once as 'Assistant'."
     for dict_message in st.session_state.messages:
         if dict_message["role"] == "user":
@@ -148,21 +148,24 @@ def generate_llama2_response(prompt_input, llm):
     return output
 
 # User-provided prompt
-if prompt := st.chat_input(disabled=not replicate_api):
+prompt = None
+if prompt_input := st.chat_input(disabled=not replicate_api):
+    prompt = prompt_input
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.write(prompt)
 
 # Generate a new response if the last message is not from the assistant
-if st.session_state.messages[-1]["role"] != "assistant":
-    with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
-            response = generate_llama2_response(prompt, llm)
-            placeholder = st.empty()
-            full_response = ''
-            for item in response:
-                full_response += item
+if prompt:
+    if st.session_state.messages[-1]["role"] != "assistant":
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                response = generate_llama2_response(prompt, llm, temperature, top_p, max_length)
+                placeholder = st.empty()
+                full_response = ''
+                for item in response:
+                    full_response += item
+                    placeholder.markdown(full_response)
                 placeholder.markdown(full_response)
-            placeholder.markdown(full_response)
-    message = {"role": "assistant", "content": full_response}
-    st.session_state.messages.append(message)
+        message = {"role": "assistant", "content": full_response}
+        st.session_state.messages.append(message)
