@@ -131,7 +131,6 @@ else:
 prediction_prompt = {'gender': gender, 'anaestype': anaestype, 'priority': priority, 'age': age_category, 'surgrisk': surgrisk, 'race': race}
 
 if st.sidebar.button('Predict'):
-    st.session_state.messages.append({"role": "user", "content": prediction_prompt})
     with st.chat_message("user"):
         st.write(prediction_prompt)
 
