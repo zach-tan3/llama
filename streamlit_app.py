@@ -166,7 +166,7 @@ if st.sidebar.button('Predict'):
             st.session_state.last_prediction_probability = f"Predicted probability: {probability.item():.2f}"
             
             # Display prediction
-            st.write(f"Predicted probability: {probability.item():.2f}")
+            st.write(st.session_state.last_prediction_probability)
 
     message = {"role": "assistant", "content": f"Predicted probability: {predicted.item():.2f}"}
     st.session_state.messages.append(message)
