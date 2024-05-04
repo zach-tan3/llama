@@ -105,33 +105,32 @@ if st.sidebar.button('Predict'):
     with st.chat_message("user"):
         st.write(prompt)
 
+    with st.spinner("Thinking..."):
+        # Preprocess your input data
+        input_data = pd.DataFrame({'GENDER': [gender],
+                                   'AnaestypeCategory': [anaestype],
+                                   'PriorityCategory': [priority],
+                                   'AGEcategory': [age_category],
+                                   'SurgRiskCategory': [surgrisk],
+                                   'RaceCategory': [race]})
+
+        # Map categorical values
+        input_data['GENDER'] = input_data['GENDER'].map({'MALE': 0, 'FEMALE': 1})
+        input_data['AnaestypeCategory'] = input_data['AnaestypeCategory'].map({'GA': 0, 'EA': 1})
+        input_data['PriorityCategory'] = input_data['PriorityCategory'].map({'Elective': 0, 'Emergency': 1})
+        input_data['AGEcategory'] = input_data['AGEcategory'].map({'18-29': 0, '30-39': 1, '40-49': 2, '50-59': 3, '60-69': 4, '70-79': 5, '80-89': 6, '90-99': 7})
+        input_data['SurgRiskCategory'] = input_data['SurgRiskCategory'].map({'Low': 0, 'Moderate': 1, 'High': 2})
+        input_data['RaceCategory'] = input_data['RaceCategory'].map({'Chinese': 0, 'Others': 1})
+
+        # Convert to PyTorch tensor
+        input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
+
+        # Generate prediction
+        with torch.no_grad():
+            probability = model(input_tensor)
+            predicted = (probability >= 0.5).float()  # Here, you are using a threshold of 0.5 to determine the class.
+
+    # Display prediction
+    st.session_state.messages.append({"role": "assistant", "content": f"Predicted probability: {predicted.item():.2f}"})
     with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
-            # Preprocess your input data
-            input_data = pd.DataFrame({'GENDER': [gender],
-                                       'AnaestypeCategory': [anaestype],
-                                       'PriorityCategory': [priority],
-                                       'AGEcategory': [age_category],
-                                       'SurgRiskCategory': [surgrisk],
-                                       'RaceCategory': [race]})
-
-            # Map categorical values
-            input_data['GENDER'] = input_data['GENDER'].map({'MALE': 0, 'FEMALE': 1})
-            input_data['AnaestypeCategory'] = input_data['AnaestypeCategory'].map({'GA': 0, 'EA': 1})
-            input_data['PriorityCategory'] = input_data['PriorityCategory'].map({'Elective': 0, 'Emergency': 1})
-            input_data['AGEcategory'] = input_data['AGEcategory'].map({'18-29': 0, '30-39': 1, '40-49': 2, '50-59': 3, '60-69': 4, '70-79': 5, '80-89': 6, '90-99': 7})
-            input_data['SurgRiskCategory'] = input_data['SurgRiskCategory'].map({'Low': 0, 'Moderate': 1, 'High': 2})
-            input_data['RaceCategory'] = input_data['RaceCategory'].map({'Chinese': 0, 'Others': 1})
-
-            # Convert to PyTorch tensor
-            input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
-
-            # Generate prediction
-            with torch.no_grad():
-                probability = model(input_tensor)
-                predicted = (probability >= 0.5).float()  # Here, you are using a threshold of 0.5 to determine the class.
-            
-            # Display prediction
-            st.write(f"Predicted probability: {probability.item():.2f}")
-            message = {"role": "assistant", "content": f"Predicted probability: {predicted.item():.2f}"}
-            st.session_state.messages[-1] = message
+        st.write(f"Predicted probability: {predicted.item():.2f}")
