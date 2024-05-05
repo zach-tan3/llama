@@ -164,11 +164,11 @@ if st.sidebar.button('Predict'):
                 probability = model(input_tensor)
                 predicted = (probability >= 0.5).float()  # Here, you are using a threshold of 0.5 to determine the class.
 
-             # Save prediction probability
+            # Save prediction probability
             st.session_state.last_prediction_probability = f"Predicted probability: {probability.item():.2f}"
             
             # Display prediction
             st.write(st.session_state.last_prediction_probability)
 
-    message = {"role": "assistant", "content": f"Predicted probability: {predicted.item():.2f}"}
-    st.session_state.messages.append(message)
+            message = {"role": "assistant", "content": st.session_state.last_prediction_probability}
+            st.session_state.messages.append(message)
