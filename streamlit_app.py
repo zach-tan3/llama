@@ -143,7 +143,7 @@ prediction_prompt = {'Age': Age,
                      'GradeofKidneyDisease': GradeofKidneyDisease, 
                      'AnaesthesiaTypeCategory': AnesthesiaTypeCategory, 
                      'PriorityCategory': PriorityCategory, 
-                     'AGEcategory': age_category, 
+                     'AgeCategory': age_category, 
                      'SurgicalRiskCategory': SurgicalRiskCategory, 
                      'RaceCategory': RaceCategory, 
                      'AnemiaCategoryBinned': AnemiaCategoryBinned, 
@@ -165,7 +165,7 @@ if st.sidebar.button('Predict'):
                                        'GradeofKidneyDisease': [GradeofKidneyDisease],
                                        'AnesthesiaTypeCategory': [AnesthesiaTypeCategory],
                                        'PriorityCategory': [PriorityCategory],
-                                       'AGEcategory': [age_category],
+                                       'AgeCategory': [age_category],
                                        'SurgicalRiskCategory': [SurgicalRiskCategory],
                                        'RaceCategory': [RaceCategory],
                                        'AnemiaCategoryBinned': [AnemiaCategoryBinned],
@@ -187,16 +187,16 @@ if st.sidebar.button('Predict'):
             
             # Map categorical values
             input_data['Gender'] = input_data['Gender'].map(gender_mapper)
-            input_data['Anemiacategory'] = input_data['Anemiacategory'].map(anemia_category_mapper)
-            input_data['GradeofKidneydisease'] = input_data['GradeofKidneydisease'].map(GradeofKidneydisease_mapper)
-            input_data['AnaestypeCategory'] = input_data['AnaestypeCategory'].map(anaestype_mapper)
+            input_data['AnemiaCategory'] = input_data['AnemiaCategory'].map(anemia_category_mapper)
+            input_data['GradeofKidneyDisease'] = input_data['GradeofKidneyDisease'].map(GradeofKidneydisease_mapper)
+            input_data['AnesthesiaTypeCategory'] = input_data['AnesthesiaTypeCategory'].map(anaestype_mapper)
             input_data['PriorityCategory'] = input_data['PriorityCategory'].map(priority_mapper)
-            input_data['AGEcategory'] = input_data['AGEcategory'].map(AGEcategory_mapper)
-            input_data['SurgRiskCategory'] = input_data['SurgRiskCategory'].map(SurgRiskCategory_mapper)
+            input_data['AgeCategory'] = input_data['AgeCategory'].map(AGEcategory_mapper)
+            input_data['SurgicalRiskCategory'] = input_data['SurgicalRiskCategory'].map(SurgRiskCategory_mapper)
             input_data['RaceCategory'] = input_data['RaceCategory'].map(race_mapper)
-            input_data['Anemiacategorybinned'] = input_data['Anemiacategorybinned'].map(Anemiacategorybinned_mapper)
-            input_data['RDW157'] = input_data['RDW157'].map(RDW157_mapper)
-            input_data['ASAcategorybinned'] = input_data['ASAcategorybinned'].map(ASAcategorybinned_mapper)
+            input_data['AnemiaCategoryBinned'] = input_data['AnemiaCategoryBinned'].map(Anemiacategorybinned_mapper)
+            input_data['RDW15.7'] = input_data['RDW15.7'].map(RDW157_mapper)
+            input_data['ASACategoryBinned'] = input_data['ASACategoryBinned'].map(ASAcategorybinned_mapper)
 
             # Convert to PyTorch tensor
             input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
