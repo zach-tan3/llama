@@ -223,7 +223,7 @@ if st.sidebar.button('Predict'):
                 predicted = (probability >= 0.5).float()  # Here, you are using a threshold of 0.5 to determine the class.
 
             # Save prediction probability
-            st.session_state.last_prediction_probability = f"Predicted probability: {probability.item():.2f}"
+            st.session_state.last_prediction_probability = f"Predicted probability: {probability.item():.4f * 100}"
             
             # Display prediction
             st.write(st.session_state.last_prediction_probability)
