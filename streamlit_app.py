@@ -122,15 +122,15 @@ RDW157 = st.sidebar.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
 ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
 
 age_category = None
-if age < 30:
+if Age < 30:
     age_category = '18-29'
-elif age < 50:
+elif Age < 50:
     age_category = '30-49'
-elif age < 65:
+elif Age < 65:
     age_category = '50-64'
-elif age < 75:
+elif Age < 75:
     age_category = '65-74'
-elif age < 85:
+elif Age < 85:
     age_category = '75-84'
 else:
     age_category = '>=85'
