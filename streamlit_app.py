@@ -186,7 +186,7 @@ if st.sidebar.button('Predict'):
             ASAcategorybinned_mapper = {"i":0, "ii":1, 'iii':2, 'iv-vi':3}
             
             # Map categorical values
-            input_data['GENDER'] = input_data['GENDER'].map(gender_mapper)
+            input_data['Gender'] = input_data['Gender'].map(gender_mapper)
             input_data['Anemiacategory'] = input_data['Anemiacategory'].map(anemia_category_mapper)
             input_data['GradeofKidneydisease'] = input_data['GradeofKidneydisease'].map(GradeofKidneydisease_mapper)
             input_data['AnaestypeCategory'] = input_data['AnaestypeCategory'].map(anaestype_mapper)
