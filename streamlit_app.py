@@ -53,8 +53,8 @@ with st.sidebar:
     st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
 
 # Create an instance of the model
-model_path = "discriminator"  # Path to your model file in the GitHub repository
-model = Discriminator(input_size=6)  # Assuming the input size is 6, you need to update it accordingly
+model_path = "discriminator_allparams_nosampling"  # Path to your model file in the GitHub repository
+model = Discriminator(input_size=14)  # Assuming the input size is 6, you need to update it accordingly
 model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
 model.eval()
 
@@ -107,32 +107,48 @@ if st.session_state.messages[-1]["role"] != "assistant":
     message = {"role": "assistant", "content": full_response}
     st.session_state.messages.append(message)
 
-gender = st.sidebar.selectbox('Gender', ['MALE', 'FEMALE'])
-anaestype = st.sidebar.selectbox('Anaestype', ['GA', 'EA'])
-priority = st.sidebar.selectbox('Priority', ['Elective', 'Emergency'])
-age = st.sidebar.slider('Age', 18, 99, 40)
-surgrisk = st.sidebar.selectbox('SurgRisk', ['Low', 'Moderate', 'High'])
-race = st.sidebar.selectbox('Race', ['Chinese', 'Others'])
+Age = st.sidebar.slider('Age', 18, 99, 40)
+Gender = st.sidebar.selectbox('Gender', ['female', 'male'])
+RCRIScore = st.sidebar.select_slider('RCRIScore', options=[1, 2, 3, 4, 5])
+AnemiaCategory = st.sidebar.selectbox('Anemia Category', ['none', 'mild', 'moderate', 'severe'])
+PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
+GradeofKidneyDisease = st.sidebar.selectbox('Grade of Kidney Disease', ['g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
+AnesthesiaTypeCategory = st.sidebar.selectbox('Anaestype', ['ga', 'ra'])
+PriorityCategory = st.sidebar.selectbox('Priority', ['elective', 'emergency'])
+SurgicalRiskCategory = st.sidebar.selectbox('SurgRisk', ['low', 'moderate', 'high'])
+RaceCategory = st.sidebar.selectbox('Race', ['chinese', 'indian', 'malay', 'others'])
+AnemiaCategoryBinned = st.sidebar.selectbox('Anemia Category Binned', ['none', 'mild', 'moderate/severe'])
+RDW157 = st.sidebar.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
+ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
 
 age_category = None
 if age < 30:
     age_category = '18-29'
-elif age < 40:
-    age_category = '30-39'
 elif age < 50:
-    age_category = '40-49'
-elif age < 60:
-    age_category = '50-59'
-elif age < 70:
-    age_category = '60-69'
-elif age < 80:
-    age_category = '70-79'
-elif age < 90:
-    age_category = '80-89'
+    age_category = '30-49'
+elif age < 65:
+    age_category = '50-64'
+elif age < 75:
+    age_category = '65-74'
+elif age < 85:
+    age_category = '75-84'
 else:
-    age_category = '90-99'
+    age_category = '>=85'
 
-prediction_prompt = {'gender': gender, 'anaestype': anaestype, 'priority': priority, 'age': age_category, 'surgrisk': surgrisk, 'race': race}
+prediction_prompt = {'Age': Age,
+                     'Gender': Gender, 
+                     'RCRIScore': RCRIScore,
+                     'AnemiaCategory': AnemiaCategory, 
+                     'PreopEGFRMDRD': PreopEGFRMDRD, 
+                     'GradeofKidneyDisease': GradeofKidneyDisease, 
+                     'AnaesthesiaTypeCategory': AnesthesiaTypeCategory, 
+                     'PriorityCategory': PriorityCategory, 
+                     'AGEcategory': age_category, 
+                     'SurgicalRiskCategory': SurgicalRiskCategory, 
+                     'RaceCategory': RaceCategory, 
+                     'AnemiaCategoryBinned': AnemiaCategoryBinned, 
+                     'RDW15.7': RDW157, 
+                     'ASACategoryBinned': ASACategoryBinned}
 
 if st.sidebar.button('Predict'):
     with st.chat_message("user"):
@@ -141,20 +157,46 @@ if st.sidebar.button('Predict'):
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             # Preprocess your input data
-            input_data = pd.DataFrame({'GENDER': [gender],
-                                       'AnaestypeCategory': [anaestype],
-                                       'PriorityCategory': [priority],
+            input_data = pd.DataFrame({'Age': [Age],
+                                       'Gender': [Gender],
+                                       'RCRIScore': [RCRIScore],
+                                       'AnemiaCategory': [AnemiaCategory],
+                                       'PreopEGFRMDRD': [PreopEGFRMDRD],
+                                       'GradeofKidneyDisease': [GradeofKidneyDisease],
+                                       'AnesthesiaTypeCategory': [AnesthesiaTypeCategory],
+                                       'PriorityCategory': [PriorityCategory],
                                        'AGEcategory': [age_category],
-                                       'SurgRiskCategory': [surgrisk],
-                                       'RaceCategory': [race]})
+                                       'SurgicalRiskCategory': [SurgicalRiskCategory],
+                                       'RaceCategory': [RaceCategory],
+                                       'AnemiaCategoryBinned': [AnemiaCategoryBinned],
+                                       'RDW15.7': [RDW157],
+                                       'ASACategoryBinned': [ASACategoryBinned]})
 
+            # Mappings of categorical values
+            gender_mapper = {"female": 0, "male": 1}
+            anemia_category_mapper = {"none":0, "mild":1, "moderate":2, "severe":3}
+            GradeofKidneydisease_mapper = {"g1":0, "g2":1, "g3a":2,"g3b":3, "g4":4, "g5":5}
+            anaestype_mapper = {"ga": 0, "ra": 1}
+            priority_mapper = {"elective": 0, "emergency": 1}
+            AGEcategory_mapper = {"18-29":0, "30-49":1, "50-64":2,"65-74":3, "75-84":4, ">=85":5}
+            SurgRiskCategory_mapper = {"low":0, "moderate":1, "high":2}
+            race_mapper = {"chinese": 0, "indian": 1, "malay": 2, "others": 3}
+            Anemiacategorybinned_mapper = {"none": 0, "mild":1, "moderate/severe":2}
+            RDW157_mapper = {"<= 15.7":0, ">15.7":1}
+            ASAcategorybinned_mapper = {"i":0, "ii":1, 'iii':2, 'iv-vi':3}
+            
             # Map categorical values
-            input_data['GENDER'] = input_data['GENDER'].map({'MALE': 0, 'FEMALE': 1})
-            input_data['AnaestypeCategory'] = input_data['AnaestypeCategory'].map({'GA': 0, 'EA': 1})
-            input_data['PriorityCategory'] = input_data['PriorityCategory'].map({'Elective': 0, 'Emergency': 1})
-            input_data['AGEcategory'] = input_data['AGEcategory'].map({'18-29': 0, '30-39': 1, '40-49': 2, '50-59': 3, '60-69': 4, '70-79': 5, '80-89': 6, '90-99': 7})
-            input_data['SurgRiskCategory'] = input_data['SurgRiskCategory'].map({'Low': 0, 'Moderate': 1, 'High': 2})
-            input_data['RaceCategory'] = input_data['RaceCategory'].map({'Chinese': 0, 'Others': 1})
+            input_data['GENDER'] = input_data['GENDER'].map(gender_mapper)
+            input_data['Anemiacategory'] = input_data['Anemiacategory'].map(anemia_category_mapper)
+            input_data['GradeofKidneydisease'] = input_data['GradeofKidneydisease'].map(GradeofKidneydisease_mapper)
+            input_data['AnaestypeCategory'] = input_data['AnaestypeCategory'].map(anaestype_mapper)
+            input_data['PriorityCategory'] = input_data['PriorityCategory'].map(priority_mapper)
+            input_data['AGEcategory'] = input_data['AGEcategory'].map(AGEcategory_mapper)
+            input_data['SurgRiskCategory'] = input_data['SurgRiskCategory'].map(SurgRiskCategory_mapper)
+            input_data['RaceCategory'] = input_data['RaceCategory'].map(race_mapper)
+            input_data['Anemiacategorybinned'] = input_data['Anemiacategorybinned'].map(Anemiacategorybinned_mapper)
+            input_data['RDW157'] = input_data['RDW157'].map(RDW157_mapper)
+            input_data['ASAcategorybinned'] = input_data['ASAcategorybinned'].map(ASAcategorybinned_mapper)
 
             # Convert to PyTorch tensor
             input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
