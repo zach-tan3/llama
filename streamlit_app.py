@@ -53,7 +53,7 @@ with st.sidebar:
     st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
 
 # Create an instance of the model
-model_path = "discriminator_allparams_nosampling"  # Path to your model file in the GitHub repository
+model_path = "discriminator_final"  # Path to your model file in the GitHub repository
 model = Discriminator(input_size=14)  # Assuming the input size is 6, you need to update it accordingly
 model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
 model.eval()
