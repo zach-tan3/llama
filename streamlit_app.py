@@ -125,10 +125,10 @@ if st.session_state.messages[-1]["role"] != "assistant":
 
 Age = st.sidebar.slider('Age', 18, 99, 40)
 Gender = st.sidebar.selectbox('Gender', ['female', 'male'])
-RCRIScore = st.sidebar.select_slider('RCRIScore', options=[1, 2, 3, 4, 5])
+RCRIScore = st.sidebar.select_slider('RCRIScore', options=[0, 1, 2, 3, 4, 5])
 AnemiaCategory = st.sidebar.selectbox('Anemia Category', ['none', 'mild', 'moderate', 'severe'])
 PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
-GradeofKidneyDisease = st.sidebar.selectbox('Grade of Kidney Disease', ['g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
+GradeofKidneyDisease = st.sidebar.selectbox('Grade of Kidney Disease', ['blank', 'g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
 AnesthesiaTypeCategory = st.sidebar.selectbox('Anaestype', ['ga', 'ra'])
 PriorityCategory = st.sidebar.selectbox('Priority', ['elective', 'emergency'])
 SurgicalRiskCategory = st.sidebar.selectbox('SurgRisk', ['low', 'moderate', 'high'])
@@ -191,7 +191,7 @@ if st.sidebar.button('Predict'):
             # Mappings of categorical values
             gender_mapper = {"female": 0, "male": 1}
             anemia_category_mapper = {"none":0, "mild":1, "moderate":2, "severe":3}
-            GradeofKidneydisease_mapper = {"g1":0, "g2":1, "g3a":2,"g3b":3, "g4":4, "g5":5}
+            GradeofKidneydisease_mapper = {"blank":0, "g1":1, "g2":2, "g3a":3,"g3b":4, "g4":5, "g5":6}
             anaestype_mapper = {"ga": 0, "ra": 1}
             priority_mapper = {"elective": 0, "emergency": 1}
             AGEcategory_mapper = {"18-29":0, "30-49":1, "50-64":2,"65-74":3, "75-84":4, ">=85":5}
