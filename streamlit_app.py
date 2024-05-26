@@ -224,7 +224,6 @@ if st.button('Predict', key='predict', help='Click to predict ICU admission and 
 
             st.write(st.session_state.last_icu_prediction_probability)
             st.write(st.session_state.last_mortality_prediction_probability)
-            st.subheader("Prediction Results")
             st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_icu_prediction_probability})
             st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_mortality_prediction_probability})
 
