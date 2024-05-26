@@ -101,10 +101,11 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
+#<img src='static_images/ICURISK Logo.png' alt='Company Logo'>
 # Title and description
+st.image(r'static_images/ICURISK Logo.png')
 st.markdown("""
 <div class='header-container'>
-    st.image(r'static_images/ICURISK Logo.png')
     <div class='vertical-line'></div>
     <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
 </div>
