@@ -2,3 +2,5 @@ scikit-learn
 torch==1.13.0
 streamlit
 replicate
+openai
+python-dotenv
