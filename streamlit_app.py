@@ -91,7 +91,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-        #<div class='vertical-line'></div>
+    #    #<div class='vertical-line'></div>
         #<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h>
 
 openai.api_key = ''
