@@ -89,10 +89,10 @@ st.markdown("""
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
     .header-container img {
-        width: 100px;
+        width: 200px;
         margin-right: 10px;
     }
     .vertical-line {
@@ -105,7 +105,7 @@ st.markdown("""
 
 # Title and description using Streamlit columns
 header_col1, header_col2, header_col3 = st.columns([1, 0.1, 2])
-image_path = 'static/ICURISK_Logo.png'
+image_path = 'static_images/ICURISK_Logo.png'
 if os.path.exists(image_path):
     with header_col1:
         st.image(image_path, width=200)
@@ -139,7 +139,7 @@ st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 # Main container for input parameters
 st.header("Input Parameters")
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3 = st.columns([1, 1, 1])
 
 with col1:
     Age = st.slider('Age', 18, 99, 40)
@@ -256,5 +256,3 @@ if user_prompt := st.chat_input("Your prompt"):
             st.stop()
 
     st.session_state.messages.append({"role": "assistant", "content": full_response})
-
-st.markdown("</div>", unsafe_allow_html=True)
