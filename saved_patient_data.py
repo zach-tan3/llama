@@ -1,9 +1,14 @@
 # saved_patient_data.py
 
 import streamlit as st
+import os
 import pandas as pd
+import torch
+import numpy as np
+from io import BytesIO
+import torch.nn as nn
+import openai
 import base64
-
 
 # Title and description with logo
 
@@ -70,9 +75,9 @@ st.markdown(
 )
 
 # Load saved data
-data = pd.read_csv("saved_patient_data.csv")
+#data = pd.read_csv("saved_patient_data.csv")
 
-st.dataframe(data)
+#st.dataframe(data)
 
 # Allow updating ICU and Mortality status
 st.sidebar.header("Update Patient Data")
