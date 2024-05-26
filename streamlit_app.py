@@ -13,6 +13,13 @@ import openai
 import os
 from dotenv import load_dotenv
 
+# Ensure API key is set
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    st.error("OPENAI_API_KEY environment variable not found. Please set it in your environment or secrets.")
+    st.stop()
+
+openai.api_key = api_key
 
 openai.api_key = os.environ["OPENAI_API_KEY"]
 response = openai.chat.completions.create(
