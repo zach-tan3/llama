@@ -13,6 +13,10 @@ import openai
 import base64
 from dotenv import load_dotenv
 
+# Function to clear chat history
+def clear_chat_history():
+    st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
+
 def risk_calculator_page():
     # Title and description with logo
     LOGO_IMAGE = "static/ICURISK_Logo.png"
