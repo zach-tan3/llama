@@ -85,32 +85,24 @@ st.markdown("""
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
-    .header-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-    .header-container img {
-        width: 150px;
-        margin-right: 20px;
-    }
     .vertical-line {
         border-left: 2px solid #6eb52f;
-        height: 150px;
+        height: 80px;
+        margin-left: 20px;
         margin-right: 20px;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# Title and description
-st.markdown("""
-<div class='header-container'>
-    <img src='static_images/ICURISK_Logo.png' alt='Company Logo'>
-    <div class='vertical-line'></div>
-    <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
-</div>
-""", unsafe_allow_html=True)
+# Title and description using Streamlit columns
+header_col1, header_col2, header_col3 = st.columns([1, 1, 6])
+with header_col1:
+    st.image('static_images/ICURISK_Logo.png', width=150)
+with header_col2:
+    st.markdown("<div class='vertical-line'></div>", unsafe_allow_html=True)
+with header_col3:
+    st.markdown("<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>", unsafe_allow_html=True)
+
 st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality.</p>", unsafe_allow_html=True)
 
 # Load environment variables
