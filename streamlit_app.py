@@ -258,12 +258,14 @@ if st.sidebar.button('Predict'):
 
             # Convert to PyTorch tensor
             input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
-
-            # Generate prediction
-            icu_probability = icu_classifier.predict(input_tensor)
-            icu_predicted = icu_probability # Here, you are using a threshold of 0.5 to determine the class.
-            mortality_probability = mortality_classifier.predict(input_tensor)
-            mortality_predicted = mortality_probability
+            
+            # Generate prediction probabilities
+            icu_probability = icu_classifier.predict_proba(input_tensor)[:, 1].item() * 100
+            mortality_probability = mortality_classifier.predict_proba(input_tensor)[:, 1].item() * 100
+            
+            # Display prediction probabilities
+            #st.write(f"ICU Predicted probability: {icu_probability:.2f}%")
+            #st.write(f"Mortality Predicted probability: {mortality_probability:.2f}%")
             
             # Save prediction probability
             st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability.item() * 100:.2f}%"
