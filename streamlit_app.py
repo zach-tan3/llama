@@ -9,39 +9,59 @@ import torch.nn as nn
 import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+import openai
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+openai.api_key = os.environ["OPENAI_API_KEY"]
+
+st.title("My Own ChatGPT!🤖")
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+
+for message in st.session_state["messages"]:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# initialize model
+if "model" not in st.session_state:
+    st.session_state.model = "gpt-3.5-turbo"
+
+# user input
+if user_prompt := st.chat_input("Your prompt"):
+    st.session_state.messages.append({"role": "user", "content": user_prompt})
+    with st.chat_message("user"):
+        st.markdown(user_prompt)
+
+    # generate responses
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+
+        for response in openai.ChatCompletion.create(
+            model=st.session_state.model,
+            messages=[
+                {"role": m["role"], "content": m["content"]}
+                for m in st.session_state.messages
+            ],
+            stream=True,
+        ):
+            full_response += response.choices[0].delta.get("content", "")
+            message_placeholder.markdown(full_response + "▌")
+
+        message_placeholder.markdown(full_response)
+
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 
 # App title
 st.set_page_config(page_title="🦙💬 Llama 2 Chatbot")
 st.session_state.last_prediction_probability = " "
 
-# Replicate Credentials
-with st.sidebar:
-    st.title('🦙💬 Llama 2 Chatbot')
-    st.write('This chatbot is created using the open-source Llama 2 LLM model from Meta.')
-    if 'REPLICATE_API_TOKEN' in st.secrets:
-        st.success('API key already provided!', icon='✅')
-        replicate_api = st.secrets['REPLICATE_API_TOKEN']
-    else:
-        replicate_api = st.text_input('Enter Replicate API token:', type='password')
-        if not (replicate_api.startswith('r8_') and len(replicate_api)==40):
-            st.warning('Please enter your credentials!', icon='⚠️')
-        else:
-            st.success('Proceed to entering your prompt message!', icon='👉')
-    os.environ['REPLICATE_API_TOKEN'] = replicate_api
-
-    st.subheader('Models and parameters')
-    selected_model = st.selectbox('Choose a Llama2 model', ['Llama2-70B', 'Llama2-13B', 'Llama2-7B'], key='selected_model')
-    if selected_model == 'Llama2-70B':
-        llm = 'replicate/llama70b-v2-chat:e951f18578850b652510200860fc4ea62b3b16fac280f83ff32282f87bbd2e48'
-    elif selected_model == 'Llama2-13B':
-        llm = 'a16z-infra/llama13b-v2-chat:df7690f1994d94e96ad9d568eac121aecf50684a0b0963b25a41cc40061269e5'
-    elif selected_model == 'Llama2-7B':
-        llm = 'a16z-infra/llama7b-v2-chat:4f0a4744c7295c024a1de15e1a63c880d3da035fa1f49bfd344fe076074c8eea'
-    temperature = st.slider('temperature', min_value=0.01, max_value=1.0, value=0.1, step=0.01)
-    top_p = st.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
-    max_length = st.slider('max_length', min_value=32, max_value=9999, value=120, step=8)
-    st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
 
 # Create an instance of the model
 if os.path.exists('icu_classifier.pkl') and os.path.exists('mortality_classifier.pkl'):
@@ -62,7 +82,7 @@ for message in st.session_state.messages:
 def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for of admission into an Intensive Care Unit (ICU) of a paitent post-surgery. Ask me anything"}]
 st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
-
+'''
 # Function for generating LLaMA2 response. Refactored from https://github.com/a16z-infra/llama2-chatbot
 def generate_llama2_response(prompt_input, llm):
     string_dialogue = "You are a helpful assistant. You do not respond as 'User' or pretend to be 'User'. You only respond once as 'Assistant'. "
@@ -114,7 +134,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             placeholder.markdown(full_response)
     message = {"role": "assistant", "content": full_response}
     st.session_state.messages.append(message)
-
+'''
 Age = st.sidebar.slider('Age', 18, 99, 40)
 PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
 ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
