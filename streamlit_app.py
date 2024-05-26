@@ -41,7 +41,7 @@ st.markdown("""
         margin-bottom: 20px;
     }
     .stChatMessage {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
     .main-title {
         font-size: 2.5rem;
@@ -103,12 +103,12 @@ st.markdown("""
 # Title and description
 st.markdown("""
 <div class='header-container'>
-    <img src='/static images/ICURISK Logo.png' alt='Company Logo'>
+    <img src='static/images/ICURISK Logo.png' alt='Company Logo'>
     <div class='vertical-line'></div>
     <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
 </div>
 """, unsafe_allow_html=True)
-st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality.", unsafe_allow_html=True)
+st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality.</p>", unsafe_allow_html=True)
 
 # Load environment variables
 load_dotenv()
@@ -134,28 +134,28 @@ col1, col2, col3 = st.columns(3)
 with col1:
     Age = st.slider('Age', 18, 99, 40)
     PreopEGFRMDRD = st.slider('PreopEGFRMDRD', 0, 160, 80)
-    ASACategoryBinned = st.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
+    Intraop = st.slider('Intraop', 0, 1, 0)
     GradeofKidneyDisease = st.selectbox('Grade of Kidney Disease', ['blank', 'g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
 
 with col2:
     AnemiaCategoryBinned = st.selectbox('Anemia Category Binned', ['none', 'mild', 'moderate/severe'])
+    ASACategoryBinned = st.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
     RDW157 = st.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
-    SurgicalRiskCategory = st.selectbox('Surgical Risk Category', ['low', 'moderate', 'high'])
 
 with col3:
-    Intraop = st.slider('Intraop', 0, 1, 0)
+    SurgicalRiskCategory = st.selectbox('Surgical Risk Category', ['low', 'moderate', 'high'])
     AnesthesiaTypeCategory = st.selectbox('Anesthesia Type Category', ['ga', 'ra'])
     PriorityCategory = st.selectbox('Priority Category', ['elective', 'emergency'])
 
 prediction_prompt = {
     'Age': Age,
     'PreopEGFRMDRD': PreopEGFRMDRD,
-    'ASACategoryBinned': ASACategoryBinned,
+    'Intraop': Intraop,
     'GradeofKidneyDisease': GradeofKidneyDisease,
     'AnemiaCategoryBinned': AnemiaCategoryBinned,
+    'ASACategoryBinned': ASACategoryBinned,
     'RDW15.7': RDW157,
     'SurgicalRiskCategory': SurgicalRiskCategory,
-    'Intraop': Intraop,
     'AnesthesiaTypeCategory': AnesthesiaTypeCategory,
     'PriorityCategory': PriorityCategory
 }
