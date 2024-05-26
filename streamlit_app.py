@@ -116,7 +116,7 @@ else:
 with header_col2:
     st.markdown("<div class='vertical-line'></div>", unsafe_allow_html=True)
 with header_col3:
-    st.markdown("<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h2>", unsafe_allow_html=True)
 
 st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality.</p>", unsafe_allow_html=True)
 
