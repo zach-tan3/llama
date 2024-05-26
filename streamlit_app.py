@@ -19,33 +19,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Apply the theme directly in the script
-st.markdown("""
-    <style>
-    body {
-        font-family: "sans serif";
-        background-color: #e0f7fa;
-    }
-    .stButton button {
-        background-color: #6eb52f;
-        color: white;
-    }
-    .stSidebar {
-        background-color: #e0f0ef;
-    }
-    .stSidebar .stButton button {
-        background-color: #6eb52f;
-        color: white;
-    }
-    .stSidebar .stSelectbox, .stSidebar .stSlider {
-        margin-bottom: 20px;
-    }
-    .stChatMessage {
-        margin-bottom: 20px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
 st.title("ICURISK with ChatGPT! 🤖")
 
 # Load environment variables
