@@ -156,9 +156,9 @@ with col1:
     PreopEGFRMDRD = st.slider('PreopEGFRMDRD', 0, 160, 80)
     ASACategoryBinned = st.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
     GradeofKidneyDisease = st.selectbox('Grade of Kidney Disease', ['blank', 'g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
+    AnemiaCategoryBinned = st.selectbox('Anemia Category Binned', ['none', 'mild', 'moderate/severe'])
 
 with col2:
-    AnemiaCategoryBinned = st.selectbox('Anemia Category Binned', ['none', 'mild', 'moderate/severe'])
     RDW157 = st.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
     SurgicalRiskCategory = st.selectbox('Surgical Risk Category', ['low', 'moderate', 'high'])
     Intraop = st.slider('Intraop', 0, 1, 0)
