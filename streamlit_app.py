@@ -145,6 +145,10 @@ if st.sidebar.button('Predict'):
             icu_probability = icu_classifier.predict_proba(input_tensor)[:, 1].item() * 100
             mortality_probability = mortality_classifier.predict_proba(input_tensor)[:, 1].item() * 100
             
+            # Display prediction probabilities
+            #st.write(f"ICU Predicted probability: {icu_probability:.2f}%")
+            #st.write(f"Mortality Predicted probability: {mortality_probability:.2f}%")
+            
             # Save prediction probability
             st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
             st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
