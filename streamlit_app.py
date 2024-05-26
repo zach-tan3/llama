@@ -74,7 +74,7 @@ st.markdown(
     }
     .logo-img {
         float:right;
-        padding-top: 1px !important;
+        padding-top: 0px !important;
     }
     </style>
     """,
