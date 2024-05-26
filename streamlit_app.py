@@ -148,19 +148,19 @@ def risk_calculator_page():
     if "messages" not in st.session_state:
         st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
 
-    # Sidebar input elements
-    st.sidebar.header("Input Parameters")
+# Sidebar input elements
+st.sidebar.header("Input Parameters")
 
-    Age = st.sidebar.slider('Age', 18, 99, 40)
-    PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
-    Intraop = st.sidebar.slider('Intraop', 0, 1, 0)
-    ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['I', 'Ii', 'Iii', 'Iv-Vi'])
-    AnemiaCategoryBinned = st.sidebar.selectbox('Anemia Category Binned', ['None', 'Mild', 'Moderate/Severe'])
-    RDW157 = st.sidebar.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
-    SurgicalRiskCategory = st.sidebar.selectbox('Surgical Risk', ['Low', 'Moderate', 'High'])
-    AnesthesiaTypeCategory = st.sidebar.selectbox('Anesthesia Type', ['Ga', 'Ra'])
-    GradeofKidneyDisease = st.sidebar.selectbox('Grade of Kidney Disease', ['Blank', 'G1', 'G2', 'G3a', 'G3b', 'G4', 'G5'])
-    PriorityCategory = st.sidebar.selectbox('Priority', ['Elective', 'Emergency'])
+Age = st.sidebar.slider('Age', 18, 99, 40)
+PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
+Intraop = st.sidebar.slider('Intraop', 0, 1, 0)
+ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['I', 'Ii', 'Iii', 'Iv-Vi'])
+AnemiaCategoryBinned = st.sidebar.selectbox('Anemia Category Binned', ['None', 'Mild', 'Moderate/Severe'])
+RDW157 = st.sidebar.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
+SurgicalRiskCategory = st.sidebar.selectbox('Surgical Risk', ['Low', 'Moderate', 'High'])
+AnesthesiaTypeCategory = st.sidebar.selectbox('Anesthesia Type', ['Ga', 'Ra'])
+GradeofKidneyDisease = st.sidebar.selectbox('Grade of Kidney Disease', ['Blank', 'G1', 'G2', 'G3a', 'G3b', 'G4', 'G5'])
+PriorityCategory = st.sidebar.selectbox('Priority', ['Elective', 'Emergency'])
 
 prediction_prompt = {'Age': Age,
                      'PreopEGFRMDRD': PreopEGFRMDRD, 
