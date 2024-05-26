@@ -103,9 +103,9 @@ st.markdown("""
 # Title and description
 st.markdown("""
 <div class='header-container'>
-<img src='static_images/ICURISK Logo.png'>
-<div class='vertical-line'></div>
-<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
+    <img src='static_images/ICURISK Logo.png'>
+    <div class='vertical-line'></div>
+    <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
 </div>
 """, unsafe_allow_html=True)
 st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality.</p>", unsafe_allow_html=True)
