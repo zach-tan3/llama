@@ -165,13 +165,18 @@ def risk_calculator_page():
             # Display prediction probabilities
             st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
             st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
-    
+
+            st.session_state.prediction_prompt = prediction_prompt
+
     with col2:
         st.button('Clear Chat History', on_click=clear_chat_history)
 
     # Display prediction results
     if 'last_icu_prediction_probability' in st.session_state and 'last_mortality_prediction_probability' in st.session_state:
         st.subheader("Prediction Results")
+        st.write("### Input Values")
+        st.write(st.session_state.prediction_prompt)
+        st.write("### Predicted Probabilities")
         st.write(st.session_state.last_icu_prediction_probability)
         st.write(st.session_state.last_mortality_prediction_probability)
 
