@@ -124,95 +124,93 @@ def risk_calculator_page():
     col1, col2 = st.sidebar.columns([1, 1])
     
     with col1:
-        # Prediction button and processing
-        if st.button('Predict', key='predict', help='Click to predict ICU admission and mortality'):
-            with st.spinner("Thinking..."):
-                # Preprocess your input data
-                input_data = pd.DataFrame([prediction_prompt])
-        
-                # Mappings of categorical values
-                ASAcategorybinned_mapper = {"i": 0, "ii": 1, 'iii': 2, 'iv-vi': 3}
-                GradeofKidneyDisease_mapper = {"blank": 0, "g1": 1, "g2": 2, "g3a": 3, "g3b": 4, "g4": 5, "g5": 6}
-                AnemiaCategoryBinned_mapper = {"none": 0, "mild": 1, "moderate/severe": 2}
-                RDW157_mapper = {"<= 15.7": 0, ">15.7": 1}
-                SurgicalRiskCategory_mapper = {"low": 0, "moderate": 1, "high": 2}
-                AnesthesiaTypeCategory_mapper = {"ga": 0, "ra": 1}
-                PriorityCategory_mapper = {"elective": 0, "emergency": 1}
-        
-                # Map categorical values
-                input_data['ASACategoryBinned'] = input_data['ASACategoryBinned'].map(ASAcategorybinned_mapper)
-                input_data['GradeofKidneyDisease'] = input_data['GradeofKidneyDisease'].map(GradeofKidneyDisease_mapper)
-                input_data['AnemiaCategoryBinned'] = input_data['AnemiaCategoryBinned'].map(AnemiaCategoryBinned_mapper)
-                input_data['RDW15.7'] = input_data['RDW15.7'].map(RDW157_mapper)
-                input_data['SurgicalRiskCategory'] = input_data['SurgicalRiskCategory'].map(SurgicalRiskCategory_mapper)
-                input_data['AnesthesiaTypeCategory'] = input_data['AnesthesiaTypeCategory'].map(AnesthesiaTypeCategory_mapper)
-                input_data['PriorityCategory'] = input_data['PriorityCategory'].map(PriorityCategory_mapper)
-        
-                # Convert to PyTorch tensor
-                input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
-        
-                # Generate prediction probabilities
-                icu_probability = icu_classifier.predict_proba(input_tensor)[:, 1].item() * 100
-                mortality_probability = mortality_classifier.predict_proba(input_tensor)[:, 1].item() * 100
-        
-                # Display prediction probabilities
-                st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
-                st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
-        
-        # Display prediction results
-        if 'last_icu_prediction_probability' in st.session_state and 'last_mortality_prediction_probability' in st.session_state:
-            st.subheader("Prediction Results")
-            st.write(st.session_state.last_icu_prediction_probability)
-            st.write(st.session_state.last_mortality_prediction_probability)
-            st.markdown("</div>", unsafe_allow_html=True)
-        
-        # Chatbot interaction section moved to the bottom
-        st.markdown("<h2 class='section-title'>Chatbot Interaction</h2>", unsafe_allow_html=True)
-        
-        # Initialize session state for messages if not already done
-        if "messages" not in st.session_state:
-            st.session_state.messages = [{"role": "assistant", "content": "Hi! The name is Vision, here to answer any mind-boggling enquiries. Ask me anything."}]
-        
-        for message in st.session_state["messages"]:
-            with st.chat_message(message["role"]):
-                st.markdown(message["content"])
-        
-        # Initialize model
-        if "model" not in st.session_state:
-            st.session_state.model = "gpt-3.5-turbo"
-        
-        # User input for the chatbot
-        if user_prompt := st.chat_input("Your prompt"):
-            st.session_state.messages.append({"role": "user", "content": user_prompt})
-            with st.chat_message("user"):
-                st.markdown(user_prompt)
-        
-            # Generate responses
-            with st.chat_message("assistant"):
-                message_placeholder = st.empty()
-                full_response = ""
-        
-                try:
-                    response = openai.ChatCompletion.create(
-                        model=st.session_state.model,
-                        messages=[
-                            {"role": m["role"], "content": m["content"]}
-                            for m in st.session_state.messages
-                        ]
-                    )
-        
-                    # Extract the content from the response
-                    full_response = response.choices[0].message["content"]
-                    message_placeholder.markdown(full_response)
-        
-                except Exception as e:
-                    st.error(f"An error occurred: {str(e)}")
-                    st.stop()
-        
-            st.session_state.messages.append({"role": "assistant", "content": full_response})
-        
+        if st.button('Predict'):
+            # Preprocess your input data
+            input_data = pd.DataFrame({ 'Age': [Age],
+                                        'PreopEGFRMDRD': [PreopEGFRMDRD],
+                                        'Intraop': [Intraop],
+                                        'ASACategoryBinned': [ASACategoryBinned],
+                                        'AnemiaCategoryBinned': [AnemiaCategoryBinned],
+                                        'RDW15.7': [RDW157],
+                                        'SurgicalRiskCategory': [SurgicalRiskCategory],
+                                        'AnesthesiaTypeCategory': [AnesthesiaTypeCategory],
+                                        'GradeofKidneyDisease': [GradeofKidneyDisease],
+                                        'PriorityCategory': [PriorityCategory]})    
+
+            # Mappings of categorical values
+            ASAcategorybinned_mapper = {"I": 0, "Ii": 1, 'Iii': 2, 'Iv-Vi': 3}
+            GradeofKidneydisease_mapper = {"Blank": 0, "G1": 1, "G2": 2, "G3a": 3, "G3b": 4, "G4": 5, "G5": 6}
+            Anemiacategorybinned_mapper = {"None": 0, "Mild": 1, "Moderate/Severe": 2}
+            RDW157_mapper = {"<= 15.7": 0, ">15.7": 1}
+            SurgRiskCategory_mapper = {"Low": 0, "Moderate": 1, "High": 2}
+            anaestype_mapper = {"Ga": 0, "Ra": 1}
+            priority_mapper = {"Elective": 0, "Emergency": 1}
+            
+            # Map categorical values
+            input_data['ASACategoryBinned'] = input_data['ASACategoryBinned'].map(ASAcategorybinned_mapper)
+            input_data['GradeofKidneyDisease'] = input_data['GradeofKidneyDisease'].map(GradeofKidneydisease_mapper)
+            input_data['AnemiaCategoryBinned'] = input_data['AnemiaCategoryBinned'].map(Anemiacategorybinned_mapper)
+            input_data['RDW15.7'] = input_data['RDW15.7'].map(RDW157_mapper)
+            input_data['SurgicalRiskCategory'] = input_data['SurgicalRiskCategory'].map(SurgRiskCategory_mapper)
+            input_data['AnesthesiaTypeCategory'] = input_data['AnesthesiaTypeCategory'].map(anaestype_mapper)
+            input_data['PriorityCategory'] = input_data['PriorityCategory'].map(priority_mapper)
+
+            # Convert to PyTorch tensor
+            input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
+            
+            # Generate prediction probabilities
+            icu_probability = icu_classifier.predict_proba(input_tensor)[:, 1].item() * 100
+            mortality_probability = mortality_classifier.predict_proba(input_tensor)[:, 1].item() * 100
+            
+            # Display prediction probabilities
+            st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
+            st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
+    
     with col2:
         st.button('Clear Chat History', on_click=clear_chat_history)
+
+# Display prediction results
+if 'last_icu_prediction_probability' in st.session_state and 'last_mortality_prediction_probability' in st.session_state:
+    st.subheader("Prediction Results")
+    st.write(st.session_state.last_icu_prediction_probability)
+    st.write(st.session_state.last_mortality_prediction_probability)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # Chatbot interaction section
+    st.markdown("<h2 class='section-title'>Chatbot Interaction</h2>", unsafe_allow_html=True)
+    for message in st.session_state["messages"]:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+    # User input
+    if user_prompt := st.chat_input("Your prompt"):
+        st.session_state.messages.append({"role": "user", "content": user_prompt})
+        with st.chat_message("user"):
+            st.markdown(user_prompt)
+
+        # Generate responses
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+
+            try:
+                response = openai.ChatCompletion.create(
+                    model=st.session_state.model,
+                    messages=[
+                        {"role": m["role"], "content": m["content"]}
+                        for m in st.session_state.messages
+                    ]
+                )
+
+                # Extract the content from the response
+                full_response = response.choices[0].message["content"]
+                message_placeholder.markdown(full_response)
+
+            except Exception as e:
+                st.error(f"An error occurred: {str(e)}")
+                st.stop()
+
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 # Function for Risk Model Development page
 def risk_model_development_page():
