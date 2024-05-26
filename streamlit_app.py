@@ -106,28 +106,28 @@ st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 # Sidebar input elements
 st.sidebar.header("Input Parameters")
 
-Age = st.sidebar.slider('Age', 18, 99, 40)
-PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
-ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
-GradeofKidneyDisease = st.sidebar.selectbox('Grade of Kidney Disease', ['blank', 'g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
-AnemiaCategoryBinned = st.sidebar.selectbox('Anemia Category Binned', ['none', 'mild', 'moderate/severe'])
+AGE = st.sidebar.slider('Age', 18, 99, 40)
+PREOPEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
+ASACATEGORYBINNED = st.sidebar.selectbox('ASA Category Binned', ['I', 'II', 'III', 'IV-VI'])
+GRADEOFKIDNEYDISEASE = st.sidebar.selectbox('Grade of Kidney Disease', ['BLANK', 'G1', 'G2', 'G3A', 'G3B', 'G4', 'G5'])
+ANEMIACATEGORYBINNED = st.sidebar.selectbox('Anemia Category Binned', ['NONE', 'MILD', 'MODERATE/SEVERE'])
 RDW157 = st.sidebar.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
-SurgicalRiskCategory = st.sidebar.selectbox('Surgical Risk Category', ['low', 'moderate', 'high'])
-Intraop = st.sidebar.slider('Intraop', 0, 1, 0)
-AnesthesiaTypeCategory = st.sidebar.selectbox('Anesthesia Type Category', ['ga', 'ra'])
-PriorityCategory = st.sidebar.selectbox('Priority Category', ['elective', 'emergency'])
+SURGICALRISKCATEGORY = st.sidebar.selectbox('Surgical Risk Category', ['LOW', 'MODERATE', 'HIGH'])
+INTRAOP = st.sidebar.slider('Intraop', 0, 1, 0)
+ANESTHESIATYPECATEGORY = st.sidebar.selectbox('Anesthesia Type Category', ['GA', 'RA'])
+PRIORITYCATEGORY = st.sidebar.selectbox('Priority Category', ['ELECTIVE', 'EMERGENCY'])
 
 prediction_prompt = {
-    'Age': Age,
-    'PreopEGFRMDRD': PreopEGFRMDRD,
-    'ASACategoryBinned': ASACategoryBinned,
-    'GradeofKidneyDisease': GradeofKidneyDisease,
-    'AnemiaCategoryBinned': AnemiaCategoryBinned,
+    'AGE': AGE,
+    'PREOPEGFRMDRD': PREOPEGFRMDRD,
+    'ASACATEGORYBINNED': ASACATEGORYBINNED,
+    'GRADEOFKIDNEYDISEASE': GRADEOFKIDNEYDISEASE,
+    'ANEMIACATEGORYBINNED': ANEMIACATEGORYBINNED,
     'RDW15.7': RDW157,
-    'SurgicalRiskCategory': SurgicalRiskCategory,
-    'Intraop': Intraop,
-    'AnesthesiaTypeCategory': AnesthesiaTypeCategory,
-    'PriorityCategory': PriorityCategory
+    'SURGICALRISKCATEGORY': SURGICALRISKCATEGORY,
+    'INTRAOP': INTRAOP,
+    'ANESTHESIATYPECATEGORY': ANESTHESIATYPECATEGORY,
+    'PRIORITYCATEGORY': PRIORITYCATEGORY
 }
 
 # Prediction button and processing
@@ -141,22 +141,22 @@ if st.sidebar.button('Predict'):
             input_data = pd.DataFrame([prediction_prompt])
 
             # Mappings of categorical values
-            ASAcategorybinned_mapper = {"i": 0, "ii": 1, 'iii': 2, 'iv-vi': 3}
-            GradeofKidneyDisease_mapper = {"blank": 0, "g1": 1, "g2": 2, "g3a": 3, "g3b": 4, "g4": 5, "g5": 6}
-            AnemiaCategoryBinned_mapper = {"none": 0, "mild": 1, "moderate/severe": 2}
+            ASACATEGORYBINNED_mapper = {"I": 0, "II": 1, 'III': 2, 'IV-VI': 3}
+            GRADEOFKIDNEYDISEASE_mapper = {"BLANK": 0, "G1": 1, "G2": 2, "G3A": 3, "G3B": 4, "G4": 5, "G5": 6}
+            ANEMIACATEGORYBINNED_mapper = {"NONE": 0, "MILD": 1, "MODERATE/SEVERE": 2}
             RDW157_mapper = {"<= 15.7": 0, ">15.7": 1}
-            SurgicalRiskCategory_mapper = {"low": 0, "moderate": 1, "high": 2}
-            AnesthesiaTypeCategory_mapper = {"ga": 0, "ra": 1}
-            PriorityCategory_mapper = {"elective": 0, "emergency": 1}
+            SURGICALRISKCATEGORY_mapper = {"LOW": 0, "MODERATE": 1, "HIGH": 2}
+            ANESTHESIATYPECATEGORY_mapper = {"GA": 0, "RA": 1}
+            PRIORITYCATEGORY_mapper = {"ELECTIVE": 0, "EMERGENCY": 1}
 
             # Map categorical values
-            input_data['ASACategoryBinned'] = input_data['ASACategoryBinned'].map(ASAcategorybinned_mapper)
-            input_data['GradeofKidneyDisease'] = input_data['GradeofKidneyDisease'].map(GradeofKidneyDisease_mapper)
-            input_data['AnemiaCategoryBinned'] = input_data['AnemiaCategoryBinned'].map(AnemiaCategoryBinned_mapper)
+            input_data['ASACATEGORYBINNED'] = input_data['ASACATEGORYBINNED'].map(ASACATEGORYBINNED_mapper)
+            input_data['GRADEOFKIDNEYDISEASE'] = input_data['GRADEOFKIDNEYDISEASE'].map(GRADEOFKIDNEYDISEASE_mapper)
+            input_data['ANEMIACATEGORYBINNED'] = input_data['ANEMIACATEGORYBINNED'].map(ANEMIACATEGORYBINNED_mapper)
             input_data['RDW15.7'] = input_data['RDW15.7'].map(RDW157_mapper)
-            input_data['SurgicalRiskCategory'] = input_data['SurgicalRiskCategory'].map(SurgicalRiskCategory_mapper)
-            input_data['AnesthesiaTypeCategory'] = input_data['AnesthesiaTypeCategory'].map(AnesthesiaTypeCategory_mapper)
-            input_data['PriorityCategory'] = input_data['PriorityCategory'].map(PriorityCategory_mapper)
+            input_data['SURGICALRISKCATEGORY'] = input_data['SURGICALRISKCATEGORY'].map(SURGICALRISKCATEGORY_mapper)
+            input_data['ANESTHESIATYPECATEGORY'] = input_data['ANESTHESIATYPECATEGORY'].map(ANESTHESIATYPECATEGORY_mapper)
+            input_data['PRIORITYCATEGORY'] = input_data['PRIORITYCATEGORY'].map(PRIORITYCATEGORY_mapper)
 
             # Convert to PyTorch tensor
             input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
@@ -166,11 +166,60 @@ if st.sidebar.button('Predict'):
             mortality_probability = mortality_classifier.predict_proba(input_tensor)[:, 1].item() * 100
 
             # Display prediction probabilities
-            st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
-            st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
+            st.session_state.last_icu_prediction_probability = f"ICU Predicted Probability: {icu_probability:.2f}%"
+            st.session_state.last_mortality_prediction_probability = f"Mortality Predicted Probability: {mortality_probability:.2f}%"
 
             st.write(st.session_state.last_icu_prediction_probability)
             st.write(st.session_state.last_mortality_prediction_probability)
 
             st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_icu_prediction_probability})
             st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_mortality_prediction_probability})
+
+# Display prediction results
+if 'last_icu_prediction_probability' in st.session_state and 'last_mortality_prediction_probability' in st.session_state:
+    st.subheader("Prediction Results")
+    st.write(st.session_state.last_icu_prediction_probability)
+    st.write(st.session_state.last_mortality_prediction_probability)
+
+# Chatbot interaction section moved to the bottom
+st.markdown("<h2 class='section-title'>Chatbot Interaction</h2>", unsafe_allow_html=True)
+
+# Initialize session state for messages if not already done
+if "messages" not in st.session_state:
+    st.session_state.messages = [{"role": "assistant", "content": "Hi! The name is Vision, here to answer any mind-boggling enquiries. Ask me anything."}]
+
+for message in st.session_state["messages"]:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# User input for the chatbot
+if user_prompt := st.chat_input("Your prompt"):
+    st.session_state.messages.append({"role": "user", "content": user_prompt})
+    with st.chat_message("user"):
+        st.markdown(user_prompt)
+
+    # Generate responses
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+
+        try:
+            response = openai.ChatCompletion.create(
+                model=st.session_state.model,
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ]
+            )
+
+            # Extract the content from the response
+            full_response = response.choices[0].message.content
+            message_placeholder.markdown(full_response)
+
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
+            st.stop()
+
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+st.markdown("</div>", unsafe_allow_html=True)
