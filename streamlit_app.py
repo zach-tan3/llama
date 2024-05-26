@@ -85,14 +85,14 @@ st.markdown(
     f"""
     <div class="container">
         <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
-        <div class='vertical-line'></div>
-        <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h>
+        <p class="logo-text">ICURISK with ChatGPT! 🤖</p>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality.</p>", unsafe_allow_html=True)
+        #<div class='vertical-line'></div>
+        #<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h>
 
 openai.api_key = ''
 
