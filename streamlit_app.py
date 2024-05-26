@@ -231,8 +231,6 @@ if st.sidebar.button('Predict'):
             st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
             
             # Display prediction
-            st.write("## Prediction Results")
-            st.write(prediction_prompt)
             st.write(st.session_state.last_icu_prediction_probability)
             st.write(st.session_state.last_mortality_prediction_probability)
 
