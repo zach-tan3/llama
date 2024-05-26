@@ -1,5 +1,15 @@
 import streamlit as st
 import os
+import pandas as pd
+import torch
+import numpy as np
+from io import BytesIO
+import torch.nn as nn
+import joblib
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+import openai
+from dotenv import load_dotenv
 
 # Set Streamlit configuration with a new theme
 st.set_page_config(
@@ -7,13 +17,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
-# Debug statement to check if the file exists
-image_path = 'static_images/ICURISK Logo.png'
-if os.path.exists(image_path):
-    st.markdown(f"<div>Image found at {image_path}</div>", unsafe_allow_html=True)
-else:
-    st.markdown(f"<div>Image not found at {image_path}</div>", unsafe_allow_html=True)
 
 # Apply custom CSS for styling
 st.markdown("""
@@ -97,9 +100,9 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Title and description
-st.markdown(f"""
+st.markdown("""
 <div class='header-container'>
-    <img src='{image_path}' alt='Company Logo'>
+    <img src='static_images/ICURISK Logo.png' alt='Company Logo'>
     <div class='vertical-line'></div>
     <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
 </div>
@@ -107,9 +110,12 @@ st.markdown(f"""
 st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality.</p>", unsafe_allow_html=True)
 
 # Load environment variables
-from dotenv import load_dotenv
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    st.error("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+else:
+    openai.api_key = api_key
 
 # Load models
 if os.path.exists('icu_classifier.pkl') and os.path.exists('mortality_classifier.pkl'):
@@ -186,62 +192,4 @@ if st.button('Predict', key='predict', help='Click to predict ICU admission and 
 
         # Generate prediction probabilities
         icu_probability = icu_classifier.predict_proba(input_tensor)[:, 1].item() * 100
-        mortality_probability = mortality_classifier.predict_proba(input_tensor)[:, 1].item() * 100
-
-        # Display prediction probabilities
-        st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
-        st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
-
-# Display prediction results
-if 'last_icu_prediction_probability' in st.session_state and 'last_mortality_prediction_probability' in st.session_state:
-    st.subheader("Prediction Results")
-    st.write(st.session_state.last_icu_prediction_probability)
-    st.write(st.session_state.last_mortality_prediction_probability)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# Chatbot interaction section moved to the bottom
-st.markdown("<h2 class='section-title'>Chatbot Interaction</h2>", unsafe_allow_html=True)
-
-# Initialize session state for messages if not already done
-if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "assistant", "content": "Hi! The name is Vision, here to answer any mind-boggling enquiries. Ask me anything."}]
-
-for message in st.session_state["messages"]:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-# Initialize model
-if "model" not in st.session_state:
-    st.session_state.model = "gpt-3.5-turbo"
-
-# User input for the chatbot
-if user_prompt := st.chat_input("Your prompt"):
-    st.session_state.messages.append({"role": "user", "content": user_prompt})
-    with st.chat_message("user"):
-        st.markdown(user_prompt)
-
-    # Generate responses
-    with st.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-
-        try:
-            response = openai.ChatCompletion.create(
-                model=st.session_state.model,
-                messages=[
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ]
-            )
-
-            # Extract the content from the response
-            full_response = response.choices[0].message["content"]
-            message_placeholder.markdown(full_response)
-
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
-            st.stop()
-
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
-
-st.markdown("</div>", unsafe_allow_html=True)
+        mortality_probability = mortality_classifier.predict
