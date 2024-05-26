@@ -14,6 +14,8 @@ from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 import openai
 import base64
 from dotenv import load_dotenv
+from saved_patient_data import saved_patient_data_page
+from risk_model_development import risk_model_development_page
 
 # Set Streamlit configuration
 st.set_page_config(page_title="ICURISK with ChatGPT", layout="wide")
