@@ -227,36 +227,6 @@ def risk_calculator_page():
     with col2:
         st.button('Clear Chat History', on_click=clear_chat_history)
 
-    # User input
-    if user_prompt := st.chat_input("Your prompt"):
-        st.session_state.messages.append({"role": "user", "content": user_prompt})
-        with st.chat_message("user"):
-            st.markdown(user_prompt)
-
-        # Generate responses
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
-            full_response = ""
-
-            try:
-                response = openai.ChatCompletion.create(
-                    model=st.session_state.model,
-                    messages=[
-                        {"role": m["role"], "content": m["content"]}
-                        for m in st.session_state.messages
-                    ]
-                )
-
-                # Extract the content from the response
-                full_response = response.choices[0].message["content"]
-                message_placeholder.markdown(full_response)
-
-            except Exception as e:
-                st.error(f"An error occurred: {str(e)}")
-                st.stop()
-
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
-
 # Function for Risk Model Development page
 def risk_model_development_page():
     st.title("Risk Model Development")
