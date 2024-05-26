@@ -1,4 +1,4 @@
+joblib
 torch==1.13.0
 streamlit
 replicate
-joblib
