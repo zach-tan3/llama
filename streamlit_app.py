@@ -13,21 +13,25 @@ import openai
 from dotenv import load_dotenv
 
 # Set Streamlit configuration with a new theme
-st.set_page_config(page_title="ICURISK with ChatGPT", layout="wide")
+st.set_page_config(
+    page_title="ICURISK with ChatGPT",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-# Custom CSS for styling
+# Apply the theme directly in the script
 st.markdown("""
     <style>
     body {
         font-family: "sans serif";
-        background-color: #f0f0f5;
+        background-color: #e0f7fa;
     }
     .stButton button {
         background-color: #6eb52f;
         color: white;
     }
     .stSidebar {
-        background-color: #e0e0ef;
+        background-color: #e0f0ef;
     }
     .stSidebar .stButton button {
         background-color: #6eb52f;
