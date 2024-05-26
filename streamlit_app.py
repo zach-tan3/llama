@@ -68,9 +68,9 @@ st.markdown(
     }
     .logo-text {
         font-weight:700 !important;
-        font-size:50px !important;
-        color: #f9a01b !important;
-        padding-top: 75px !important;
+        font-size:45px !important;
+        color: #000000 !important;
+        padding-top: 15px !important;
     }
     .logo-img {
         float:right;
