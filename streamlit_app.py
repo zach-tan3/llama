@@ -17,6 +17,25 @@ load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+def check_openai_api_key(api_key):
+    openai.api_key = api_key
+    try:
+        openai.Model.list()
+    except openai.error.AuthenticationError as e:
+        return False
+    else:
+        return True
+
+
+api_key = "YOUR_API_KEY"
+is_valid = check_openai_api_key(os.getenv("OPENAI_API_KEY"))
+
+if is_valid:
+    print("Valid OpenAI API key.")
+else:
+    print("Invalid OpenAI API key."
+
+
 st.title("My Own ChatGPT!🤖")
 
 if "messages" not in st.session_state:
