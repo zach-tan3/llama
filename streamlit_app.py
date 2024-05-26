@@ -58,7 +58,7 @@ st.markdown("""
         font-weight: 700;
         font-size: 40px;
         color: #000000;
-        padding-top: 20px;
+        padding-top: 18px;
     }
     </style>
     """, unsafe_allow_html=True)
