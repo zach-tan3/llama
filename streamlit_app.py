@@ -60,25 +60,61 @@ st.markdown("""
         color: #000000;
         padding-top: 18px;
     }
+    .nav-buttons {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .nav-buttons button {
+        flex: 1;
+        padding: 15px;
+        font-size: 18px;
+        border: none;
+        border-radius: 25px;
+        margin: 0 10px;
+        cursor: pointer;
+    }
+    .nav-button-left {
+        background-color: #4CAF50; /* Green */
+    }
+    .nav-button-right {
+        background-color: #008CBA; /* Blue */
+    }
     </style>
     """, unsafe_allow_html=True)
 
+# Title and description with logo
+LOGO_IMAGE = "static/ICURISK_Logo.png"
+st.markdown(
+    f"""
+    <div class="header-container">
+        <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
+        <div class='vertical-line'></div>
+        <p class="logo-text">Risk Calculator w/ ChatGPT! 🤖</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# Navigation Buttons
+st.markdown(
+    """
+    <div class="nav-buttons">
+        <form action="/" method="get">
+            <button class="nav-button-left" name="page" value="calculator">Risk Calculator w/ ChatGPT</button>
+            <button class="nav-button-right" name="page" value="development">Risk Model Development</button>
+        </form>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# Initialize OpenAI API
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 # Function for Risk Calculator w/ ChatGPT page
 def risk_calculator_page():
-    LOGO_IMAGE = "static/ICURISK_Logo.png"
-    st.markdown(
-        f"""
-        <div class="header-container">
-            <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
-            <div class='vertical-line'></div>
-            <p class="logo-text">Risk Calculator w/ ChatGPT! 🤖</p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    openai.api_key = ''
-
+    st.title("ICURISK with ChatGPT! 🤖")
     # Initialize session state for messages if not already done
     if "messages" not in st.session_state:
         st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
@@ -185,7 +221,7 @@ def risk_calculator_page():
                 SurgRiskCategory_mapper = {"Low": 0, "Moderate": 1, "High": 2}
                 anaestype_mapper = {"Ga": 0, "Ra": 1}
                 priority_mapper = {"Elective": 0, "Emergency": 1}
-
+                
                 # Map categorical values
                 input_data['ASACategoryBinned'] = input_data['ASACategoryBinned'].map(ASAcategorybinned_mapper)
                 input_data['GradeofKidneyDisease'] = input_data['GradeofKidneyDisease'].map(GradeofKidneydisease_mapper)
@@ -197,15 +233,15 @@ def risk_calculator_page():
 
                 # Convert to PyTorch tensor
                 input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
-
+                
                 # Generate prediction probabilities
                 icu_probability = icu_classifier.predict_proba(input_tensor)[:, 1].item() * 100
                 mortality_probability = mortality_classifier.predict_proba(input_tensor)[:, 1].item() * 100
-
+                
                 # Display prediction probabilities
                 st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
                 st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
-
+                
                 # Display prediction
                 st.write(st.session_state.last_icu_prediction_probability)
                 st.write(st.session_state.last_mortality_prediction_probability)
@@ -218,27 +254,23 @@ def risk_calculator_page():
 # Function for Risk Model Development page
 def risk_model_development_page():
     st.title("Risk Model Development")
-    st.sidebar.header("Model Selection")
-    model_choice = st.sidebar.selectbox('Select Model', ['Model 1', 'Model 2', 'Model 3'])
+    st.write("This is the Risk Model Development page.")
+    model1_button = st.sidebar.button('Model 1')
+    model2_button = st.sidebar.button('Model 2')
+    model3_button = st.sidebar.button('Model 3')
 
-    if model_choice == 'Model 1':
-        st.image("static/model1.png", caption="Model 1 Development")
-    elif model_choice == 'Model 2':
-        st.image("static/model2.png", caption="Model 2 Development")
-    elif model_choice == 'Model 3':
-        st.image("static/model3.png", caption="Model 3 Development")
+    if model1_button:
+        st.image("static/model1.png")
+    if model2_button:
+        st.image("static/model2.png")
+    if model3_button:
+        st.image("static/model3.png")
 
-# Navigation
-if "page" not in st.session_state:
-    st.session_state.page = "Risk Calculator w/ ChatGPT"
+# Navigation logic
+query_params = st.experimental_get_query_params()
+page = query_params.get("page", ["calculator"])[0]
 
-if st.sidebar.button('Risk Calculator w/ ChatGPT'):
-    st.session_state.page = "Risk Calculator w/ ChatGPT"
-
-if st.sidebar.button('Risk Model Development'):
-    st.session_state.page = "Risk Model Development"
-
-if st.session_state.page == "Risk Calculator w/ ChatGPT":
+if page == "calculator":
     risk_calculator_page()
-elif st.session_state.page == "Risk Model Development":
+elif page == "development":
     risk_model_development_page()
