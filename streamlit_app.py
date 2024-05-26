@@ -151,9 +151,7 @@ def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery. Ask me anything."}]
 st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
-# Main container for input parameters and prediction results
-st.markdown("<h2 class='section-title'>Risk Calculator</h2>", unsafe_allow_html=True)
-st.markdown("<div class='input-container'>", unsafe_allow_html=True)
+# Main container for input parameters
 st.header("Input Parameters")
 
 col1, col2 = st.columns(2)
@@ -229,6 +227,9 @@ if st.button('Predict', key='predict', help='Click to predict ICU admission and 
 
             st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_icu_prediction_probability})
             st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_mortality_prediction_probability})
+            
+st.markdown("<h2 class='section-title'>Risk Calculator</h2>", unsafe_allow_html=True)
+st.markdown("<div class='input-container'>", unsafe_allow_html=True)
 
 # Display prediction results
 if 'last_icu_prediction_probability' in st.session_state and 'last_mortality_prediction_probability' in st.session_state:
