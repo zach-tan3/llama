@@ -184,103 +184,96 @@ st.sidebar.header("Navigation")
 page = st.sidebar.selectbox("Go to", ["Risk Calculator w/ ChatGPT", "Saved Patient Data", "Risk Model Development"])
 
 if page == "Risk Calculator w/ ChatGPT":
-    risk_calculator_page()
-if page == "Saved Patient Data":
-    st.switch_page("saved_patient_data.py")
-if page == "Risk Model Development":
-    st.switch_page("risk_model_development.py")
-    
-'''if page == "Risk Calculator w/ ChatGPT":
-    risk_calculator_page()
+    # Risk calculator code here
+
+    # Sidebar input elements
+    st.sidebar.header("Input Parameters")
+
+    Age = st.sidebar.slider('Age', 18, 99, 40)
+    PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
+    Intraop = st.sidebar.slider('Intraop', 0, 1, 0)
+    ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['I', 'Ii', 'Iii', 'Iv-Vi'])
+    AnemiaCategoryBinned = st.sidebar.selectbox('Anemia Category Binned', ['None', 'Mild', 'Moderate/Severe'])
+    RDW157 = st.sidebar.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
+    SurgicalRiskCategory = st.sidebar.selectbox('Surgical Risk', ['Low', 'Moderate', 'High'])
+    AnesthesiaTypeCategory = st.sidebar.selectbox('Anesthesia Type', ['Ga', 'Ra'])
+    GradeofKidneyDisease = st.sidebar.selectbox('Grade of Kidney Disease', ['Blank', 'G1', 'G2', 'G3a', 'G3b', 'G4', 'G5'])
+    PriorityCategory = st.sidebar.selectbox('Priority', ['Elective', 'Emergency'])
+
+    prediction_prompt = {'Age': Age,
+                         'PreopEGFRMDRD': PreopEGFRMDRD, 
+                         'Intraop': Intraop,
+                         'ASACategoryBinned': ASACategoryBinned,
+                         'AnemiaCategoryBinned': AnemiaCategoryBinned, 
+                         'RDW15.7': RDW157, 
+                         'SurgicalRiskCategory': SurgicalRiskCategory, 
+                         'AnesthesiaTypeCategory': AnesthesiaTypeCategory, 
+                         'GradeofKidneyDisease': GradeofKidneyDisease,
+                         'PriorityCategory': PriorityCategory}
+
+    if st.sidebar.button('Predict'):
+        with st.chat_message("user"):
+            st.write(prediction_prompt)
+
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                # Preprocess your input data
+                input_data = pd.DataFrame({ 'Age': [Age],
+                                            'PreopEGFRMDRD': [PreopEGFRMDRD],
+                                            'Intraop': [Intraop],
+                                            'ASACategoryBinned': [ASACategoryBinned],
+                                            'AnemiaCategoryBinned': [AnemiaCategoryBinned],
+                                            'RDW15.7': [RDW157],
+                                            'SurgicalRiskCategory': [SurgicalRiskCategory],
+                                            'AnesthesiaTypeCategory': [AnesthesiaTypeCategory],
+                                            'GradeofKidneyDisease': [GradeofKidneyDisease],
+                                            'PriorityCategory': [PriorityCategory]})    
+
+                # Mappings of categorical values
+                ASAcategorybinned_mapper = {"I": 0, "Ii": 1, 'Iii': 2, 'Iv-Vi': 3}
+                GradeofKidneydisease_mapper = {"Blank": 0, "G1": 1, "G2": 2, "G3a": 3, "G3b": 4, "G4": 5, "G5": 6}
+                Anemiacategorybinned_mapper = {"None": 0, "Mild": 1, "Moderate/Severe": 2}
+                RDW157_mapper = {"<= 15.7": 0, ">15.7": 1}
+                SurgRiskCategory_mapper = {"Low": 0, "Moderate": 1, "High": 2}
+                anaestype_mapper = {"Ga": 0, "Ra": 1}
+                priority_mapper = {"Elective": 0, "Emergency": 1}
+                
+                # Map categorical values
+                input_data['ASACategoryBinned'] = input_data['ASACategoryBinned'].map(ASAcategorybinned_mapper)
+                input_data['GradeofKidneyDisease'] = input_data['GradeofKidneyDisease'].map(GradeofKidneydisease_mapper)
+                input_data['AnemiaCategoryBinned'] = input_data['AnemiaCategoryBinned'].map(Anemiacategorybinned_mapper)
+                input_data['RDW15.7'] = input_data['RDW15.7'].map(RDW157_mapper)
+                input_data['SurgicalRiskCategory'] = input_data['SurgicalRiskCategory'].map(SurgRiskCategory_mapper)
+                input_data['AnesthesiaTypeCategory'] = input_data['AnesthesiaTypeCategory'].map(anaestype_mapper)
+                input_data['PriorityCategory'] = input_data['PriorityCategory'].map(priority_mapper)
+
+                # Convert to PyTorch tensor
+                input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
+                
+                # Generate prediction probabilities
+                icu_probability = icu_classifier.predict_proba(input_tensor)[:, 1].item() * 100
+                mortality_probability = mortality_classifier.predict_proba(input_tensor)[:, 1].item() * 100
+                
+                # Save prediction probability
+                st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
+                st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
+                
+                # Display prediction
+                st.write(st.session_state.last_icu_prediction_probability)
+                st.write(st.session_state.last_mortality_prediction_probability)
+
+                message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_icu_prediction_probability}
+                st.session_state.messages.append(message)
+                message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_mortality_prediction_probability}
+                st.session_state.messages.append(message)
+
+        st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
+        st.sidebar.button('Save Patient Data', on_click=save_patient_data)
+    # Sidebar button for clearing chat history
+    st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
+
 elif page == "Saved Patient Data":
     saved_patient_data_page()
 elif page == "Risk Model Development":
-    risk_model_development_page()'''
-    
-# Sidebar input elements
-st.sidebar.header("Input Parameters")
+    risk_model_development_page()
 
-Age = st.sidebar.slider('Age', 18, 99, 40)
-PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
-Intraop = st.sidebar.slider('Intraop', 0, 1, 0)
-ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['I', 'Ii', 'Iii', 'Iv-Vi'])
-AnemiaCategoryBinned = st.sidebar.selectbox('Anemia Category Binned', ['None', 'Mild', 'Moderate/Severe'])
-RDW157 = st.sidebar.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
-SurgicalRiskCategory = st.sidebar.selectbox('Surgical Risk', ['Low', 'Moderate', 'High'])
-AnesthesiaTypeCategory = st.sidebar.selectbox('Anesthesia Type', ['Ga', 'Ra'])
-GradeofKidneyDisease = st.sidebar.selectbox('Grade of Kidney Disease', ['Blank', 'G1', 'G2', 'G3a', 'G3b', 'G4', 'G5'])
-PriorityCategory = st.sidebar.selectbox('Priority', ['Elective', 'Emergency'])
-
-prediction_prompt = {'Age': Age,
-                     'PreopEGFRMDRD': PreopEGFRMDRD, 
-                     'Intraop': Intraop,
-                     'ASACategoryBinned': ASACategoryBinned,
-                     'AnemiaCategoryBinned': AnemiaCategoryBinned, 
-                     'RDW15.7': RDW157, 
-                     'SurgicalRiskCategory': SurgicalRiskCategory, 
-                     'AnesthesiaTypeCategory': AnesthesiaTypeCategory, 
-                     'GradeofKidneyDisease': GradeofKidneyDisease,
-                     'PriorityCategory': PriorityCategory}
-
-if st.sidebar.button('Predict'):
-    with st.chat_message("user"):
-        st.write(prediction_prompt)
-
-    with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
-            # Preprocess your input data
-            input_data = pd.DataFrame({
-                'Age': [Age],
-                'PreopEGFRMDRD': [PreopEGFRMDRD],
-                'Intraop': [Intraop],
-                'ASACategoryBinned': [ASACategoryBinned],
-                'AnemiaCategoryBinned': [AnemiaCategoryBinned],
-                'RDW15.7': [RDW157],
-                'SurgicalRiskCategory': [SurgicalRiskCategory],
-                'AnesthesiaTypeCategory': [AnesthesiaTypeCategory],
-                'GradeofKidneyDisease': [GradeofKidneyDisease],
-                'PriorityCategory': [PriorityCategory]})    
-
-            # Mappings of categorical values
-            ASAcategorybinned_mapper = {"I": 0, "Ii": 1, 'Iii': 2, 'Iv-Vi': 3}
-            GradeofKidneydisease_mapper = {"Blank": 0, "G1": 1, "G2": 2, "G3a": 3, "G3b": 4, "G4": 5, "G5": 6}
-            Anemiacategorybinned_mapper = {"None": 0, "Mild": 1, "Moderate/Severe": 2}
-            RDW157_mapper = {"<= 15.7": 0, ">15.7": 1}
-            SurgRiskCategory_mapper = {"Low": 0, "Moderate": 1, "High": 2}
-            anaestype_mapper = {"Ga": 0, "Ra": 1}
-            priority_mapper = {"Elective": 0, "Emergency": 1}
-            
-            # Map categorical values
-            input_data['ASACategoryBinned'] = input_data['ASACategoryBinned'].map(ASAcategorybinned_mapper)
-            input_data['GradeofKidneyDisease'] = input_data['GradeofKidneyDisease'].map(GradeofKidneydisease_mapper)
-            input_data['AnemiaCategoryBinned'] = input_data['AnemiaCategoryBinned'].map(Anemiacategorybinned_mapper)
-            input_data['RDW15.7'] = input_data['RDW15.7'].map(RDW157_mapper)
-            input_data['SurgicalRiskCategory'] = input_data['SurgicalRiskCategory'].map(SurgRiskCategory_mapper)
-            input_data['AnesthesiaTypeCategory'] = input_data['AnesthesiaTypeCategory'].map(anaestype_mapper)
-            input_data['PriorityCategory'] = input_data['PriorityCategory'].map(priority_mapper)
-
-            # Convert to PyTorch tensor
-            input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
-            
-            # Generate prediction probabilities
-            icu_probability = icu_classifier.predict_proba(input_tensor)[:, 1].item() * 100
-            mortality_probability = mortality_classifier.predict_proba(input_tensor)[:, 1].item() * 100
-            
-            # Save prediction probability
-            st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
-            st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
-
-            # Display prediction
-            st.write(st.session_state.last_icu_prediction_probability)
-            st.write(st.session_state.last_mortality_prediction_probability)
-
-            message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_icu_prediction_probability}
-            st.session_state.messages.append(message)
-            message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_mortality_prediction_probability}
-            st.session_state.messages.append(message)
-
-            # Show save button
-            st.sidebar.button('Save Patient Data', on_click=save_patient_data)
-
-# Sidebar button for clearing chat history
-st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
