@@ -162,16 +162,16 @@ def risk_calculator_page():
     GradeofKidneyDisease = st.sidebar.selectbox('Grade of Kidney Disease', ['Blank', 'G1', 'G2', 'G3a', 'G3b', 'G4', 'G5'])
     PriorityCategory = st.sidebar.selectbox('Priority', ['Elective', 'Emergency'])
 
-    prediction_prompt = {'Age': Age,
-                         'PreopEGFRMDRD': PreopEGFRMDRD, 
-                         'Intraop': Intraop,
-                         'ASACategoryBinned': ASACategoryBinned,
-                         'AnemiaCategoryBinned': AnemiaCategoryBinned, 
-                         'RDW15.7': RDW157, 
-                         'SurgicalRiskCategory': SurgicalRiskCategory, 
-                         'AnesthesiaTypeCategory': AnesthesiaTypeCategory, 
-                         'GradeofKidneyDisease': GradeofKidneyDisease,
-                         'PriorityCategory': PriorityCategory}
+prediction_prompt = {'Age': Age,
+                     'PreopEGFRMDRD': PreopEGFRMDRD, 
+                     'Intraop': Intraop,
+                     'ASACategoryBinned': ASACategoryBinned,
+                     'AnemiaCategoryBinned': AnemiaCategoryBinned, 
+                     'RDW15.7': RDW157, 
+                     'SurgicalRiskCategory': SurgicalRiskCategory, 
+                     'AnesthesiaTypeCategory': AnesthesiaTypeCategory, 
+                     'GradeofKidneyDisease': GradeofKidneyDisease,
+                     'PriorityCategory': PriorityCategory}
 
 if st.sidebar.button('Predict'):
     with st.chat_message("user"):
