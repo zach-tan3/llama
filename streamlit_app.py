@@ -57,13 +57,40 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Title and description with logo
-st.markdown("""
-<div class='header-container'>
-    <img src='static/ICURISK_Logo.png' alt='Company Logo'>
-    <div class='vertical-line'></div>
-    <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
-</div>
-""", unsafe_allow_html=True)
+
+LOGO_IMAGE = "static/ICURISK_Logo.png"
+
+st.markdown(
+    """
+    <style>
+    .container {
+        display: flex;
+    }
+    .logo-text {
+        font-weight:700 !important;
+        font-size:50px !important;
+        color: #f9a01b !important;
+        padding-top: 75px !important;
+    }
+    .logo-img {
+        float:right;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    f"""
+    <div class="container">
+        <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
+        <div class='vertical-line'></div>
+        <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality.</p>", unsafe_allow_html=True)
 
 openai.api_key = ''
