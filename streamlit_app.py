@@ -16,19 +16,6 @@ from dotenv import load_dotenv
 # Set Streamlit configuration
 st.set_page_config(page_title="ICURISK with ChatGPT", layout="wide")
 
-# Navigation Buttons
-st.markdown(
-    """
-    <div class="nav-buttons">
-        <form action="/" method="get">
-            <button class="nav-button-left" name="page" value="calculator">Risk Calculator w/ ChatGPT</button>
-            <button class="nav-button-right" name="page" value="development">Risk Model Development</button>
-        </form>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
 # Custom CSS for styling
 st.markdown("""
     <style>
@@ -80,18 +67,19 @@ st.markdown("""
     }
     .nav-buttons button {
         flex: 1;
-        padding: 15px;
+        padding: 10px;
         font-size: 18px;
         border: none;
         border-radius: 25px;
         margin: 0 10px;
         cursor: pointer;
+        background-color: #e0e0ef;
     }
     .nav-button-left {
-        background-color: #4CAF50; /* Green */
+        background-color: #6eb52f; /* Same color as sidebar */
     }
     .nav-button-right {
-        background-color: #008CBA; /* Blue */
+        background-color: #6eb52f; /* Same color as sidebar */
     }
     </style>
     """, unsafe_allow_html=True)
@@ -109,7 +97,19 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Initialize OpenAI API
+# Navigation Buttons
+st.markdown(
+    """
+    <div class="nav-buttons">
+        <form action="/" method="get">
+            <button class="nav-button-left" name="page" value="calculator">Risk Calculator w/ ChatGPT</button>
+            <button class="nav-button-right" name="page" value="development">Risk Model Development</button>
+        </form>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Function for Risk Calculator w/ ChatGPT page
