@@ -52,6 +52,11 @@ st.markdown("""
         font-size: 1.25rem;
         color: #262730;
     }
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 20px;
+    }
     .input-container {
         background-color: #ffffff;
         padding: 20px;
@@ -81,6 +86,9 @@ st.markdown("<p class='sub-title'>This is a risk calculator for need for admissi
 # Load environment variables
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# Chatbot interaction section
+st.markdown("<h2 class='section-title'>Chatbot Interaction</h2>", unsafe_allow_html=True)
 
 # Initialize session state for messages if not already done
 if "messages" not in st.session_state:
@@ -137,6 +145,7 @@ def clear_chat_history():
 st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
 # Main container for input parameters and prediction results
+st.markdown("<h2 class='section-title'>Risk Calculator</h2>", unsafe_allow_html=True)
 st.markdown("<div class='input-container'>", unsafe_allow_html=True)
 st.header("Input Parameters")
 
