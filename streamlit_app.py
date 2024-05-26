@@ -14,7 +14,7 @@ import base64
 from dotenv import load_dotenv
 
 # Set Streamlit configuration
-st.set_page_config(page_title="ICURISK with ChatGPT", layout="wide")
+st.set_page_config(layout="wide")
 
 # Custom CSS for styling
 st.markdown("""
