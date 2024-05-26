@@ -96,8 +96,14 @@ st.markdown("""
 
 # Title and description using Streamlit columns
 header_col1, header_col2, header_col3 = st.columns([1, 1, 6])
-with header_col1:
-    st.image('static_images/ICURISK_Logo.png', width=150)
+image_path = 'static_images/ICURISK_Logo.png'
+if os.path.exists(image_path):
+    with header_col1:
+        st.image(image_path, width=150)
+else:
+    st.error(f"Image not found at path: {image_path}")
+    st.stop()
+
 with header_col2:
     st.markdown("<div class='vertical-line'></div>", unsafe_allow_html=True)
 with header_col3:
@@ -241,5 +247,3 @@ if user_prompt := st.chat_input("Your prompt"):
             st.stop()
 
     st.session_state.messages.append({"role": "assistant", "content": full_response})
-
-st.markdown("</div>", unsafe_allow_html=True)
