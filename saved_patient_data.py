@@ -4,8 +4,20 @@ import streamlit as st
 import pandas as pd
 
 def saved_patient_data_page():
-    st.title("Saved Patient Data")
-
+    
+    # Title and description with logo
+    LOGO_IMAGE = "static/ICURISK_Logo.png"
+    st.markdown(
+        f"""
+        <div class="header-container">
+            <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
+            <div class='vertical-line'></div>
+            <p class="logo-text">Saved Patient Data</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
     # Load saved data
     data = pd.read_csv("saved_patient_data.csv")
 
