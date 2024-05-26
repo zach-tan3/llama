@@ -87,7 +87,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Title and description
-col1, col2, col3 = st.columns([2, 0.05, 8])
+col1, col2, col3 = st.columns([1, 1, 8])
 with col1:
     st.image('static/ICURISK_Logo.png', width=80)
 with col2:
