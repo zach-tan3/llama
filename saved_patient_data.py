@@ -35,3 +35,5 @@ def saved_patient_data_page():
         data.loc[data['Patient ID'] == patient_id, 'Mortality'] = mortality_status
         data.to_csv("saved_patient_data.csv", index=False)
         st.write("Patient data updated successfully.")
+
+saved_patient_data_page()
