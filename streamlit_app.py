@@ -101,16 +101,10 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Opening Image file
-file_ = open("static_images/ICURISK Logo.png", "rb")
-contents = file_.read()
-data_url = base64.b64encode(contents).decode("utf-8")
-file_.close()
-
 # Title and description
 st.markdown("""
 <div class='header-container'>
-    <img src='data:image/gif;base64,{data_url}' alt='Company Logo'>
+    <img src='static_images/ICURISK Logo.png' alt='Company Logo'>
     <div class='vertical-line'></div>
     <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
 </div>
