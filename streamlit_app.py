@@ -70,7 +70,7 @@ st.markdown(
         font-weight:700 !important;
         font-size:40px !important;
         color: #000000 !important;
-        padding-top: 50px !important;
+        padding-top: 40px !important;
     }
     .logo-img {
         float:right;
@@ -91,9 +91,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
-    #    #<div class='vertical-line'></div>
-        #<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h>
 
 openai.api_key = ''
 
