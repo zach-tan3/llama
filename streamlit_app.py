@@ -79,6 +79,36 @@ st.markdown(
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+# User input
+if user_prompt := st.chat_input("Your prompt"):
+    st.session_state.messages.append({"role": "user", "content": user_prompt})
+    with st.chat_message("user"):
+        st.markdown(user_prompt)
+
+    # Generate responses
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+        try:
+            response = openai.ChatCompletion.create(
+                model=st.session_state.model,
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ]
+            )
+
+            # Extract the content from the response
+            full_response = response.choices[0].message["content"]
+            message_placeholder.markdown(full_response)
+
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
+            st.stop()
+
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+
 # Load models
 if os.path.exists('icu_classifier.pkl') and os.path.exists('mortality_classifier.pkl'):
     icu_classifier = joblib.load('icu_classifier.pkl')
@@ -162,59 +192,21 @@ def risk_calculator_page():
             icu_probability = icu_classifier.predict_proba(input_tensor)[:, 1].item() * 100
             mortality_probability = mortality_classifier.predict_proba(input_tensor)[:, 1].item() * 100
             
-            # Display prediction probabilities
+            # Save prediction probability
             st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
             st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
+            
+            # Display prediction
+            st.write(st.session_state.last_icu_prediction_probability)
+            st.write(st.session_state.last_mortality_prediction_probability)
 
-            st.session_state.prediction_prompt = prediction_prompt
+            message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_icu_prediction_probability}
+            st.session_state.messages.append(message)
+            message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_mortality_prediction_probability}
+            st.session_state.messages.append(message)
 
     with col2:
         st.button('Clear Chat History', on_click=clear_chat_history)
-
-    # Display prediction results
-    if 'last_icu_prediction_probability' in st.session_state and 'last_mortality_prediction_probability' in st.session_state:
-        st.subheader("Prediction Results")
-        st.write("### Input Values")
-        st.write(st.session_state.prediction_prompt)
-        st.write("### Predicted Probabilities")
-        st.write(st.session_state.last_icu_prediction_probability)
-        st.write(st.session_state.last_mortality_prediction_probability)
-
-    # Chatbot interaction section
-    st.markdown("<h2 class='section-title'>Chatbot Interaction</h2>", unsafe_allow_html=True)
-    for message in st.session_state["messages"]:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
-    # User input
-    if user_prompt := st.chat_input("Your prompt"):
-        st.session_state.messages.append({"role": "user", "content": user_prompt})
-        with st.chat_message("user"):
-            st.markdown(user_prompt)
-
-        # Generate responses
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
-            full_response = ""
-
-            try:
-                response = openai.ChatCompletion.create(
-                    model=st.session_state.model,
-                    messages=[
-                        {"role": m["role"], "content": m["content"]}
-                        for m in st.session_state.messages
-                    ]
-                )
-
-                # Extract the content from the response
-                full_response = response.choices[0].message["content"]
-                message_placeholder.markdown(full_response)
-
-            except Exception as e:
-                st.error(f"An error occurred: {str(e)}")
-                st.stop()
-
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 # Function for Risk Model Development page
 def risk_model_development_page():
