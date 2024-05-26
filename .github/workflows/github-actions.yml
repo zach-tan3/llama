@@ -1,6 +1,10 @@
 name: GitHub Actions
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
+
+env:
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
