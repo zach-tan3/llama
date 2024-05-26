@@ -225,46 +225,36 @@ if st.sidebar.button('Predict'):
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             # Preprocess your input data
-            input_data = pd.DataFrame({'Age': [Age],
-                                       'Gender': [Gender],
-                                       'RCRIScore': [RCRIScore],
-                                       'AnemiaCategory': [AnemiaCategory],
-                                       'PreopEGFRMDRD': [PreopEGFRMDRD],
-                                       'GradeofKidneyDisease': [GradeofKidneyDisease],
-                                       'AnesthesiaTypeCategory': [AnesthesiaTypeCategory],
-                                       'PriorityCategory': [PriorityCategory],
-                                       'AgeCategory': [age_category],
-                                       'SurgicalRiskCategory': [SurgicalRiskCategory],
-                                       'RaceCategory': [RaceCategory],
-                                       'AnemiaCategoryBinned': [AnemiaCategoryBinned],
-                                       'RDW15.7': [RDW157],
-                                       'ASACategoryBinned': [ASACategoryBinned]})
+            input_data = pd.DataFrame({ 'Age': [Age],
+                                        'PreopEGFRMDRD': [PreopEGFRMDRD],
+                                        'ASACategoryBinned': [ASACategoryBinned],
+                                        'GradeofKidneyDisease': [GradeofKidneyDisease],
+                                        'AnemiaCategoryBinned': [AnemiaCategoryBinned],
+                                        'RDW15.7': [RDW157],
+                                        'SurgicalRiskCategory': [SurgicalRiskCategory],
+                                        'Intraop': [Intraop],
+                                        'AnaesthesiaTypeCategory': [AnesthesiaTypeCategory],
+                                        'PriorityCategory': [PriorityCategory]})    
 
             # Mappings of categorical values
-            gender_mapper = {"female": 0, "male": 1}
-            anemia_category_mapper = {"none":0, "mild":1, "moderate":2, "severe":3}
+            #Age
+            #PreopEGFRMDRD
+            ASAcategorybinned_mapper = {"i":0, "ii":1, 'iii':2, 'iv-vi':3}
             GradeofKidneydisease_mapper = {"blank":0, "g1":1, "g2":2, "g3a":3,"g3b":4, "g4":5, "g5":6}
-            anaestype_mapper = {"ga": 0, "ra": 1}
-            priority_mapper = {"elective": 0, "emergency": 1}
-            AGEcategory_mapper = {"18-29":0, "30-49":1, "50-64":2,"65-74":3, "75-84":4, ">=85":5}
-            SurgRiskCategory_mapper = {"low":0, "moderate":1, "high":2}
-            race_mapper = {"chinese": 0, "indian": 1, "malay": 2, "others": 3}
             Anemiacategorybinned_mapper = {"none": 0, "mild":1, "moderate/severe":2}
             RDW157_mapper = {"<= 15.7":0, ">15.7":1}
-            ASAcategorybinned_mapper = {"i":0, "ii":1, 'iii':2, 'iv-vi':3}
+            SurgRiskCategory_mapper = {"low":0, "moderate":1, "high":2}
+            anaestype_mapper = {"ga": 0, "ra": 1}
+            priority_mapper = {"elective": 0, "emergency": 1}
             
             # Map categorical values
-            input_data['Gender'] = input_data['Gender'].map(gender_mapper)
-            input_data['AnemiaCategory'] = input_data['AnemiaCategory'].map(anemia_category_mapper)
+            input_data['ASACategoryBinned'] = input_data['ASACategoryBinned'].map(ASAcategorybinned_mapper)
             input_data['GradeofKidneyDisease'] = input_data['GradeofKidneyDisease'].map(GradeofKidneydisease_mapper)
-            input_data['AnesthesiaTypeCategory'] = input_data['AnesthesiaTypeCategory'].map(anaestype_mapper)
-            input_data['PriorityCategory'] = input_data['PriorityCategory'].map(priority_mapper)
-            input_data['AgeCategory'] = input_data['AgeCategory'].map(AGEcategory_mapper)
-            input_data['SurgicalRiskCategory'] = input_data['SurgicalRiskCategory'].map(SurgRiskCategory_mapper)
-            input_data['RaceCategory'] = input_data['RaceCategory'].map(race_mapper)
             input_data['AnemiaCategoryBinned'] = input_data['AnemiaCategoryBinned'].map(Anemiacategorybinned_mapper)
             input_data['RDW15.7'] = input_data['RDW15.7'].map(RDW157_mapper)
-            input_data['ASACategoryBinned'] = input_data['ASACategoryBinned'].map(ASAcategorybinned_mapper)
+            input_data['SurgicalRiskCategory'] = input_data['SurgicalRiskCategory'].map(SurgRiskCategory_mapper)
+            input_data['AnaesthesiaTypeCategory'] = input_data['AnaesthesiaTypeCategory'].map(anaestype_mapper)
+            input_data['PriorityCategory'] = input_data['PriorityCategory'].map(priority_mapper)
 
             # Convert to PyTorch tensor
             input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
