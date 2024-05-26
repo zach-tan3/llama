@@ -101,7 +101,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Opening Image file
-file_ = open("/static_images/ICURISK Logo.png", "rb")
+file_ = open("static_images/ICURISK Logo.png", "rb")
 contents = file_.read()
 data_url = base64.b64encode(contents).decode("utf-8")
 file_.close()
