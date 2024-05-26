@@ -108,7 +108,7 @@ header_col1, header_col2, header_col3 = st.columns([0.2, 0.01, 0.7])
 image_path = 'static/ICURISK_Logo.png'
 if os.path.exists(image_path):
     with header_col1:
-        st.image(image_path, width=200)
+        st.image(image_path, width=150)
 else:
     st.error(f"Image not found at path: {image_path}")
     st.stop()
@@ -116,7 +116,7 @@ else:
 with header_col2:
     st.markdown("<div class='vertical-line'></div>", unsafe_allow_html=True)
 with header_col3:
-    st.markdown("<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h2>", unsafe_allow_html=True)
+    st.markdown("<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>", unsafe_allow_html=True)
 
 st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality.</p>", unsafe_allow_html=True)
 
