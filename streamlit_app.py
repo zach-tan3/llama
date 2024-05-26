@@ -269,8 +269,6 @@ if page == "Risk Calculator w/ ChatGPT":
 
         st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
         st.sidebar.button('Save Patient Data', on_click=save_patient_data)
-    # Sidebar button for clearing chat history
-    st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
 elif page == "Saved Patient Data":
     saved_patient_data_page()
