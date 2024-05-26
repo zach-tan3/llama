@@ -68,7 +68,48 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Title and description with logo
+# Function to clear chat history
+def clear_chat_history():
+    st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
+
+# Function for Risk Calculator w/ ChatGPT page
+def risk_calculator_page():
+    # Initialize session state for messages if not already done
+    if "messages" not in st.session_state:
+        st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
+
+# Function to handle saving patient data
+def save_patient_data():
+    patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
+    if st.button("Submit ID"):
+        if patient_id.lower() == 'exit':
+            st.write("Patient data not saved.")
+        else:
+            # Save the data to a CSV or database
+            prediction_data = {
+                "Patient ID": patient_id,
+                "Age": Age,
+                "PreopEGFRMDRD": PreopEGFRMDRD,
+                "Intraop": Intraop,
+                "ASACategoryBinned": ASACategoryBinned,
+                "AnemiaCategoryBinned": AnemiaCategoryBinned,
+                "RDW15.7": RDW157,
+                "SurgicalRiskCategory": SurgicalRiskCategory,
+                "AnesthesiaTypeCategory": AnesthesiaTypeCategory,
+                "GradeofKidneyDisease": GradeofKidneyDisease,
+                "PriorityCategory": PriorityCategory,
+                "ICU Probability": icu_probability,
+                "Mortality Probability": mortality_probability
+            }
+            save_patient_data(prediction_data)  # This function will be in utils.py
+            st.write("Patient data saved successfully.")
+
+# Sidebar navigation dropdown
+st.sidebar.header("Navigation")
+page = st.sidebar.selectbox("Go to", ["Risk Calculator w/ ChatGPT", "Saved Patient Data", "Risk Model Development"])
+
+if page == "Risk Calculator w/ ChatGPT":
+    # Title and description with logo
 LOGO_IMAGE = "static/ICURISK_Logo.png"
 st.markdown(
     f"""
@@ -142,50 +183,6 @@ if os.path.exists('icu_classifier.pkl') and os.path.exists('mortality_classifier
     mortality_classifier = joblib.load('mortality_classifier.pkl')
 else:
     st.error('Model files not found. Please ensure the files are uploaded.')
-
-# Function to clear chat history
-def clear_chat_history():
-    st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
-
-# Function for Risk Calculator w/ ChatGPT page
-def risk_calculator_page():
-    # Initialize session state for messages if not already done
-    if "messages" not in st.session_state:
-        st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
-
-# Function to handle saving patient data
-def save_patient_data():
-    patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
-    if st.button("Submit ID"):
-        if patient_id.lower() == 'exit':
-            st.write("Patient data not saved.")
-        else:
-            # Save the data to a CSV or database
-            prediction_data = {
-                "Patient ID": patient_id,
-                "Age": Age,
-                "PreopEGFRMDRD": PreopEGFRMDRD,
-                "Intraop": Intraop,
-                "ASACategoryBinned": ASACategoryBinned,
-                "AnemiaCategoryBinned": AnemiaCategoryBinned,
-                "RDW15.7": RDW157,
-                "SurgicalRiskCategory": SurgicalRiskCategory,
-                "AnesthesiaTypeCategory": AnesthesiaTypeCategory,
-                "GradeofKidneyDisease": GradeofKidneyDisease,
-                "PriorityCategory": PriorityCategory,
-                "ICU Probability": icu_probability,
-                "Mortality Probability": mortality_probability
-            }
-            save_patient_data(prediction_data)  # This function will be in utils.py
-            st.write("Patient data saved successfully.")
-
-# Sidebar navigation dropdown
-st.sidebar.header("Navigation")
-page = st.sidebar.selectbox("Go to", ["Risk Calculator w/ ChatGPT", "Saved Patient Data", "Risk Model Development"])
-
-if page == "Risk Calculator w/ ChatGPT":
-    # Risk calculator code here
-
     # Sidebar input elements
     st.sidebar.header("Input Parameters")
 
