@@ -70,32 +70,19 @@ st.markdown("""
         padding: 10px;
         font-size: 18px;
         border: none;
-        border-radius: 25px;
+        border-radius: 50px;
         margin: 0 10px;
         cursor: pointer;
         background-color: #e0e0ef;
     }
     .nav-button-left {
-        background-color: #6eb52f; /* Same color as sidebar */
+        background-color: #6eb52f;
     }
     .nav-button-right {
-        background-color: #6eb52f; /* Same color as sidebar */
+        background-color: #6eb52f;
     }
     </style>
     """, unsafe_allow_html=True)
-
-# Title and description with logo
-LOGO_IMAGE = "static/ICURISK_Logo.png"
-st.markdown(
-    f"""
-    <div class="header-container">
-        <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
-        <div class='vertical-line'></div>
-        <p class="logo-text">Risk Calculator w/ ChatGPT! 🤖</p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
 
 # Navigation Buttons
 st.markdown(
@@ -105,6 +92,19 @@ st.markdown(
             <button class="nav-button-left" name="page" value="calculator">Risk Calculator w/ ChatGPT</button>
             <button class="nav-button-right" name="page" value="development">Risk Model Development</button>
         </form>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# Title and description with logo
+LOGO_IMAGE = "static/ICURISK_Logo.png"
+st.markdown(
+    f"""
+    <div class="header-container">
+        <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
+        <div class='vertical-line'></div>
+        <p class="logo-text">Risk Calculator w/ ChatGPT! 🤖</p>
     </div>
     """,
     unsafe_allow_html=True
