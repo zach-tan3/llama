@@ -19,11 +19,67 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-st.title("ICURISK with ChatGPT! 🤖")
+# Apply custom CSS for styling
+st.markdown("""
+    <style>
+    body {
+        font-family: "sans serif";
+        background-color: #e0f7fa;
+    }
+    .stButton button {
+        background-color: #6eb52f;
+        color: white;
+    }
+    .stSidebar {
+        background-color: #e0f0ef;
+    }
+    .stSidebar .stButton button {
+        background-color: #6eb52f;
+        color: white;
+    }
+    .stSidebar .stSelectbox, .stSidebar .stSlider {
+        margin-bottom: 20px;
+    }
+    .stChatMessage {
+        margin-bottom: 20px;
+    }
+    .main-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #262730;
+    }
+    .sub-title {
+        font-size: 1.25rem;
+        color: #262730;
+    }
+    .input-container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    .predict-button {
+        background-color: #6eb52f;
+        color: white;
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# Title and description
+st.markdown("<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>", unsafe_allow_html=True)
+st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything.</p>", unsafe_allow_html=True)
 
 # Load environment variables
 load_dotenv()
-
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Initialize session state for messages if not already done
@@ -38,7 +94,7 @@ for message in st.session_state["messages"]:
 if "model" not in st.session_state:
     st.session_state.model = "gpt-3.5-turbo"
 
-# User input
+# User input for the chatbot
 if user_prompt := st.chat_input("Your prompt"):
     st.session_state.messages.append({"role": "user", "content": user_prompt})
     with st.chat_message("user"):
@@ -80,19 +136,25 @@ def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery. Ask me anything."}]
 st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
-# Sidebar input elements
-st.sidebar.header("Input Parameters")
+# Main container for input parameters and prediction results
+st.markdown("<div class='input-container'>", unsafe_allow_html=True)
+st.header("Input Parameters")
 
-Age = st.sidebar.slider('Age', 18, 99, 40)
-PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
-ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
-GradeofKidneyDisease = st.sidebar.selectbox('Grade of Kidney Disease', ['blank', 'g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
-AnemiaCategoryBinned = st.sidebar.selectbox('Anemia Category Binned', ['none', 'mild', 'moderate/severe'])
-RDW157 = st.sidebar.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
-SurgicalRiskCategory = st.sidebar.selectbox('Surgical Risk Category', ['low', 'moderate', 'high'])
-Intraop = st.sidebar.slider('Intraop', 0, 1, 0)
-AnesthesiaTypeCategory = st.sidebar.selectbox('Anesthesia Type Category', ['ga', 'ra'])
-PriorityCategory = st.sidebar.selectbox('Priority Category', ['elective', 'emergency'])
+col1, col2 = st.columns(2)
+
+with col1:
+    Age = st.slider('Age', 18, 99, 40)
+    PreopEGFRMDRD = st.slider('PreopEGFRMDRD', 0, 160, 80)
+    ASACategoryBinned = st.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
+    GradeofKidneyDisease = st.selectbox('Grade of Kidney Disease', ['blank', 'g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
+
+with col2:
+    AnemiaCategoryBinned = st.selectbox('Anemia Category Binned', ['none', 'mild', 'moderate/severe'])
+    RDW157 = st.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
+    SurgicalRiskCategory = st.selectbox('Surgical Risk Category', ['low', 'moderate', 'high'])
+    Intraop = st.slider('Intraop', 0, 1, 0)
+    AnesthesiaTypeCategory = st.selectbox('Anesthesia Type Category', ['ga', 'ra'])
+    PriorityCategory = st.selectbox('Priority Category', ['elective', 'emergency'])
 
 prediction_prompt = {
     'Age': Age,
@@ -108,7 +170,7 @@ prediction_prompt = {
 }
 
 # Prediction button and processing
-if st.sidebar.button('Predict'):
+if st.button('Predict', key='predict', help='Click to predict ICU admission and mortality'):
     with st.chat_message("user"):
         st.write(prediction_prompt)
 
@@ -151,3 +213,5 @@ if st.sidebar.button('Predict'):
 
             st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_icu_prediction_probability})
             st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_mortality_prediction_probability})
+
+st.markdown("</div>", unsafe_allow_html=True)
