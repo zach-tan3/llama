@@ -10,6 +10,7 @@ import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 import openai
+import base64
 from dotenv import load_dotenv
 
 # Set Streamlit configuration
