@@ -201,4 +201,56 @@ if st.button('Predict', key='predict', help='Click to predict ICU admission and 
 
             st.write(st.session_state.last_icu_prediction_probability)
             st.write(st.session_state.last_mortality_prediction_probability)
-            st.session_state.messages.append({"
+            st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_icu_prediction_probability})
+            st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_mortality_prediction_probability})
+
+# Display prediction results
+if 'last_icu_prediction_probability' in st.session_state and 'last_mortality_prediction_probability' in st.session_state:
+    st.markdown("<div class='result-container'>", unsafe_allow_html=True)
+    st.subheader("Prediction Results")
+    st.write(st.session_state.last_icu_prediction_probability)
+    st.write(st.session_state.last_mortality_prediction_probability)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# Chatbot interaction section moved to the bottom
+st.markdown("<h2 class='section-title'>Chatbot Interaction</h2>", unsafe_allow_html=True)
+
+for message in st.session_state["messages"]:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# Initialize model
+if "model" not in st.session_state:
+    st.session_state.model = "gpt-3.5-turbo"
+
+# User input for the chatbot
+if user_prompt := st.chat_input("Your prompt"):
+    st.session_state.messages.append({"role": "user", "content": user_prompt})
+    with st.chat_message("user"):
+        st.markdown(user_prompt)
+
+    # Generate responses
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+
+        try:
+            response = openai.ChatCompletion.create(
+                model=st.session_state.model,
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ]
+            )
+
+            # Extract the content from the response
+            full_response = response.choices[0].message["content"]
+            message_placeholder.markdown(full_response)
+
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
+            st.stop()
+
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+st.markdown("</div>", unsafe_allow_html=True)
