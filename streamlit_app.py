@@ -268,8 +268,8 @@ if st.sidebar.button('Predict'):
             #st.write(f"Mortality Predicted probability: {mortality_probability:.2f}%")
             
             # Save prediction probability
-            st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability * 100:.2f}%"
-            st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability * 100:.2f}%"
+            st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
+            st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
             
             # Display prediction
             st.write(st.session_state.last_icu_prediction_probability)
