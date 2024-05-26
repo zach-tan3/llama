@@ -76,6 +76,13 @@ st.markdown("""
         cursor: pointer;
         margin-top: 20px;
     }
+    .result-container {
+        margin-top: 20px;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -222,5 +229,13 @@ if st.button('Predict', key='predict', help='Click to predict ICU admission and 
 
             st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_icu_prediction_probability})
             st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_mortality_prediction_probability})
+
+# Display prediction results
+if 'last_icu_prediction_probability' in st.session_state and 'last_mortality_prediction_probability' in st.session_state:
+    st.markdown("<div class='result-container'>", unsafe_allow_html=True)
+    st.subheader("Prediction Results")
+    st.write(st.session_state.last_icu_prediction_probability)
+    st.write(st.session_state.last_mortality_prediction_probability)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("</div>", unsafe_allow_html=True)
