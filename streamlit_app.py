@@ -11,7 +11,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 import openai
 from dotenv import load_dotenv
-import base64
 
 # Set Streamlit configuration with a new theme
 st.set_page_config(
@@ -84,31 +83,18 @@ st.markdown("""
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
-    .header-container {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-    .header-container img {
-        width: 80px;
-        margin-right: 20px;
-    }
-    .vertical-line {
-        border-left: 2px solid #6eb52f;
-        height: 80px;
-        margin-right: 20px;
-    }
     </style>
     """, unsafe_allow_html=True)
 
 # Title and description
-st.markdown("""
-<div class='header-container'>
-    <img src='app/static/ICURISK_Logo.png' alt='Company Logo'>
-    <div class='vertical-line'></div>
-    <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
-</div>
-""", unsafe_allow_html=True)
+col1, col2, col3 = st.columns([1, 0.05, 8])
+with col1:
+    st.image('static/ICURISK_Logo.png', width=80)
+with col2:
+    st.markdown("<div class='vertical-line'></div>", unsafe_allow_html=True)
+with col3:
+    st.markdown("<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>", unsafe_allow_html=True)
+
 st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality.</p>", unsafe_allow_html=True)
 
 # Load environment variables
