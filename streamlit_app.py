@@ -83,61 +83,36 @@ st.markdown("""
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
+    .header-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .header-container img {
+        width: 80px;
+        margin-right: 20px;
+    }
+    .vertical-line {
+        border-left: 2px solid #6eb52f;
+        height: 80px;
+        margin-right: 20px;
+    }
     </style>
     """, unsafe_allow_html=True)
 
 # Title and description
-st.markdown("<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>", unsafe_allow_html=True)
+st.markdown("""
+<div class='header-container'>
+    <img src='static images/ICURISK Logo.png' alt='Company Logo'>
+    <div class='vertical-line'></div>
+    <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
+</div>
+""", unsafe_allow_html=True)
 st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything.</p>", unsafe_allow_html=True)
 
 # Load environment variables
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
-# Chatbot interaction section
-st.markdown("<h2 class='section-title'>Chatbot Interaction</h2>", unsafe_allow_html=True)
-
-# Initialize session state for messages if not already done
-if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
-
-for message in st.session_state["messages"]:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-# Initialize model
-if "model" not in st.session_state:
-    st.session_state.model = "gpt-3.5-turbo"
-
-# User input for the chatbot
-if user_prompt := st.chat_input("Your prompt"):
-    st.session_state.messages.append({"role": "user", "content": user_prompt})
-    with st.chat_message("user"):
-        st.markdown(user_prompt)
-
-    # Generate responses
-    with st.chat_message("assistant"):
-        message_placeholder = st.empty()
-        full_response = ""
-
-        try:
-            response = openai.ChatCompletion.create(
-                model=st.session_state.model,
-                messages=[
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ]
-            )
-
-            # Extract the content from the response
-            full_response = response.choices[0].message.content
-            message_placeholder.markdown(full_response)
-
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
-            st.stop()
-
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 # Load models
 if os.path.exists('icu_classifier.pkl') and os.path.exists('mortality_classifier.pkl'):
@@ -154,18 +129,20 @@ st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 # Main container for input parameters
 st.header("Input Parameters")
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 
 with col1:
     Age = st.slider('Age', 18, 99, 40)
     PreopEGFRMDRD = st.slider('PreopEGFRMDRD', 0, 160, 80)
     ASACategoryBinned = st.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
     GradeofKidneyDisease = st.selectbox('Grade of Kidney Disease', ['blank', 'g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
-    AnemiaCategoryBinned = st.selectbox('Anemia Category Binned', ['none', 'mild', 'moderate/severe'])
 
 with col2:
+    AnemiaCategoryBinned = st.selectbox('Anemia Category Binned', ['none', 'mild', 'moderate/severe'])
     RDW157 = st.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
     SurgicalRiskCategory = st.selectbox('Surgical Risk Category', ['low', 'moderate', 'high'])
+
+with col3:
     Intraop = st.slider('Intraop', 0, 1, 0)
     AnesthesiaTypeCategory = st.selectbox('Anesthesia Type Category', ['ga', 'ra'])
     PriorityCategory = st.selectbox('Priority Category', ['elective', 'emergency'])
@@ -224,7 +201,4 @@ if st.button('Predict', key='predict', help='Click to predict ICU admission and 
 
             st.write(st.session_state.last_icu_prediction_probability)
             st.write(st.session_state.last_mortality_prediction_probability)
-            st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_icu_prediction_probability})
-            st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_mortality_prediction_probability})
-
-st.markdown("</div>", unsafe_allow_html=True)
+            st.session_state.messages.append({"
