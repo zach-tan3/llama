@@ -13,11 +13,15 @@ import openai
 import os
 from dotenv import load_dotenv
 
-st.write('AAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+
 load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
+response = openai.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[{"role": "user", "content": "How much does a litre of water weigh"}]
+)
+st.write(response)
 st.title("My Own ChatGPT!🤖")
 
 if "messages" not in st.session_state:
