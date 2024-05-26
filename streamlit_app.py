@@ -153,6 +153,32 @@ def risk_calculator_page():
     if "messages" not in st.session_state:
         st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
 
+# Function to handle saving patient data
+def save_patient_data():
+    patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
+    if st.button("Submit ID"):
+        if patient_id.lower() == 'exit':
+            st.write("Patient data not saved.")
+        else:
+            # Save the data to a CSV or database
+            prediction_data = {
+                "Patient ID": patient_id,
+                "Age": Age,
+                "PreopEGFRMDRD": PreopEGFRMDRD,
+                "Intraop": Intraop,
+                "ASACategoryBinned": ASACategoryBinned,
+                "AnemiaCategoryBinned": AnemiaCategoryBinned,
+                "RDW15.7": RDW157,
+                "SurgicalRiskCategory": SurgicalRiskCategory,
+                "AnesthesiaTypeCategory": AnesthesiaTypeCategory,
+                "GradeofKidneyDisease": GradeofKidneyDisease,
+                "PriorityCategory": PriorityCategory,
+                "ICU Probability": icu_probability,
+                "Mortality Probability": mortality_probability
+            }
+            save_patient_data(prediction_data)  # This function will be in utils.py
+            st.write("Patient data saved successfully.")
+
 # Sidebar navigation dropdown
 st.sidebar.header("Navigation")
 page = st.sidebar.selectbox("Go to", ["Risk Calculator w/ ChatGPT", "Saved Patient Data", "Risk Model Development"])
@@ -163,7 +189,6 @@ elif page == "Saved Patient Data":
     saved_patient_data_page()
 elif page == "Risk Model Development":
     risk_model_development_page()
-
 
 # Sidebar input elements
 st.sidebar.header("Input Parameters")
@@ -197,16 +222,17 @@ if st.sidebar.button('Predict'):
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             # Preprocess your input data
-            input_data = pd.DataFrame({ 'Age': [Age],
-                                        'PreopEGFRMDRD': [PreopEGFRMDRD],
-                                        'Intraop': [Intraop],
-                                        'ASACategoryBinned': [ASACategoryBinned],
-                                        'AnemiaCategoryBinned': [AnemiaCategoryBinned],
-                                        'RDW15.7': [RDW157],
-                                        'SurgicalRiskCategory': [SurgicalRiskCategory],
-                                        'AnesthesiaTypeCategory': [AnesthesiaTypeCategory],
-                                        'GradeofKidneyDisease': [GradeofKidneyDisease],
-                                        'PriorityCategory': [PriorityCategory]})    
+            input_data = pd.DataFrame({
+                'Age': [Age],
+                'PreopEGFRMDRD': [PreopEGFRMDRD],
+                'Intraop': [Intraop],
+                'ASACategoryBinned': [ASACategoryBinned],
+                'AnemiaCategoryBinned': [AnemiaCategoryBinned],
+                'RDW15.7': [RDW157],
+                'SurgicalRiskCategory': [SurgicalRiskCategory],
+                'AnesthesiaTypeCategory': [AnesthesiaTypeCategory],
+                'GradeofKidneyDisease': [GradeofKidneyDisease],
+                'PriorityCategory': [PriorityCategory]})    
 
             # Mappings of categorical values
             ASAcategorybinned_mapper = {"I": 0, "Ii": 1, 'Iii': 2, 'Iv-Vi': 3}
@@ -236,7 +262,7 @@ if st.sidebar.button('Predict'):
             # Save prediction probability
             st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
             st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
-            
+
             # Display prediction
             st.write(st.session_state.last_icu_prediction_probability)
             st.write(st.session_state.last_mortality_prediction_probability)
@@ -246,4 +272,8 @@ if st.sidebar.button('Predict'):
             message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_mortality_prediction_probability}
             st.session_state.messages.append(message)
 
+            # Show save button
+            st.sidebar.button('Save Patient Data', on_click=save_patient_data)
+
+# Sidebar button for clearing chat history
 st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
