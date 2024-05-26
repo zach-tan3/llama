@@ -10,18 +10,6 @@ import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 
-class Discriminator(nn.Module):
-    def __init__(self, input_size):
-        super(Discriminator, self).__init__()
-        self.main = nn.Sequential(
-            nn.Linear(input_size, 128),
-            nn.ReLU(True),
-            nn.Linear(128, 1),
-            nn.Sigmoid()
-        )
-
-    def forward(self, input):
-        return self.main(input)
 
 # App title
 st.set_page_config(page_title="🦙💬 Llama 2 Chatbot")
@@ -64,72 +52,74 @@ else:
 # Create an instance of the model
 #icu_classifier = joblib.load('icu_classifier.pkl')
 #mortality_classifier = joblib.load('mortality_classifier.pkl')
-important_features = [
-    'PreopEGFRMDRD',
-    'Age',
-    'ASACategoryBinned',
-    'GradeofKidneyDisease',
-    'AnemiaCategoryBinned',
-    'RDW15.7',
-    'SurgicalRiskCategory',
-    'Intraop',
-    'AnesthesiaTypeCategory',
-    'PriorityCategory'
-]
-X_train = pd.read_csv('./ICUAdmgt24h_Train_Inbalanced.csv')
-X_train['ICUAdmgt24h'] = X_train['ICUAdmgt24h'].map({'yes': 1, 'no': 0})
-y_train = X_train['ICUAdmgt24h']
-X_train = X_train.drop(['Mortality', 'ThirtyDayMortality', 'ICUAdmgt24h'], axis=1)
 
-X_test = pd.read_csv('./Test.csv')
-X_test['ICUAdmgt24h'] = X_test['ICUAdmgt24h'].map({'yes': 1, 'no': 0})
-y_test = X_test['ICUAdmgt24h']
-X_test = X_test.drop(['Mortality', 'ThirtyDayMortality', 'ICUAdmgt24h'], axis=1)
-
-X_train = X_train[important_features]
-X_test = X_test[important_features]
-
-log_reg = LogisticRegression(C=1, penalty='l1', solver='liblinear', random_state=42, max_iter=10000)
-rf = RandomForestClassifier(n_estimators=100, min_samples_split=10, min_samples_leaf=1, max_depth=10, random_state=42)
-
-# Create a soft voting classifier
-voting_clf1 = VotingClassifier(
-    estimators=[
-        ('log_reg', log_reg), 
-        ('rf', rf)
-    ], voting='soft')
-
-# Fit the ensemble model
-voting_clf1.fit(X_train, y_train)
-
-X_train = pd.read_csv('./Mortality_Train_Inbalanced.csv')
-X_train['Mortality'] = X_train['Mortality'].map({'yes': 1, 'no death': 0})
-y_train = X_train['Mortality']
-X_train = X_train.drop(['Mortality', 'ICUAdmgt24h'], axis=1)
-
-X_test = pd.read_csv('./Test.csv')
-
-y_test = X_test['Mortality']
-X_test = X_test.drop(['Mortality', 'ThirtyDayMortality', 'ICUAdmgt24h'], axis=1)
-
-X_train = X_train[important_features]
-X_test = X_test[important_features]
-
-log_reg = LogisticRegression(C=10, penalty='l1', solver='liblinear', random_state=42)
-rf = RandomForestClassifier(n_estimators=100, min_samples_split=2, min_samples_leaf=2, max_depth=30, random_state=42)
-
-# Create a soft voting classifier
-voting_clf2 = VotingClassifier(
-    estimators=[
-        ('log_reg', log_reg), 
-        ('rf', rf)
-    ], voting='soft')
-
-# Fit the ensemble model
-voting_clf2.fit(X_train, y_train)
-
-icu_classifier = voting_clf1
-mortality_classifier = voting_clf2
+if icu_classifier == None:
+    important_features = [
+        'PreopEGFRMDRD',
+        'Age',
+        'ASACategoryBinned',
+        'GradeofKidneyDisease',
+        'AnemiaCategoryBinned',
+        'RDW15.7',
+        'SurgicalRiskCategory',
+        'Intraop',
+        'AnesthesiaTypeCategory',
+        'PriorityCategory'
+    ]
+    X_train = pd.read_csv('./ICUAdmgt24h_Train_Inbalanced.csv')
+    X_train['ICUAdmgt24h'] = X_train['ICUAdmgt24h'].map({'yes': 1, 'no': 0})
+    y_train = X_train['ICUAdmgt24h']
+    X_train = X_train.drop(['Mortality', 'ThirtyDayMortality', 'ICUAdmgt24h'], axis=1)
+    
+    X_test = pd.read_csv('./Test.csv')
+    X_test['ICUAdmgt24h'] = X_test['ICUAdmgt24h'].map({'yes': 1, 'no': 0})
+    y_test = X_test['ICUAdmgt24h']
+    X_test = X_test.drop(['Mortality', 'ThirtyDayMortality', 'ICUAdmgt24h'], axis=1)
+    
+    X_train = X_train[important_features]
+    X_test = X_test[important_features]
+    
+    log_reg = LogisticRegression(C=1, penalty='l1', solver='liblinear', random_state=42, max_iter=10000)
+    rf = RandomForestClassifier(n_estimators=100, min_samples_split=10, min_samples_leaf=1, max_depth=10, random_state=42)
+    
+    # Create a soft voting classifier
+    voting_clf1 = VotingClassifier(
+        estimators=[
+            ('log_reg', log_reg), 
+            ('rf', rf)
+        ], voting='soft')
+    
+    # Fit the ensemble model
+    voting_clf1.fit(X_train, y_train)
+    
+    X_train = pd.read_csv('./Mortality_Train_Inbalanced.csv')
+    X_train['Mortality'] = X_train['Mortality'].map({'yes': 1, 'no death': 0})
+    y_train = X_train['Mortality']
+    X_train = X_train.drop(['Mortality', 'ICUAdmgt24h'], axis=1)
+    
+    X_test = pd.read_csv('./Test.csv')
+    
+    y_test = X_test['Mortality']
+    X_test = X_test.drop(['Mortality', 'ThirtyDayMortality', 'ICUAdmgt24h'], axis=1)
+    
+    X_train = X_train[important_features]
+    X_test = X_test[important_features]
+    
+    log_reg = LogisticRegression(C=10, penalty='l1', solver='liblinear', random_state=42)
+    rf = RandomForestClassifier(n_estimators=100, min_samples_split=2, min_samples_leaf=2, max_depth=30, random_state=42)
+    
+    # Create a soft voting classifier
+    voting_clf2 = VotingClassifier(
+        estimators=[
+            ('log_reg', log_reg), 
+            ('rf', rf)
+        ], voting='soft')
+    
+    # Fit the ensemble model
+    voting_clf2.fit(X_train, y_train)
+    
+    icu_classifier = voting_clf1
+    mortality_classifier = voting_clf2
 
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
