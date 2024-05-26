@@ -2,6 +2,7 @@
 
 import streamlit as st
 import pandas as pd
+import base64
 
 def saved_patient_data_page():
     
