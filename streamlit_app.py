@@ -104,11 +104,11 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Title and description using Streamlit columns
-header_col1, header_col2, header_col3 = st.columns([0.2, 0.01, 0.7])
+header_col1, header_col2, header_col3 = st.columns([0.04, 0.01, 0.07])
 image_path = 'static/ICURISK_Logo.png'
 if os.path.exists(image_path):
     with header_col1:
-        st.image(image_path, width=150)
+        st.image(image_path, width=170)
 else:
     st.error(f"Image not found at path: {image_path}")
     st.stop()
