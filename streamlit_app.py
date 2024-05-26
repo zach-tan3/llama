@@ -234,6 +234,11 @@ if st.sidebar.button('Predict'):
             st.write(st.session_state.last_icu_prediction_probability)
             st.write(st.session_state.last_mortality_prediction_probability)
 
+            message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_icu_prediction_probability}
+            st.session_state.messages.append(message)
+            message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_mortality_prediction_probability}
+            st.session_state.messages.append(message)
+
 st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
 # Function for Risk Model Development page
