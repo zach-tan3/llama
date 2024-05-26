@@ -184,11 +184,11 @@ st.sidebar.header("Navigation")
 page = st.sidebar.selectbox("Go to", ["Risk Calculator w/ ChatGPT", "Saved Patient Data", "Risk Model Development"])
 
 if page == "Risk Calculator w/ ChatGPT":
-    risk_calculator_page()
+    st.switch_page("streamlit_app.py")
 elif page == "Saved Patient Data":
-    saved_patient_data_page()
+    st.switch_page("saved_patient_data.py")
 elif page == "Risk Model Development":
-    risk_model_development_page()
+    st.switch_page("risk_model_development.py")
 
 # Sidebar input elements
 st.sidebar.header("Input Parameters")
