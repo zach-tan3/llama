@@ -103,7 +103,7 @@ st.markdown("""
 # Title and description
 st.markdown("""
 <div class='header-container'>
-    st.image(static_images/ICURISK Logo.png')
+    <img src='static_images/ICURISK Logo.png'>
     <div class='vertical-line'></div>
     <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
 </div>
