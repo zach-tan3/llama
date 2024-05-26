@@ -7,7 +7,7 @@ import numpy as np
 from io import BytesIO
 import torch.nn as nn
 import joblib
-import scikit-learn
+
 
 class Discriminator(nn.Module):
     def __init__(self, input_size):
