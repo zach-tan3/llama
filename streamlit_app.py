@@ -148,6 +148,16 @@ def risk_calculator_page():
     if "messages" not in st.session_state:
         st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
 
+# Sidebar navigation dropdown
+st.sidebar.header("Navigation")
+page = st.sidebar.selectbox("Go to", ["Risk Calculator w/ ChatGPT", "Risk Model Development"])
+
+if page == "Risk Calculator w/ ChatGPT":
+    risk_calculator_page()
+elif page == "Risk Model Development":
+    risk_model_development_page()
+
+
 # Sidebar input elements
 st.sidebar.header("Input Parameters")
 
@@ -242,12 +252,3 @@ def risk_model_development_page():
         st.image("static/model2.png")
     if model3_button:
         st.image("static/model3.png")
-
-# Sidebar navigation dropdown
-st.sidebar.header("Navigation")
-page = st.sidebar.selectbox("Go to", ["Risk Calculator w/ ChatGPT", "Risk Model Development"])
-
-if page == "Risk Calculator w/ ChatGPT":
-    risk_calculator_page()
-elif page == "Risk Model Development":
-    risk_model_development_page()
