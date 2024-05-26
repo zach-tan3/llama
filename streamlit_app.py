@@ -229,9 +229,16 @@ def risk_model_development_page():
         st.image("static/model3.png", caption="Model 3 Development")
 
 # Navigation
-page = st.selectbox("Navigate", ["Risk Calculator w/ ChatGPT", "Risk Model Development"])
+if "page" not in st.session_state:
+    st.session_state.page = "Risk Calculator w/ ChatGPT"
 
-if page == "Risk Calculator w/ ChatGPT":
+if st.sidebar.button('Risk Calculator w/ ChatGPT'):
+    st.session_state.page = "Risk Calculator w/ ChatGPT"
+
+if st.sidebar.button('Risk Model Development'):
+    st.session_state.page = "Risk Model Development"
+
+if st.session_state.page == "Risk Calculator w/ ChatGPT":
     risk_calculator_page()
-elif page == "Risk Model Development":
+elif st.session_state.page == "Risk Model Development":
     risk_model_development_page()
