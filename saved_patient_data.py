@@ -5,6 +5,9 @@ import pandas as pd
 import base64
 
 def saved_patient_data_page():
+
+    # Set Streamlit configuration
+    st.set_page_config(page_title="ICURISK with ChatGPT", layout="wide")
     
     # Title and description with logo
     LOGO_IMAGE = "static/ICURISK_Logo.png"
