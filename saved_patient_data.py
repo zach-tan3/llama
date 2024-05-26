@@ -6,9 +6,6 @@ import numpy as np
 import base64
 
 def saved_patient_data_page():
-
-    # Set Streamlit configuration
-    st.set_page_config(layout="wide")
     
     # Custom CSS for styling
     st.markdown("""
