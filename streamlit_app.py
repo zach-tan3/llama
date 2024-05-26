@@ -33,7 +33,7 @@ is_valid = check_openai_api_key(os.getenv("OPENAI_API_KEY"))
 if is_valid:
     print("Valid OpenAI API key.")
 else:
-    print("Invalid OpenAI API key."
+    print("Invalid OpenAI API key.")
 
 
 st.title("My Own ChatGPT!🤖")
