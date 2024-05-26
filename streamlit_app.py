@@ -97,24 +97,13 @@ st.markdown("""
         height: 80px;
         margin-right: 20px;
     }
-    .grade-of-kidney-disease-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        margin-top: -10px;
-    }
-    .centered-element {
-        flex: 1;
-        max-width: 300px;
-    }
     </style>
     """, unsafe_allow_html=True)
 
 # Title and description
 st.markdown("""
 <div class='header-container'>
-    <img src='static/images/ICURISK Logo.png' alt='Company Logo'>
+    <img src='static_images/ICURISK Logo.png' alt='Company Logo'>
     <div class='vertical-line'></div>
     <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
 </div>
@@ -151,18 +140,12 @@ with col2:
     AnemiaCategoryBinned = st.selectbox('Anemia Category Binned', ['none', 'mild', 'moderate/severe'])
     ASACategoryBinned = st.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
     RDW157 = st.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
+    GradeofKidneyDisease = st.selectbox('Grade of Kidney Disease', ['blank', 'g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
 
 with col3:
     SurgicalRiskCategory = st.selectbox('Surgical Risk Category', ['low', 'moderate', 'high'])
     AnesthesiaTypeCategory = st.selectbox('Anesthesia Type Category', ['ga', 'ra'])
     PriorityCategory = st.selectbox('Priority Category', ['elective', 'emergency'])
-
-# Positioning "Grade of Kidney Disease" between columns
-st.markdown("<div class='grade-of-kidney-disease-container'>", unsafe_allow_html=True)
-st.markdown("<div class='centered-element'>", unsafe_allow_html=True)
-GradeofKidneyDisease = st.selectbox('Grade of Kidney Disease', ['blank', 'g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
-st.markdown("</div>", unsafe_allow_html=True)
-st.markdown("</div>", unsafe_allow_html=True)
 
 prediction_prompt = {
     'Age': Age,
