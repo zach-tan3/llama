@@ -79,29 +79,3 @@ elif page == "Saved Patient Data":
     saved_patient_data_page()
 elif page == "Risk Model Development":
     risk_model_development_page()
-
-# Function to handle saving patient data
-def save_patient_data():
-    patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
-    if st.button("Submit ID"):
-        if patient_id.lower() == 'exit':
-            st.write("Patient data not saved.")
-        else:
-            # Save the data to a CSV or database
-            prediction_data = {
-                "Patient ID": patient_id,
-                "Age": Age,
-                "PreopEGFRMDRD": PreopEGFRMDRD,
-                "Intraop": Intraop,
-                "ASACategoryBinned": ASACategoryBinned,
-                "AnemiaCategoryBinned": AnemiaCategoryBinned,
-                "RDW15.7": RDW157,
-                "SurgicalRiskCategory": SurgicalRiskCategory,
-                "AnesthesiaTypeCategory": AnesthesiaTypeCategory,
-                "GradeofKidneyDisease": GradeofKidneyDisease,
-                "PriorityCategory": PriorityCategory,
-                "ICU Probability": icu_probability,
-                "Mortality Probability": mortality_probability
-            }
-            save_patient_data(prediction_data)  # This function will be in utils.py
-            st.write("Patient data saved successfully.")
