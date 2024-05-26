@@ -43,18 +43,14 @@ with st.sidebar:
     max_length = st.slider('max_length', min_value=32, max_value=9999, value=120, step=8)
     st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
 
-if os.path.exists('icu_classifier.pkl') and os.path.exists('mortality_classifier.pkl'):
-    icu_classifier = joblib.load('icu_classifier.pkl')
-    mortality_classifier = joblib.load('mortality_classifier.pkl')
-else:
-    st.error('Model files not found. Please ensure the files are uploaded.')
-
 # Create an instance of the model
-#icu_classifier = joblib.load('icu_classifier.pkl')
-#mortality_classifier = joblib.load('mortality_classifier.pkl')
-
-
-
+if icu_classifier==None:
+    if os.path.exists('icu_classifier.pkl') and os.path.exists('mortality_classifier.pkl'):
+        icu_classifier = joblib.load('icu_classifier.pkl')
+        mortality_classifier = joblib.load('mortality_classifier.pkl')
+    else:
+        st.error('Model files not found. Please ensure the files are uploaded.')
+        
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
     st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
