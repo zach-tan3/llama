@@ -58,8 +58,7 @@ if user_prompt := st.chat_input("Your prompt"):
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
 
-# App title
-st.set_page_config(page_title="🦙💬 Llama 2 Chatbot")
+
 st.session_state.last_prediction_probability = " "
 
 
