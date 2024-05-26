@@ -164,6 +164,9 @@ def risk_calculator_page():
     col1, col2 = st.sidebar.columns([1, 1])
     
     with col1:
+        st.button('Clear Chat History', on_click=clear_chat_history)
+
+    with col2:
         if st.button('Predict'):
             with st.chat_message("user"):
                 st.write(prediction_prompt)
@@ -219,9 +222,6 @@ def risk_calculator_page():
                     st.session_state.messages.append(message)
                     message = {"role": "assistant", "content": st.session_state.last_mortality_prediction_probability}
                     st.session_state.messages.append(message)
-
-    with col2:
-        st.button('Clear Chat History', on_click=clear_chat_history)
 
 # Function for Risk Model Development page
 def risk_model_development_page():
