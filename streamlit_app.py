@@ -69,6 +69,17 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
+# Sidebar navigation dropdown
+st.sidebar.header("Navigation")
+page = st.sidebar.selectbox("Go to", ["Risk Calculator w/ ChatGPT", "Saved Patient Data", "Risk Model Development"])
+
+if page == "Risk Calculator w/ ChatGPT":
+    risk_calculator_page()
+elif page == "Saved Patient Data":
+    saved_patient_data_page()
+elif page == "Risk Model Development":
+    risk_model_development_page()
+
 # Function to handle saving patient data
 def save_patient_data():
     patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
@@ -94,15 +105,3 @@ def save_patient_data():
             }
             save_patient_data(prediction_data)  # This function will be in utils.py
             st.write("Patient data saved successfully.")
-
-# Sidebar navigation dropdown
-st.sidebar.header("Navigation")
-page = st.sidebar.selectbox("Go to", ["Risk Calculator w/ ChatGPT", "Saved Patient Data", "Risk Model Development"])
-
-if page == "Risk Calculator w/ ChatGPT":
-    risk_calculator_page()
-elif page == "Saved Patient Data":
-    saved_patient_data_page()
-elif page == "Risk Model Development":
-    risk_model_development_page()
-
