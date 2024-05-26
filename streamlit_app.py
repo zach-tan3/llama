@@ -105,7 +105,7 @@ st.markdown("""
 
 # Title and description using Streamlit columns
 header_col1, header_col2, header_col3 = st.columns([1, 0.1, 2])
-image_path = 'static_images/ICURISK_Logo.png'
+image_path = 'static/ICURISK_Logo.png'
 if os.path.exists(image_path):
     with header_col1:
         st.image(image_path, width=200)
