@@ -60,12 +60,32 @@ st.markdown("""
 # Title and description with logo
 
 LOGO_IMAGE = "static/ICURISK_Logo.png"
+st.markdown(
+    """
+    <style>
+    .container {
+        display: flex;
+    }
+    .logo-text {
+        font-weight:700 !important;
+        font-size:50px !important;
+        color: #f9a01b !important;
+        padding-top: 75px !important;
+    }
+    .logo-img {
+        float:right;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 st.markdown(
     f"""
     <div class="container">
         <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
-        <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h>
+        <div class='vertical-line'></div>
+        <p class="logo-text">ICURISK with ChatGPT! 🤖</p>
     </div>
     """,
     unsafe_allow_html=True
