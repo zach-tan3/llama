@@ -14,7 +14,7 @@ import os
 from dotenv import load_dotenv
 
 st.title("ICURISK with ChatGPT!🤖")
-st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for of admission into an Intensive Care Unit (ICU) of a paitent post-surgery and for Mortaility. Ask me anything"}]
+st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for of admission into an Intensive Care Unit (ICU) of a paitent post-surgery and for Mortality. Ask me anything"}]
 
 openai.api_key = ""
 
