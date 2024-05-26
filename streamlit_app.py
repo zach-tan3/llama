@@ -10,21 +10,16 @@ import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 import openai
+import os
 from dotenv import load_dotenv
 
-load_dotenv()
+st.title("ICURISK with ChatGPT!🤖")
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
-response = openai.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[{"role": "user", "content": "How much does a litre of water weigh"}]
-)
-st.write(response)
-st.title("My Own ChatGPT!🤖")
+openai.api_key = ''
 
+# Initialize session state for messages if not already done
 if "messages" not in st.session_state:
-    st.session_state.messages = []
-
+    st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
 
 for message in st.session_state["messages"]:
     with st.chat_message(message["role"]):
@@ -34,32 +29,35 @@ for message in st.session_state["messages"]:
 if "model" not in st.session_state:
     st.session_state.model = "gpt-3.5-turbo"
 
-# user input
+# User input
 if user_prompt := st.chat_input("Your prompt"):
     st.session_state.messages.append({"role": "user", "content": user_prompt})
     with st.chat_message("user"):
         st.markdown(user_prompt)
 
-    # generate responses
+    # Generate responses
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         full_response = ""
 
-        for response in openai.chat.completions.create(
-            model=st.session_state.model,
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        ):
-            full_response += response.choices[0].delta.get("content", "")
-            message_placeholder.markdown(full_response + "▌")
+        try:
+            response = openai.chat.completions.create(
+                model=st.session_state.model,
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ]
+            )
 
-        message_placeholder.markdown(full_response)
+            # Extract the content from the response
+            full_response = response.choices[0].message.content
+            message_placeholder.markdown(full_response)
+
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
+            st.stop()
 
     st.session_state.messages.append({"role": "assistant", "content": full_response})
-
 
 
 st.session_state.last_prediction_probability = " "
@@ -155,7 +153,7 @@ if st.sidebar.button('Predict'):
             st.write(st.session_state.last_icu_prediction_probability)
             st.write(st.session_state.last_mortality_prediction_probability)
 
-            message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_icu_prediction_probability}
+            message = {"role": "assistant", "content": st.session_state.last_icu_prediction_probability}
             st.session_state.messages.append(message)
-            message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_mortality_prediction_probability}
+            message = {"role": "assistant", "content": st.session_state.last_mortality_prediction_probability}
             st.session_state.messages.append(message)
