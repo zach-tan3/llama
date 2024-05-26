@@ -89,7 +89,7 @@ st.markdown("""
 # Title and description
 col1, col2, col3 = st.columns([1, 0.05, 8])
 with col1:
-    st.image('static/ICURISK_Logo.png', width=160)
+    st.image('static/ICURISK_Logo.png', height = 80 width=160)
 with col2:
     st.markdown("<div class='vertical-line'></div>", unsafe_allow_html=True)
 with col3:
