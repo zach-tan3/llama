@@ -11,6 +11,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 import openai
 from dotenv import load_dotenv
+import base64
 
 # Set Streamlit configuration with a new theme
 st.set_page_config(
