@@ -51,14 +51,14 @@ st.markdown("""
     }
     .vertical-line {
         border-left: 2px solid #6eb52f;
-        height: 100px;
+        height: 80px;
         margin-right: 20px;
     }
     .logo-text {
         font-weight: 700;
         font-size: 40px;
         color: #000000;
-        padding-top: 30px;
+        padding-top: 20px;
     }
     </style>
     """, unsafe_allow_html=True)
