@@ -13,7 +13,7 @@ import openai
 import base64
 from dotenv import load_dotenv
 
-def saved_patient_data_page():
+def risk_calculator_page():
     # Title and description with logo
     LOGO_IMAGE = "static/ICURISK_Logo.png"
     st.markdown(
