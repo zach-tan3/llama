@@ -19,10 +19,102 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Apply custom CSS for styling
+st.markdown("""
+    <style>
+    body {
+        font-family: "sans serif";
+        background-color: #e0f7fa;
+    }
+    .stButton button {
+        background-color: #6eb52f;
+        color: white;
+    }
+    .stSidebar {
+        background-color: #e0f0ef;
+    }
+    .stSidebar .stButton button {
+        background-color: #6eb52f;
+        color: white;
+    }
+    .stSidebar .stSelectbox, .stSidebar .stSlider {
+        margin-bottom: 20px;
+    }
+    .stChatMessage {
+        margin-bottom: 10px;
+    }
+    .main-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #262730;
+    }
+    .sub-title {
+        font-size: 1.25rem;
+        color: #262730;
+    }
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+    .input-container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    .predict-button {
+        background-color: #6eb52f;
+        color: white;
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    .result-container {
+        margin-top: 20px;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .header-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .header-container img {
+        width: 80px;
+        margin-right: 20px;
+    }
+    .vertical-line {
+        border-left: 2px solid #6eb52f;
+        height: 80px;
+        margin-right: 20px;
+    }
+    .grade-of-kidney-disease-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: -10px;
+    }
+    .centered-element {
+        flex: 1;
+        max-width: 300px;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 # Title and description
 st.markdown("""
 <div class='header-container'>
-    <img src='static_images/ICURISK Logo.png' alt='Company Logo'>
+    <img src='static/images/ICURISK Logo.png' alt='Company Logo'>
     <div class='vertical-line'></div>
     <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
 </div>
@@ -67,7 +159,7 @@ with col3:
 
 # Positioning "Grade of Kidney Disease" between columns
 st.markdown("<div class='grade-of-kidney-disease-container'>", unsafe_allow_html=True)
-st.markdown("<div style='width: 100%;'>", unsafe_allow_html=True)
+st.markdown("<div class='centered-element'>", unsafe_allow_html=True)
 GradeofKidneyDisease = st.selectbox('Grade of Kidney Disease', ['blank', 'g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
 st.markdown("</div>", unsafe_allow_html=True)
 st.markdown("</div>", unsafe_allow_html=True)
