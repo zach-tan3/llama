@@ -49,41 +49,25 @@ st.markdown("""
         width: 200px;
         margin-right: 20px;
     }
-    .header-container .vertical-line {
+    .vertical-line {
         border-left: 2px solid #6eb52f;
-        height: 50px;
+        height: 100px;
         margin-right: 20px;
+    }
+    .logo-text {
+        font-weight: 700;
+        font-size: 40px;
+        color: #000000;
+        padding-top: 30px;
     }
     </style>
     """, unsafe_allow_html=True)
 
 # Title and description with logo
-
 LOGO_IMAGE = "static/ICURISK_Logo.png"
 st.markdown(
-    """
-    <style>
-    .container {
-        display: flex;
-    }
-    .logo-text {
-        font-weight:700 !important;
-        font-size:40px !important;
-        color: #000000 !important;
-        padding-top: 40px !important;
-    }
-    .logo-img {
-        float:right;
-        padding-top: 0px !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown(
     f"""
-    <div class="container">
+    <div class="header-container">
         <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
         <div class='vertical-line'></div>
         <p class="logo-text">ICURISK with ChatGPT! 🤖</p>
