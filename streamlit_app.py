@@ -85,19 +85,34 @@ st.markdown("""
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
+    .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .header-container img {
+        width: 100px;
+        margin-right: 10px;
+    }
     .vertical-line {
         border-left: 2px solid #6eb52f;
-        height: 80px;
-        margin-left: 20px;
-        margin-right: 20px;
+        height: 100px;
+        margin: 0 10px;
     }
     </style>
     """, unsafe_allow_html=True)
 
 # Title and description using Streamlit columns
-header_col1, header_col2, header_col3 = st.columns([1, 0.005, 8])
-with header_col1:
-    st.image('static/ICURISK_Logo.png', width=150)
+header_col1, header_col2, header_col3 = st.columns([1, 0.1, 2])
+image_path = 'static_images/ICURISK_Logo.png'
+if os.path.exists(image_path):
+    with header_col1:
+        st.image(image_path, width=100)
+else:
+    st.error(f"Image not found at path: {image_path}")
+    st.stop()
+
 with header_col2:
     st.markdown("<div class='vertical-line'></div>", unsafe_allow_html=True)
 with header_col3:
