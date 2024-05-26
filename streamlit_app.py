@@ -76,7 +76,15 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# Load models
+if os.path.exists('icu_classifier.pkl') and os.path.exists('mortality_classifier.pkl'):
+    icu_classifier = joblib.load('icu_classifier.pkl')
+    mortality_classifier = joblib.load('mortality_classifier.pkl')
+else:
+    st.error('Model files not found. Please ensure the files are uploaded.')
 
 # Function to clear chat history
 def clear_chat_history():
@@ -157,7 +165,7 @@ def risk_calculator_page():
             # Display prediction probabilities
             st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
             st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
-
+    
     with col2:
         st.button('Clear Chat History', on_click=clear_chat_history)
 
