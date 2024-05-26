@@ -14,6 +14,7 @@ from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 import openai
 import base64
 from dotenv import load_dotenv
+from risk_calculator import risk_calculator_page
 from saved_patient_data import saved_patient_data_page
 from risk_model_development import risk_model_development_page
 #from utils import load_saved_patient_data, save_patient_data, append_to_csv
