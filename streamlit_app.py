@@ -16,6 +16,19 @@ from dotenv import load_dotenv
 # Set Streamlit configuration
 st.set_page_config(page_title="ICURISK with ChatGPT", layout="wide")
 
+# Navigation Buttons
+st.markdown(
+    """
+    <div class="nav-buttons">
+        <form action="/" method="get">
+            <button class="nav-button-left" name="page" value="calculator">Risk Calculator w/ ChatGPT</button>
+            <button class="nav-button-right" name="page" value="development">Risk Model Development</button>
+        </form>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 # Custom CSS for styling
 st.markdown("""
     <style>
@@ -91,19 +104,6 @@ st.markdown(
         <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
         <div class='vertical-line'></div>
         <p class="logo-text">Risk Calculator w/ ChatGPT! 🤖</p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-# Navigation Buttons
-st.markdown(
-    """
-    <div class="nav-buttons">
-        <form action="/" method="get">
-            <button class="nav-button-left" name="page" value="calculator">Risk Calculator w/ ChatGPT</button>
-            <button class="nav-button-right" name="page" value="development">Risk Model Development</button>
-        </form>
     </div>
     """,
     unsafe_allow_html=True
