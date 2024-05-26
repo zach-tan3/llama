@@ -1,4 +1,4 @@
-joblib
+sklearn
 torch==1.13.0
 streamlit
 replicate
