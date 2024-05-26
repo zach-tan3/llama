@@ -1,16 +1,5 @@
 import streamlit as st
-import replicate
 import os
-import pandas as pd
-import torch
-import numpy as np
-from io import BytesIO
-import torch.nn as nn
-import joblib
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier, VotingClassifier
-import openai
-from dotenv import load_dotenv
 
 # Set Streamlit configuration with a new theme
 st.set_page_config(
@@ -18,6 +7,13 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Debug statement to check if the file exists
+image_path = 'static_images/ICURISK Logo.png'
+if os.path.exists(image_path):
+    st.markdown(f"<div>Image found at {image_path}</div>", unsafe_allow_html=True)
+else:
+    st.markdown(f"<div>Image not found at {image_path}</div>", unsafe_allow_html=True)
 
 # Apply custom CSS for styling
 st.markdown("""
@@ -101,9 +97,9 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Title and description
-st.markdown("""
+st.markdown(f"""
 <div class='header-container'>
-    <img src='static_images/ICURISK Logo.png' alt='Company Logo'>
+    <img src='{image_path}' alt='Company Logo'>
     <div class='vertical-line'></div>
     <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
 </div>
@@ -111,6 +107,7 @@ st.markdown("""
 st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality.</p>", unsafe_allow_html=True)
 
 # Load environment variables
+from dotenv import load_dotenv
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
