@@ -95,7 +95,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # Title and description using Streamlit columns
-header_col1, header_col2, header_col3 = st.columns([1, 1, 6])
+header_col1, header_col2, header_col3 = st.columns([1, 0.5, 6])
 with header_col1:
     st.image('static/ICURISK_Logo.png', width=150)
 with header_col2:
