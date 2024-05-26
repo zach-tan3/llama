@@ -94,7 +94,8 @@ else:
     except openai.error.AuthenticationError:
         st.error("Invalid OpenAI API key! Please check your API key and try again.")
         messages=[{"role": "user", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
-
+        st.write(response)
+        
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
