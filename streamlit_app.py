@@ -261,9 +261,9 @@ if st.sidebar.button('Predict'):
 
             # Generate prediction
             icu_probability = icu_classifier.predict(input_tensor)
-            icu_predicted = (icu_probability >= 0.5).float()  # Here, you are using a threshold of 0.5 to determine the class.
+            icu_predicted = icu_probability # Here, you are using a threshold of 0.5 to determine the class.
             mortality_probability = mortality_classifier.predict(input_tensor)
-            mortality_predicted = (mortality_probability >= 0.5).float()
+            mortality_predicted = mortality_probability
             
             # Save prediction probability
             st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability.item() * 100:.2f}%"
