@@ -99,8 +99,6 @@ def save_patient_data():
             save_patient_data(prediction_data)  # This function will be in utils.py
             st.write("Patient data saved successfully.")
 
-risk_calculator_page()
-
 # Sidebar navigation dropdown
 st.sidebar.header("Navigation")
 page = st.sidebar.selectbox("Go to", ["Risk Calculator w/ ChatGPT", "Saved Patient Data", "Risk Model Development"])
