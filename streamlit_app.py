@@ -78,6 +78,10 @@ st.markdown(
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+# Function to clear chat history
+def clear_chat_history():
+    st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
+
 # Function for Risk Calculator w/ ChatGPT page
 def risk_calculator_page():
     st.title("ICURISK with ChatGPT! 🤖")
