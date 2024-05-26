@@ -15,11 +15,11 @@ from dotenv import load_dotenv
 
 st.title("ICURISK with ChatGPT!🤖")
 
-openai.api_key = ""
+openai.api_key = ''
 
 # Initialize session state for messages if not already done
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything"}]
+    st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
 
 for message in st.session_state["messages"]:
     with st.chat_message(message["role"]):
@@ -48,7 +48,7 @@ if user_prompt := st.chat_input("Your prompt"):
                     for m in st.session_state.messages
                 ]
             )
-            
+
             # Extract the content from the response
             full_response = response.choices[0].message.content
             message_placeholder.markdown(full_response)
