@@ -84,6 +84,8 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 # Verify if API key is set
 if not openai.api_key:
     st.error("OpenAI API key is missing! Please set the API key in the .env file.")
+    messages=[{"role": "user", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
+    st.write(messages)
 else:
     try:
         response = openai.ChatCompletion.create(
