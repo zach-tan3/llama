@@ -100,6 +100,7 @@ st.markdown("""
     .grade-of-kidney-disease-container {
         display: flex;
         justify-content: center;
+        align-items: center;
         margin-top: -10px;
     }
     </style>
@@ -108,7 +109,7 @@ st.markdown("""
 # Title and description
 st.markdown("""
 <div class='header-container'>
-    <img src='./static_images/ICURISK Logo.png' alt='Company Logo'>
+    <img src='static_images/ICURISK Logo.png' alt='Company Logo'>
     <div class='vertical-line'></div>
     <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
 </div>
@@ -153,7 +154,9 @@ with col3:
 
 # Positioning "Grade of Kidney Disease" between columns
 st.markdown("<div class='grade-of-kidney-disease-container'>", unsafe_allow_html=True)
+st.markdown("<div style='width: 100%;'>", unsafe_allow_html=True)
 GradeofKidneyDisease = st.selectbox('Grade of Kidney Disease', ['blank', 'g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
+st.markdown("</div>", unsafe_allow_html=True)
 st.markdown("</div>", unsafe_allow_html=True)
 
 prediction_prompt = {
