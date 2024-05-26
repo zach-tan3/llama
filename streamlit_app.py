@@ -47,10 +47,12 @@ st.markdown("""
         font-size: 2.5rem;
         font-weight: bold;
         color: #262730;
+        text-align: center;
     }
     .sub-title {
         font-size: 1.25rem;
         color: #262730;
+        text-align: center;
     }
     .section-title {
         font-size: 1.5rem;
@@ -83,18 +85,32 @@ st.markdown("""
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
+    .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .header-container img {
+        width: 150px;
+        margin-right: 20px;
+    }
+    .vertical-line {
+        border-left: 2px solid #6eb52f;
+        height: 150px;
+        margin-right: 20px;
+    }
     </style>
     """, unsafe_allow_html=True)
 
 # Title and description
-col1, col2, col3 = st.columns([1, 1, 8])
-with col1:
-    st.image('static/ICURISK_Logo.png', width=80)
-with col2:
-    st.markdown("<div class='vertical-line'></div>", unsafe_allow_html=True)
-with col3:
-    st.markdown("<h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>", unsafe_allow_html=True)
-
+st.markdown("""
+<div class='header-container'>
+    <img src='static_images/ICURISK_Logo.png' alt='Company Logo'>
+    <div class='vertical-line'></div>
+    <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
+</div>
+""", unsafe_allow_html=True)
 st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality.</p>", unsafe_allow_html=True)
 
 # Load environment variables
