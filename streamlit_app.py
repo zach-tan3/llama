@@ -14,6 +14,8 @@ from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 import openai
 import base64
 from dotenv import load_dotenv
+from saved_patient_data import saved_patient_data_page
+from risk_model_development import risk_model_development_page
 #from utils import load_saved_patient_data, save_patient_data, append_to_csv
 
 # Set Streamlit configuration
@@ -182,11 +184,11 @@ st.sidebar.header("Navigation")
 page = st.sidebar.selectbox("Go to", ["Risk Calculator w/ ChatGPT", "Saved Patient Data", "Risk Model Development"])
 
 if page == "Risk Calculator w/ ChatGPT":
-    st.switch_page("streamlit_app.py")
+    risk_calculator_page()
 elif page == "Saved Patient Data":
-    st.switch_page("saved_patient_data.py")
+    saved_patient_data_page()
 elif page == "Risk Model Development":
-    st.switch_page("risk_model_development.py")
+    risk_model_development_page()
 
 # Sidebar input elements
 st.sidebar.header("Input Parameters")
