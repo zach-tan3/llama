@@ -1,4 +1,4 @@
-import streamlit as st
+'''import streamlit as st
 import replicate
 import os
 import pandas as pd
@@ -255,3 +255,4 @@ def risk_model_development_page():
         st.image("static/model2.png")
     if model3_button:
         st.image("static/model3.png")
+'''
