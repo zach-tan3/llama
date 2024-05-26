@@ -227,12 +227,6 @@ def risk_calculator_page():
     with col2:
         st.button('Clear Chat History', on_click=clear_chat_history)
 
-    # Chatbot interaction section
-    st.markdown("<h2 class='section-title'>Chatbot Interaction</h2>", unsafe_allow_html=True)
-    for message in st.session_state["messages"]:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
     # User input
     if user_prompt := st.chat_input("Your prompt"):
         st.session_state.messages.append({"role": "user", "content": user_prompt})
