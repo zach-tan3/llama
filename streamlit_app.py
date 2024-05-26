@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 # Set Streamlit configuration
 st.set_page_config(page_title="ICURISK with ChatGPT", layout="wide")
-
+risk_calculator_page()
 # Custom CSS for styling
 st.markdown("""
     <style>
