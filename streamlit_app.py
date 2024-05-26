@@ -103,12 +103,12 @@ st.markdown("""
 # Title and description
 st.markdown("""
 <div class='header-container'>
-    <img src='static images/ICURISK Logo.png' alt='Company Logo'>
+    <img src='static/images/ICURISK Logo.png' alt='Company Logo'>
     <div class='vertical-line'></div>
     <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
 </div>
 """, unsafe_allow_html=True)
-st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality", unsafe_allow_html=True)
+st.markdown("<p class='sub-title'>Hi! The name is Vision, here to answer any mind-boggling enquiries. Ask me anything.</p>", unsafe_allow_html=True)
 
 # Load environment variables
 load_dotenv()
