@@ -122,7 +122,8 @@ if user_prompt := st.chat_input("Your prompt"):
         message_placeholder.markdown(full_response)
 
     st.session_state.messages.append({"role": "assistant", "content": full_response})
-
+    
+st.session_state.last_prediction_probability = " "
 
 # Create an instance of the model
 if os.path.exists('icu_classifier.pkl') and os.path.exists('mortality_classifier.pkl'):
