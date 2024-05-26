@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 st.set_page_config(page_title="ICURISK with ChatGPT", layout="wide")
 
 # Custom CSS for styling
-st.markdown("""
+st.markdown(
     <style>
     body {
         font-family: "sans serif";
@@ -40,7 +40,7 @@ st.markdown("""
         margin-bottom: 20px;
     }
     </style>
-    """, unsafe_allow_html=True)
+    , unsafe_allow_html=True)
 
 st.title("ICURISK with ChatGPT! 🤖")
 
