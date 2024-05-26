@@ -153,7 +153,7 @@ if st.sidebar.button('Predict'):
             st.write(st.session_state.last_icu_prediction_probability)
             st.write(st.session_state.last_mortality_prediction_probability)
 
-            message = {"role": "assistant", "content": "ICU Predicted probability: " + st.session_state.last_icu_prediction_probability}
+            message = {"role": "assistant", "content": st.session_state.last_icu_prediction_probability}
             st.session_state.messages.append(message)
-            message = {"role": "assistant", "content": "Mortality Predicted probability: " + st.session_state.last_mortality_prediction_probability}
+            message = {"role": "assistant", "content": st.session_state.last_mortality_prediction_probability}
             st.session_state.messages.append(message)
