@@ -7,7 +7,8 @@ import numpy as np
 from io import BytesIO
 import torch.nn as nn
 import joblib
-
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 
 class Discriminator(nn.Module):
     def __init__(self, input_size):
