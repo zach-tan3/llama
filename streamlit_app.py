@@ -108,7 +108,7 @@ st.markdown("""
     <h1 class='main-title'>ICURISK with ChatGPT! 🤖</h1>
 </div>
 """, unsafe_allow_html=True)
-st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything.</p>", unsafe_allow_html=True)
+st.markdown("<p class='sub-title'>This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality", unsafe_allow_html=True)
 
 # Load environment variables
 load_dotenv()
@@ -123,7 +123,7 @@ else:
 
 # Function to clear chat history
 def clear_chat_history():
-    st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery. Ask me anything."}]
+    st.session_state.messages = [{"role": "assistant", "content": "Hi! The name is Vision, here to answer any mind-boggling enquiries. Ask me anything."}]
 st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
 # Main container for input parameters
@@ -206,7 +206,6 @@ if st.button('Predict', key='predict', help='Click to predict ICU admission and 
 
 # Display prediction results
 if 'last_icu_prediction_probability' in st.session_state and 'last_mortality_prediction_probability' in st.session_state:
-    st.markdown("<div class='result-container'>", unsafe_allow_html=True)
     st.subheader("Prediction Results")
     st.write(st.session_state.last_icu_prediction_probability)
     st.write(st.session_state.last_mortality_prediction_probability)
