@@ -60,42 +60,8 @@ st.markdown("""
         color: #000000;
         padding-top: 18px;
     }
-    .nav-buttons {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-    .nav-buttons button {
-        flex: 1;
-        padding: 10px;
-        font-size: 18px;
-        border: none;
-        border-radius: 50px;
-        margin: 0 10px;
-        cursor: pointer;
-        background-color: #e0e0ef;
-    }
-    .nav-button-left {
-        background-color: #6eb52f;
-    }
-    .nav-button-right {
-        background-color: #6eb52f;
-    }
     </style>
     """, unsafe_allow_html=True)
-
-# Navigation Buttons
-st.markdown(
-    """
-    <div class="nav-buttons">
-        <form action="/" method="get">
-            <button class="nav-button-left" name="page" value="calculator">Risk Calculator w/ ChatGPT</button>
-            <button class="nav-button-right" name="page" value="development">Risk Model Development</button>
-        </form>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
 
 # Title and description with logo
 LOGO_IMAGE = "static/ICURISK_Logo.png"
@@ -166,10 +132,6 @@ def risk_calculator_page():
     else:
         st.error('Model files not found. Please ensure the files are uploaded.')
 
-    def clear_chat_history():
-        st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for of admission into an Intensive Care Unit (ICU) of a patient post-surgery. Ask me anything"}]
-    st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
-
     # Sidebar input elements
     st.sidebar.header("Input Parameters")
 
@@ -195,61 +157,67 @@ def risk_calculator_page():
                          'GradeofKidneyDisease': GradeofKidneyDisease,
                          'PriorityCategory': PriorityCategory}
 
-    if st.sidebar.button('Predict'):
-        with st.chat_message("user"):
-            st.write(prediction_prompt)
+    col1, col2 = st.sidebar.columns([1, 1])
+    
+    with col1:
+        if st.button('Predict'):
+            with st.chat_message("user"):
+                st.write(prediction_prompt)
 
-        with st.chat_message("assistant"):
-            with st.spinner("Thinking..."):
-                # Preprocess your input data
-                input_data = pd.DataFrame({ 'Age': [Age],
-                                            'PreopEGFRMDRD': [PreopEGFRMDRD],
-                                            'Intraop': [Intraop],
-                                            'ASACategoryBinned': [ASACategoryBinned],
-                                            'AnemiaCategoryBinned': [AnemiaCategoryBinned],
-                                            'RDW15.7': [RDW157],
-                                            'SurgicalRiskCategory': [SurgicalRiskCategory],
-                                            'AnesthesiaTypeCategory': [AnesthesiaTypeCategory],
-                                            'GradeofKidneyDisease': [GradeofKidneyDisease],
-                                            'PriorityCategory': [PriorityCategory]})    
+            with st.chat_message("assistant"):
+                with st.spinner("Thinking..."):
+                    # Preprocess your input data
+                    input_data = pd.DataFrame({ 'Age': [Age],
+                                                'PreopEGFRMDRD': [PreopEGFRMDRD],
+                                                'Intraop': [Intraop],
+                                                'ASACategoryBinned': [ASACategoryBinned],
+                                                'AnemiaCategoryBinned': [AnemiaCategoryBinned],
+                                                'RDW15.7': [RDW157],
+                                                'SurgicalRiskCategory': [SurgicalRiskCategory],
+                                                'AnesthesiaTypeCategory': [AnesthesiaTypeCategory],
+                                                'GradeofKidneyDisease': [GradeofKidneyDisease],
+                                                'PriorityCategory': [PriorityCategory]})    
 
-                # Mappings of categorical values
-                ASAcategorybinned_mapper = {"I": 0, "Ii": 1, 'Iii': 2, 'Iv-Vi': 3}
-                GradeofKidneydisease_mapper = {"Blank": 0, "G1": 1, "G2": 2, "G3a": 3, "G3b": 4, "G4": 5, "G5": 6}
-                Anemiacategorybinned_mapper = {"None": 0, "Mild": 1, "Moderate/Severe": 2}
-                RDW157_mapper = {"<= 15.7": 0, ">15.7": 1}
-                SurgRiskCategory_mapper = {"Low": 0, "Moderate": 1, "High": 2}
-                anaestype_mapper = {"Ga": 0, "Ra": 1}
-                priority_mapper = {"Elective": 0, "Emergency": 1}
-                
-                # Map categorical values
-                input_data['ASACategoryBinned'] = input_data['ASACategoryBinned'].map(ASAcategorybinned_mapper)
-                input_data['GradeofKidneyDisease'] = input_data['GradeofKidneyDisease'].map(GradeofKidneydisease_mapper)
-                input_data['AnemiaCategoryBinned'] = input_data['AnemiaCategoryBinned'].map(Anemiacategorybinned_mapper)
-                input_data['RDW15.7'] = input_data['RDW15.7'].map(RDW157_mapper)
-                input_data['SurgicalRiskCategory'] = input_data['SurgicalRiskCategory'].map(SurgRiskCategory_mapper)
-                input_data['AnesthesiaTypeCategory'] = input_data['AnesthesiaTypeCategory'].map(anaestype_mapper)
-                input_data['PriorityCategory'] = input_data['PriorityCategory'].map(priority_mapper)
+                    # Mappings of categorical values
+                    ASAcategorybinned_mapper = {"I": 0, "Ii": 1, 'Iii': 2, 'Iv-Vi': 3}
+                    GradeofKidneydisease_mapper = {"Blank": 0, "G1": 1, "G2": 2, "G3a": 3, "G3b": 4, "G4": 5, "G5": 6}
+                    Anemiacategorybinned_mapper = {"None": 0, "Mild": 1, "Moderate/Severe": 2}
+                    RDW157_mapper = {"<= 15.7": 0, ">15.7": 1}
+                    SurgRiskCategory_mapper = {"Low": 0, "Moderate": 1, "High": 2}
+                    anaestype_mapper = {"Ga": 0, "Ra": 1}
+                    priority_mapper = {"Elective": 0, "Emergency": 1}
+                    
+                    # Map categorical values
+                    input_data['ASACategoryBinned'] = input_data['ASACategoryBinned'].map(ASAcategorybinned_mapper)
+                    input_data['GradeofKidneyDisease'] = input_data['GradeofKidneyDisease'].map(GradeofKidneydisease_mapper)
+                    input_data['AnemiaCategoryBinned'] = input_data['AnemiaCategoryBinned'].map(Anemiacategorybinned_mapper)
+                    input_data['RDW15.7'] = input_data['RDW15.7'].map(RDW157_mapper)
+                    input_data['SurgicalRiskCategory'] = input_data['SurgicalRiskCategory'].map(SurgRiskCategory_mapper)
+                    input_data['AnesthesiaTypeCategory'] = input_data['AnesthesiaTypeCategory'].map(anaestype_mapper)
+                    input_data['PriorityCategory'] = input_data['PriorityCategory'].map(priority_mapper)
 
-                # Convert to PyTorch tensor
-                input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
-                
-                # Generate prediction probabilities
-                icu_probability = icu_classifier.predict_proba(input_tensor)[:, 1].item() * 100
-                mortality_probability = mortality_classifier.predict_proba(input_tensor)[:, 1].item() * 100
-                
-                # Display prediction probabilities
-                st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
-                st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
-                
-                # Display prediction
-                st.write(st.session_state.last_icu_prediction_probability)
-                st.write(st.session_state.last_mortality_prediction_probability)
+                    # Convert to PyTorch tensor
+                    input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
+                    
+                    # Generate prediction probabilities
+                    icu_probability = icu_classifier.predict_proba(input_tensor)[:, 1].item() * 100
+                    mortality_probability = mortality_classifier.predict_proba(input_tensor)[:, 1].item() * 100
+                    
+                    # Display prediction probabilities
+                    st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability:.2f}%"
+                    st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability:.2f}%"
+                    
+                    # Display prediction
+                    st.write(st.session_state.last_icu_prediction_probability)
+                    st.write(st.session_state.last_mortality_prediction_probability)
 
-                message = {"role": "assistant", "content": st.session_state.last_icu_prediction_probability}
-                st.session_state.messages.append(message)
-                message = {"role": "assistant", "content": st.session_state.last_mortality_prediction_probability}
-                st.session_state.messages.append(message)
+                    message = {"role": "assistant", "content": st.session_state.last_icu_prediction_probability}
+                    st.session_state.messages.append(message)
+                    message = {"role": "assistant", "content": st.session_state.last_mortality_prediction_probability}
+                    st.session_state.messages.append(message)
+
+    with col2:
+        st.button('Clear Chat History', on_click=clear_chat_history)
 
 # Function for Risk Model Development page
 def risk_model_development_page():
@@ -266,11 +234,11 @@ def risk_model_development_page():
     if model3_button:
         st.image("static/model3.png")
 
-# Navigation logic
-query_params = st.experimental_get_query_params()
-page = query_params.get("page", ["calculator"])[0]
+# Sidebar navigation dropdown
+st.sidebar.header("Navigation")
+page = st.sidebar.selectbox("Go to", ["Risk Calculator w/ ChatGPT", "Risk Model Development"])
 
-if page == "calculator":
+if page == "Risk Calculator w/ ChatGPT":
     risk_calculator_page()
-elif page == "development":
+elif page == "Risk Model Development":
     risk_model_development_page()
