@@ -6,6 +6,7 @@ import torch
 import numpy as np
 from io import BytesIO
 import torch.nn as nn
+import joblib
 
 class Discriminator(nn.Module):
     def __init__(self, input_size):
@@ -53,10 +54,8 @@ with st.sidebar:
     st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
 
 # Create an instance of the model
-model_path = "discriminator_final"  # Path to your model file in the GitHub repository
-model = Discriminator(input_size=14)  # Assuming the input size is 6, you need to update it accordingly
-model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
-model.eval()
+icu_classifier = joblib.load('icu_classifier.pkl')
+mortality_classifier = joblib.load('mortality_classifier.pkl')
 
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
@@ -124,47 +123,26 @@ if st.session_state.messages[-1]["role"] != "assistant":
     st.session_state.messages.append(message)
 
 Age = st.sidebar.slider('Age', 18, 99, 40)
-Gender = st.sidebar.selectbox('Gender', ['female', 'male'])
-RCRIScore = st.sidebar.select_slider('RCRIScore', options=[0, 1, 2, 3, 4, 5])
-AnemiaCategory = st.sidebar.selectbox('Anemia Category', ['none', 'mild', 'moderate', 'severe'])
 PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
+ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
 GradeofKidneyDisease = st.sidebar.selectbox('Grade of Kidney Disease', ['blank', 'g1', 'g2', 'g3a', 'g3b', 'g4', 'g5'])
-AnesthesiaTypeCategory = st.sidebar.selectbox('Anaestype', ['ga', 'ra'])
-PriorityCategory = st.sidebar.selectbox('Priority', ['elective', 'emergency'])
-SurgicalRiskCategory = st.sidebar.selectbox('SurgRisk', ['low', 'moderate', 'high'])
-RaceCategory = st.sidebar.selectbox('Race', ['chinese', 'indian', 'malay', 'others'])
 AnemiaCategoryBinned = st.sidebar.selectbox('Anemia Category Binned', ['none', 'mild', 'moderate/severe'])
 RDW157 = st.sidebar.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
-ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
-
-age_category = None
-if Age < 30:
-    age_category = '18-29'
-elif Age < 50:
-    age_category = '30-49'
-elif Age < 65:
-    age_category = '50-64'
-elif Age < 75:
-    age_category = '65-74'
-elif Age < 85:
-    age_category = '75-84'
-else:
-    age_category = '>=85'
+SurgicalRiskCategory = st.sidebar.selectbox('SurgRisk', ['low', 'moderate', 'high'])
+Intraop = st.sidebar.slider('Intraop', 0, 1, 0)
+AnesthesiaTypeCategory = st.sidebar.selectbox('Anaestype', ['ga', 'ra'])
+PriorityCategory = st.sidebar.selectbox('Priority', ['elective', 'emergency'])
 
 prediction_prompt = {'Age': Age,
-                     'Gender': Gender, 
-                     'RCRIScore': RCRIScore,
-                     'AnemiaCategory': AnemiaCategory, 
                      'PreopEGFRMDRD': PreopEGFRMDRD, 
-                     'GradeofKidneyDisease': GradeofKidneyDisease, 
-                     'AnaesthesiaTypeCategory': AnesthesiaTypeCategory, 
-                     'PriorityCategory': PriorityCategory, 
-                     'AgeCategory': age_category, 
-                     'SurgicalRiskCategory': SurgicalRiskCategory, 
-                     'RaceCategory': RaceCategory, 
+                     'ASACategoryBinned': ASACategoryBinned,
+                     'GradeofKidneyDisease': GradeofKidneyDisease,
                      'AnemiaCategoryBinned': AnemiaCategoryBinned, 
                      'RDW15.7': RDW157, 
-                     'ASACategoryBinned': ASACategoryBinned}
+                     'SurgicalRiskCategory': SurgicalRiskCategory, 
+                     'Intraop': Intraop,
+                     'AnaesthesiaTypeCategory': AnesthesiaTypeCategory, 
+                     'PriorityCategory': PriorityCategory}
 
 if st.sidebar.button('Predict'):
     with st.chat_message("user"):
@@ -218,15 +196,20 @@ if st.sidebar.button('Predict'):
             input_tensor = torch.tensor(input_data.values, dtype=torch.float32)
 
             # Generate prediction
-            with torch.no_grad():
-                probability = model(input_tensor)
-                predicted = (probability >= 0.5).float()  # Here, you are using a threshold of 0.5 to determine the class.
-
+            icu_probability = icu_classifier.predict(input_tensor)
+            icu_predicted = (icu_probability >= 0.5).float()  # Here, you are using a threshold of 0.5 to determine the class.
+            mortality_probability = mortality_classifier.predict(input_tensor)
+            mortality_predicted = (mortality_probability >= 0.5).float()
+            
             # Save prediction probability
-            st.session_state.last_prediction_probability = f"Predicted probability: {probability.item() * 100:.2f}%"
+            st.session_state.last_icu_prediction_probability = f"ICU Predicted probability: {icu_probability.item() * 100:.2f}%"
+            st.session_state.last_mortality_prediction_probability = f"Mortality Predicted probability: {mortality_probability.item() * 100:.2f}%"
             
             # Display prediction
-            st.write(st.session_state.last_prediction_probability)
+            st.write(st.session_state.last_icu_prediction_probability)
+            st.write(st.session_state.last_mortality_prediction_probability)
 
-            message = {"role": "assistant", "content": st.session_state.last_prediction_probability}
+            message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_icu_prediction_probability}
+            st.session_state.messages.append(message)
+            message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_mortality_prediction_probability}
             st.session_state.messages.append(message)
