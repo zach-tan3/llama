@@ -54,8 +54,8 @@ with st.sidebar:
     st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-a-llama-2-chatbot/)!')
 
 if os.path.exists('icu_classifier.pkl') and os.path.exists('mortality_classifier.pkl'):
-    icu_classifier = joblib.load(icu_model_path)
-    mortality_classifier = joblib.load(mortality_model_path)
+    icu_classifier = joblib.load('icu_classifier.pkl')
+    mortality_classifier = joblib.load('mortality_classifier.pkl')
 else:
     st.error('Model files not found. Please ensure the files are uploaded.')
 
