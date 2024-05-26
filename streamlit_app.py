@@ -224,19 +224,8 @@ if st.button('Predict', key='predict', help='Click to predict ICU admission and 
 
             st.write(st.session_state.last_icu_prediction_probability)
             st.write(st.session_state.last_mortality_prediction_probability)
-
+            st.subheader("Prediction Results")
             st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_icu_prediction_probability})
             st.session_state.messages.append({"role": "assistant", "content": st.session_state.last_mortality_prediction_probability})
-            
-st.markdown("<h2 class='section-title'>Risk Calculator</h2>", unsafe_allow_html=True)
-st.markdown("<div class='input-container'>", unsafe_allow_html=True)
-
-# Display prediction results
-if 'last_icu_prediction_probability' in st.session_state and 'last_mortality_prediction_probability' in st.session_state:
-    st.markdown("<div class='result-container'>", unsafe_allow_html=True)
-    st.subheader("Prediction Results")
-    st.write(st.session_state.last_icu_prediction_probability)
-    st.write(st.session_state.last_mortality_prediction_probability)
-    st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown("</div>", unsafe_allow_html=True)
