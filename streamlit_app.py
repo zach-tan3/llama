@@ -69,7 +69,7 @@ st.markdown(
     }
     .logo-text {
         font-weight:700 !important;
-        font-size:50px !important;
+        font-size:45px !important;
         color: #f9a01b !important;
         padding-top: 45px !important;
     }
