@@ -84,7 +84,6 @@ def clear_chat_history():
 
 # Function for Risk Calculator w/ ChatGPT page
 def risk_calculator_page():
-    st.title("ICURISK with ChatGPT! 🤖")
     # Initialize session state for messages if not already done
     if "messages" not in st.session_state:
         st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
