@@ -210,4 +210,4 @@ def risk_calculator_page():
                     "ICU Admission>24 hours": '',
                     "Mortality": ''
                 }
-        st.sidebar.button('Save Patient Data', on_click=handle_save_patient_data)
+                st.sidebar.button('Save Patient Data', on_click=handle_save_patient_data)
