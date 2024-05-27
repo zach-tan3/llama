@@ -11,7 +11,7 @@ def load_saved_patient_data():
 def save_patient_data(data):
     df = load_saved_patient_data()
     df = df.append(data, ignore_index=True)
-    df.to_csv("saved_patient_data.csv", index=False)
+    df.to_csv("saved_data.csv", index=False)
 
 def append_to_csv(data, csv_file):
     df = pd.DataFrame([data])
