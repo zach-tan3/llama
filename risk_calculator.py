@@ -213,8 +213,8 @@ def risk_calculator_page():
         #st.sidebar.button('Save Patient Data', on_click=handle_save_patient_data)
 
         if st.sidebar.button('Save Patient Data'):
-            patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
-            if st.button("Submit ID"):
+            patient_id = st.sidebar.text_input("Enter Patient ID (type 'exit' to cancel):")
+            if st.sidebar.button("Submit ID"):
                 if patient_id.lower() == 'exit':
                     with st.chat_message("user"):
                         st.write("Patient data not saved.")
