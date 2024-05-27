@@ -3,7 +3,7 @@
 import streamlit as st
 
 def risk_model_development_page():
-    st.title("Risk Model Development")
+    st.title("Risk Model Development 📊")
     st.write("This is the Risk Model Development page.")
     model1_button = st.sidebar.button('Model 1')
     model2_button = st.sidebar.button('Model 2')
