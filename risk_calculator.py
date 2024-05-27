@@ -40,8 +40,8 @@ def save_patient_data():
                 "AnesthesiaTypeCategory": AnesthesiaTypeCategory,
                 "GradeofKidneyDisease": GradeofKidneyDisease,
                 "PriorityCategory": PriorityCategory,
-                "ICU Probability": icu_probability,
-                "Mortality Probability": mortality_probability
+                "ICU Probability": '',
+                "Mortality Probability": ''
             }
             save_patient_data(prediction_data)  # This function will be in utils.py
             st.write("Patient data saved successfully.")
