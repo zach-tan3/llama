@@ -224,4 +224,4 @@ def risk_calculator_page():
                     prediction_data["Patient ID"] = patient_id
                     with st.chat_message("user"):
                         st.write("Patient data saved successfully.")
-                save_patient_data(prediction_data)
+                    save_patient_data(prediction_data)
