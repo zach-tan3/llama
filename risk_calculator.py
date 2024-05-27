@@ -136,6 +136,8 @@ def risk_calculator_page():
                          'GradeofKidneyDisease': GradeofKidneyDisease,
                          'PriorityCategory': PriorityCategory}
 
+    st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
+    
     if st.sidebar.button('Predict'):
             
         with st.chat_message("user"):
@@ -208,5 +210,4 @@ def risk_calculator_page():
                     "ICU Admission>24 hours": '',
                     "Mortality": ''
                 }
-        st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
         st.sidebar.button('Save Patient Data', on_click=handle_save_patient_data)
