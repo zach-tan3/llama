@@ -80,8 +80,8 @@ def saved_patient_data_page():
     # Allow updating ICU and Mortality status
     st.sidebar.header("Update Patient Data")
     patient_id = st.sidebar.text_input("Patient ID to Update")
-    icu_status = st.sidebar.selectbox("ICU Admission >24 hours", ["Yes", "No"])
-    mortality_status = st.sidebar.selectbox("Mortality", ["Yes", "No"])
+    icu_status = st.sidebar.selectbox("ICU Admission >24 hours", ["Unknown", "Yes", "No"])
+    mortality_status = st.sidebar.selectbox("Mortality", ["Unknown", "Yes", "No"])
     
     if st.sidebar.button("Update Status"):
         if not data.empty and patient_id in data["Patient ID"].values:
@@ -91,4 +91,3 @@ def saved_patient_data_page():
             st.write("Patient data updated successfully.")
         else:
             st.write("Patient ID not found in saved data.")
-
