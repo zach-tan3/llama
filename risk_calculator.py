@@ -1,5 +1,3 @@
-# risk_calculator.py
-
 import streamlit as st
 import replicate
 import os
@@ -21,29 +19,16 @@ def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
 
 # Function to handle saving patient data
-def save_patient_data():
+def handle_save_patient_data():
     patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
     if st.button("Submit ID"):
         if patient_id.lower() == 'exit':
             st.write("Patient data not saved.")
         else:
-            # Save the data to a CSV or database
-            prediction_data = {
-                "Patient ID": patient_id,
-                "Age": Age,
-                "PreopEGFRMDRD": PreopEGFRMDRD,
-                "Intraop": Intraop,
-                "ASACategoryBinned": ASACategoryBinned,
-                "AnemiaCategoryBinned": AnemiaCategoryBinned,
-                "RDW15.7": RDW157,
-                "SurgicalRiskCategory": SurgicalRiskCategory,
-                "AnesthesiaTypeCategory": AnesthesiaTypeCategory,
-                "GradeofKidneyDisease": GradeofKidneyDisease,
-                "PriorityCategory": PriorityCategory,
-                "ICU Probability": '',
-                "Mortality Probability": ''
-            }
-            save_patient_data(prediction_data)  # This function will be in utils.py
+            # Collect data from session state
+            prediction_data = st.session_state.get('prediction_data', {})
+            prediction_data["Patient ID"] = patient_id
+            save_patient_data(prediction_data)
             st.write("Patient data saved successfully.")
 
 # Function for main risk calculator
@@ -203,5 +188,21 @@ def risk_calculator_page():
                 message = {"role": "assistant", "content": "Mortality prediction: " + st.session_state.last_mortality_prediction_probability}
                 st.session_state.messages.append(message)
 
+                # Save the prediction data to session state
+                st.session_state.prediction_data = {
+                    "Age": Age,
+                    "PreopEGFRMDRD": PreopEGFRMDRD,
+                    "Intraop": Intraop,
+                    "ASACategoryBinned": ASACategoryBinned,
+                    "AnemiaCategoryBinned": AnemiaCategoryBinned,
+                    "RDW15.7": RDW157,
+                    "SurgicalRiskCategory": SurgicalRiskCategory,
+                    "AnesthesiaTypeCategory": AnesthesiaTypeCategory,
+                    "GradeofKidneyDisease": GradeofKidneyDisease,
+                    "PriorityCategory": PriorityCategory,
+                    "ICU Probability": st.session_state.last_icu_prediction_probability,
+                    "Mortality Probability": st.session_state.last_mortality_prediction_probability
+                }
+
         st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
-        st.sidebar.button('Save Patient Data', on_click=save_patient_data)
+        st.sidebar.button('Save Patient Data', on_click=handle_save_patient_data)
