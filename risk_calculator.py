@@ -210,4 +210,18 @@ def risk_calculator_page():
                     "ICU Admission>24 hours": '',
                     "Mortality": ''
                 }
-        st.sidebar.button('Save Patient Data', on_click=handle_save_patient_data)
+        #st.sidebar.button('Save Patient Data', on_click=handle_save_patient_data)
+
+        if st.sidebar.button('Save Patient Data'):
+            patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
+            if st.button("Submit ID"):
+                if patient_id.lower() == 'exit':
+                    with st.chat_message("user"):
+                        st.write("Patient data not saved.")
+                else:
+                    # Collect data from session state
+                    prediction_data = st.session_state.prediction_data
+                    prediction_data["Patient ID"] = patient_id
+                    with st.chat_message("user"):
+                        st.write("Patient data saved successfully.")
+                save_patient_data(prediction_data)
