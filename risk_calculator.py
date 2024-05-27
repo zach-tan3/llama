@@ -23,7 +23,6 @@ def handle_save_patient_data():
     patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
     if st.button("Submit ID"):
         if patient_id.lower() == 'exit':
-            st.button("Nigga ID")
             with st.chat_message("user"):
                 st.write("Patient data not saved.")
         else:
