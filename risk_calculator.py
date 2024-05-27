@@ -117,7 +117,7 @@ def risk_calculator_page():
     Age = st.sidebar.slider('Age', 18, 99, 40)
     PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
     Intraop = st.sidebar.slider('Intraop', 0, 1, 0)
-    ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['I', 'Ii', 'Iii', 'Iv-Vi'])
+    ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
     AnemiaCategoryBinned = st.sidebar.selectbox('Anemia Category Binned', ['None', 'Mild', 'Moderate/Severe'])
     RDW157 = st.sidebar.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
     SurgicalRiskCategory = st.sidebar.selectbox('Surgical Risk', ['Low', 'Moderate', 'High'])
