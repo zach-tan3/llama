@@ -107,8 +107,9 @@ def risk_calculator_page():
         mortality_classifier = joblib.load('mortality_classifier.pkl')
     else:
         st.error('Model files not found. Please ensure the files are uploaded.')
-        # Sidebar input elements
-        st.sidebar.header("Input Parameters")
+    
+    # Sidebar input elements
+    st.sidebar.header("Input Parameters")
 
     Age = st.sidebar.slider('Age', 18, 99, 40)
     PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
