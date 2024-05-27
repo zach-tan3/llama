@@ -26,7 +26,7 @@ def handle_save_patient_data():
             st.write("Patient data not saved.")
         else:
             # Collect data from session state
-            prediction_data = st.session_state.get('prediction_data', {})
+            prediction_data = st.session_state.prediction_data
             prediction_data["Patient ID"] = patient_id
             save_patient_data(prediction_data)
             st.write("Patient data saved successfully.")
@@ -100,7 +100,8 @@ def risk_calculator_page():
         st.session_state.messages.append({"role": "assistant", "content": full_response})
     
     st.session_state.last_prediction_probability = " "
-
+    st.session_state.prediction_data = " "
+    
     # Create an instance of the model
     if os.path.exists('icu_classifier.pkl') and os.path.exists('mortality_classifier.pkl'):
         icu_classifier = joblib.load('icu_classifier.pkl')
@@ -201,8 +202,8 @@ def risk_calculator_page():
                     "AnesthesiaTypeCategory": AnesthesiaTypeCategory,
                     "GradeofKidneyDisease": GradeofKidneyDisease,
                     "PriorityCategory": PriorityCategory,
-                    "ICU Probability": st.session_state.last_icu_prediction_probability,
-                    "Mortality Probability": st.session_state.last_mortality_prediction_probability
+                    "ICU Admission>24 hours": '',
+                    "Mortality": ''
                 }
 
         st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
