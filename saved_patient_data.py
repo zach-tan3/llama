@@ -67,8 +67,8 @@ def saved_patient_data_page():
     )
     
     # Load saved data
-    if os.path.exists("saved_patient_data.csv"):
-        data = pd.read_csv("saved_patient_data.csv")
+    if os.path.exists("saved_data.csv"):
+        data = pd.read_csv("saved_data.csv")
     else:
         data = pd.DataFrame(columns=["Patient ID", "Age", "PreopEGFRMDRD", "Intraop", "ASACategoryBinned", "AnemiaCategoryBinned", "RDW15.7", "SurgicalRiskCategory", "AnesthesiaTypeCategory", "GradeofKidneyDisease", "PriorityCategory", "ICU Probability", "Mortality Probability", "ICU Admission >24 hours", "Mortality"])
     
