@@ -23,7 +23,6 @@ def handle_save_patient_data():
     patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
     if st.button("Submit ID"):
         if patient_id.lower() == 'exit':
-            st.session_state.messages = [{"role": "assistant", "content": "Patient data not saved"}]
             st.write("Patient data not saved.")
         else:
             # Collect data from session state
