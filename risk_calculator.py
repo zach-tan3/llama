@@ -135,6 +135,7 @@ def risk_calculator_page():
                          'PriorityCategory': PriorityCategory}
 
     if st.sidebar.button('Predict'):
+        st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
         with st.chat_message("user"):
             st.write(prediction_prompt)
 
@@ -206,5 +207,4 @@ def risk_calculator_page():
                     "Mortality": ''
                 }
 
-        st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
         st.sidebar.button('Save Patient Data', on_click=handle_save_patient_data)
