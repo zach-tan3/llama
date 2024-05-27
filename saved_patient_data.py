@@ -1,9 +1,8 @@
-# saved_patient_data.py
-
 import streamlit as st
 import pandas as pd
 import numpy as np
 import base64
+import os
 
 def saved_patient_data_page():
     
@@ -68,9 +67,15 @@ def saved_patient_data_page():
     )
     
     # Load saved data
-    data = pd.read_csv("saved_patient_data.csv")
+    if os.path.exists("saved_patient_data.csv"):
+        data = pd.read_csv("saved_patient_data.csv")
+    else:
+        data = pd.DataFrame(columns=["Patient ID", "Age", "PreopEGFRMDRD", "Intraop", "ASACategoryBinned", "AnemiaCategoryBinned", "RDW15.7", "SurgicalRiskCategory", "AnesthesiaTypeCategory", "GradeofKidneyDisease", "PriorityCategory", "ICU Probability", "Mortality Probability", "ICU Admission >24 hours", "Mortality"])
     
-    st.dataframe(data)
+    if data.empty:
+        st.write("No saved patient data found. The table will appear here when you save patient data.")
+    else:
+        st.dataframe(data)
     
     # Allow updating ICU and Mortality status
     st.sidebar.header("Update Patient Data")
@@ -79,7 +84,11 @@ def saved_patient_data_page():
     mortality_status = st.sidebar.selectbox("Mortality", ["Yes", "No"])
     
     if st.sidebar.button("Update Status"):
-        data.loc[data['Patient ID'] == patient_id, 'ICU Admission >24 hours'] = icu_status
-        data.loc[data['Patient ID'] == patient_id, 'Mortality'] = mortality_status
-        data.to_csv("saved_patient_data.csv", index=False)
-        st.write("Patient data updated successfully.")
+        if not data.empty and patient_id in data["Patient ID"].values:
+            data.loc[data['Patient ID'] == patient_id, 'ICU Admission >24 hours'] = icu_status
+            data.loc[data['Patient ID'] == patient_id, 'Mortality'] = mortality_status
+            data.to_csv("saved_patient_data.csv", index=False)
+            st.write("Patient data updated successfully.")
+        else:
+            st.write("Patient ID not found in saved data.")
+
