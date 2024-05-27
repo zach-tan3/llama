@@ -61,7 +61,7 @@ def saved_patient_data_page():
         <div class="header-container">
             <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
             <div class='vertical-line'></div>
-            <p class="logo-text">Saved Patient Data</p>
+            <p class="logo-text">Saved Patient Data 🗂️</p>
         </div>
         """,
         unsafe_allow_html=True
