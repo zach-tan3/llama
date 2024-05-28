@@ -15,10 +15,13 @@ def risk_model_development_page():
     model1_button = st.sidebar.button('Model 1', key='model1_button')
     model2_button = st.sidebar.button('Model 2', key='model2_button')
     model3_button = st.sidebar.button('Model 3', key='model3_button')
+    model4_button = st.sidebar.button('Model 4', key='model4_button')
 
     if model1_button:
-        st.image("static/model1.png")
+        st.image("static/ICU ROC Curve.png")
     if model2_button:
-        st.image("static/model2.png")
+        st.image("static/ICU Confusion Matrix.png")
     if model3_button:
-        st.image("static/model3.png")
+        st.image("static/Mortality ROC Curve.png")
+    if model3_button:
+        st.image("static/Mortality Confusion Matrix.png")
