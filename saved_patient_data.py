@@ -3,13 +3,13 @@ import pandas as pd
 import numpy as np
 import base64
 import os
-from utils import load_saved_patient_data, update_patient_data, delete_patient_data, set_bg, logo
+from utils import load_saved_patient_data, update_patient_data, delete_patient_data, set_bg, logo2
 
 def saved_patient_data_page():
     
     # Custom CSS for styling
     set_bg('static/Light blue background.jpg')
-    logo('static/ICURISK_Logo.png')
+    logo2('static/ICURISK_Logo.png')
     st.markdown("""
         <style>
         body {
@@ -59,19 +59,6 @@ def saved_patient_data_page():
         }
         </style>
         """, unsafe_allow_html=True)
-
-    # Title and description with logo
-    LOGO_IMAGE = "static/ICURISK_Logo.png"
-    st.markdown(
-        f"""
-        <div class="header-container">
-            <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
-            <div class='vertical-line'></div>
-            <p class="logo-text">Saved Patient Data 🗂️</p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
     
     # Load saved data
     data = load_saved_patient_data()
