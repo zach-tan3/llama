@@ -16,7 +16,7 @@ def risk_model_development_page():
     # Sidebar menu with smaller font sizes
     with st.sidebar:
         selected_option = option_menu(
-            menu_title='Model Comparisons',
+            title='<div style="font-size: 14px;">Model Comparisons</div>',
             menu_icon='line-chart',
             icons=['bar-chart-line', 'diagram-3', 'bar-chart'],
             options=['ROC Curve Comparisons', 'Confusion Matrix Comparisons', 'Model Performance Comparisons'],
@@ -50,7 +50,7 @@ def risk_model_development_page():
 
     if selected_option == 'Model Performance Comparisons':
         st.markdown("### Model Performance Comparison: Train and Test Accuracy")
-        col1, col2 = st.columns([1, 2, 1])
+        col1, col2, col3 = st.columns([1, 2, 1])
         with col1:
             st.empty()
         with col2:
@@ -58,5 +58,5 @@ def risk_model_development_page():
             st.image("static/ICU Train Test Accuracy of Different Models.png", use_column_width=True)
             st.markdown("#### Mortality Train and Test Accuracy")
             st.image("static/Mortality Train Test Accuracy of Different Models.png", use_column_width=True)
-        with col1:
+        with col3:
             st.empty()
