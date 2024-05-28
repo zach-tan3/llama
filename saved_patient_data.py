@@ -34,7 +34,7 @@ def saved_patient_data_page():
             margin-bottom: 20px;
         }
         .stChatMessage {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
         .header-container {
             display: flex;
