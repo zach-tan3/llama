@@ -18,8 +18,8 @@ def risk_model_development_page():
         selected_option = option_menu(
             menu_title='Model Comparisons',
             menu_icon='ui-radios',
-            icons=['graph-up', 'diagram-3', 'bar-chart', 'sliders'],
-            options=['ROC Curve', 'Confusion Matrix', 'Model Performance', 'Feature Selection'],
+            icons=['graph-up', 'diagram-3', 'bar-chart', 'sliders', 'cursor'],
+            options=['ROC Curve', 'Confusion Matrix', 'Model Performance', 'Feature Selection', 'Model Selection'],
             styles={
                 "container": {"padding": "5px"},
                 "nav-title": {"font-size": "12px", "font-weight": "bold"},
@@ -73,3 +73,13 @@ def risk_model_development_page():
             st.image("static/Mortality Feature Importance.png", use_column_width=True)
         with col3:
             st.empty()
+
+    if selected_option == 'Model Selection':
+        st.markdown("### Model Selection: ICU vs. Mortality")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("#### ICU Model Selection")
+            st.image("static/ICU Model Selection.png", use_column_width=True)
+        with col2:
+            st.markdown("#### Mortality Model Selection")
+            st.image("static/Mortality Model Selection.png", use_column_width=True)
