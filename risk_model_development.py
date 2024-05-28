@@ -6,10 +6,9 @@ import base64
 import os
 from utils import set_bg
 
-
 def risk_model_development_page():
-	
-# Custom CSS for styling
+    
+    # Custom CSS for styling
     set_bg('static/Light blue background.jpg')
     st.markdown("""
         <style>
@@ -20,13 +19,39 @@ def risk_model_development_page():
         .stButton button {
             background-color: #6eb52f;
             color: white;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: none;
+            padding: 10px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+        .stButton button:hover {
+            background-color: #5ca024;
+        }
+        .stButton button:active {
+            background-color: #4b8520;
+        }
+        .stButton button img {
+            margin-right: 10px;
         }
         .stSidebar {
             background-color: #e0e0ef;
         }
         .stSidebar .stButton button {
-            background-color: #6eb52f;
-            color: white;
+            background-color: transparent;
+            color: #ff4d4d;
+            text-align: left;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        .stSidebar .stButton button:hover {
+            background-color: #ffe6e6;
+        }
+        .stSidebar .stButton button:active {
+            background-color: #ffcccc;
         }
         .stSidebar .stSelectbox, .stSidebar .stSlider {
             margin-bottom: 20px;
@@ -54,6 +79,13 @@ def risk_model_development_page():
             color: #000000;
             padding-top: 18px;
         }
+        .icon-button {
+            display: flex;
+            align-items: center;
+        }
+        .icon-button img {
+            margin-right: 10px;
+        }
         </style>
         """, unsafe_allow_html=True)
 
@@ -69,15 +101,38 @@ def risk_model_development_page():
         """,
         unsafe_allow_html=True
     )
-    
-    model1_button = st.sidebar.button('Model 1')
-    model2_button = st.sidebar.button('Model 2')
-    model3_button = st.sidebar.button('Model 3')
 
-    if model1_button:
+    model1_button = st.sidebar.markdown(
+        """
+        <button class="icon-button">
+            <img src="data:image/png;base64,{}" width="20"/>
+            <span>Model 1</span>
+        </button>
+        """.format(base64.b64encode(open("static/model1_icon.png", "rb").read()).decode()),
+        unsafe_allow_html=True
+    )
+    model2_button = st.sidebar.markdown(
+        """
+        <button class="icon-button">
+            <img src="data:image/png;base64,{}" width="20"/>
+            <span>Model 2</span>
+        </button>
+        """.format(base64.b64encode(open("static/model2_icon.png", "rb").read()).decode()),
+        unsafe_allow_html=True
+    )
+    model3_button = st.sidebar.markdown(
+        """
+        <button class="icon-button">
+            <img src="data:image/png;base64,{}" width="20"/>
+            <span>Model 3</span>
+        </button>
+        """.format(base64.b64encode(open("static/model3_icon.png", "rb").read()).decode()),
+        unsafe_allow_html=True
+    )
+
+    if st.sidebar.button('Model 1'):
         st.image("static/model1.png")
-    if model2_button:
+    if st.sidebar.button('Model 2'):
         st.image("static/model2.png")
-    if model3_button:
+    if st.sidebar.button('Model 3'):
         st.image("static/model3.png")
-
