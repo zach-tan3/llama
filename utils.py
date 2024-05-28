@@ -13,6 +13,11 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('dscp-saved-patient-dat
 # Authorize the clientsheet 
 client = gspread.authorize(creds)
 
+# Function to clear chat history
+def clear_chat_history():
+    st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
+
+# Function to load saved patient data
 def load_saved_patient_data():
     # Get the instance of the Spreadsheet
     sheet = client.open('saved_patient_data')
@@ -24,6 +29,7 @@ def load_saved_patient_data():
     records_df = pd.DataFrame.from_dict(records_data)
     return records_df
 
+# Function to save patient data
 def save_patient_data(data):
     # Get the instance of the Spreadsheet
     sheet = client.open('saved_patient_data')
@@ -33,6 +39,7 @@ def save_patient_data(data):
     row = [data.get(col) for col in load_saved_patient_data().columns]
     sheet_instance.append_row(row)
 
+# Function to update saved patient data
 def update_patient_data(patient_id, icu_status, mortality_status):
     # Get the instance of the Spreadsheet
     sheet = client.open('saved_patient_data')
@@ -49,6 +56,7 @@ def update_patient_data(patient_id, icu_status, mortality_status):
         sheet_instance.update_cell(row, mortality_col, mortality_status)
     return load_saved_patient_data()
 
+# Function to delete saved patient data
 def delete_patient_data(patient_id):
     # Get the instance of the Spreadsheet
     sheet = client.open('saved_patient_data')
@@ -69,7 +77,8 @@ def delete_patient_data(patient_id):
         return records_df, True
     else:
         return records_df, False
-
+        
+# Function for background
 def set_bg(main_bg):
     # set bg name
     main_bg_ext = "jpg"
@@ -86,6 +95,7 @@ def set_bg(main_bg):
          unsafe_allow_html=True
      )
 
+# Function for headers on all 3 pages
 def logo1(image):
     st.markdown(
         f"""
@@ -121,7 +131,8 @@ def logo3(image):
         """,
         unsafe_allow_html=True
     )
-
+    
+# Function on the layout of the pages
 def CSS_styling():
     st.markdown("""
     <style>
