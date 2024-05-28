@@ -113,6 +113,3 @@ def risk_model_development_page():
             By zooming in on the top-performing models, we were able to make an informed decision about which model to select based on various performance metrics and their ability to generalize to new data. 
             This process ensured that the best possible model was chosen for each task, balancing accuracy, robustness, and interpretability.
         """)
-
-# Run the risk model development page
-risk_model_development_page()
