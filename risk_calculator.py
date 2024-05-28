@@ -241,18 +241,20 @@ def handle_save_patient_data():
             # Reset saving state
             st.session_state.saving = False
             st.session_state.show_patient_form = False
+            st.session_state.show_save_button = False
         else:
             # Collect data from session state
             prediction_data = st.session_state.get('prediction_data', {})
             prediction_data["Patient ID"] = patient_id
-            save_patient_data(prediction_data)
-            st.sidebar.write("Patient data saved successfully.")
-            # Reset saving state
+
+             # Reset saving state
             st.session_state.saving = False
             st.session_state.show_patient_form = False
+            st.session_state.show_save_button = False
             
-        st.session_state.show_save_button = False
-            
+            save_patient_data(prediction_data)
+            st.sidebar.write("Patient data saved successfully.")
+           
 # Function for main risk calculator
 def risk_calculator_page():
     # Title and description with logo
