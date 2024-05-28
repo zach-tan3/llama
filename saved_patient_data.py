@@ -8,7 +8,7 @@ from utils import load_saved_patient_data, update_patient_data, delete_patient_d
 def saved_patient_data_page():
     
     # Custom CSS for styling
-    set_bg('static/Light-Blue-Background-Science-Medical-with-Gradient-and-Wavy-Lines-by-SlidesCorner.com_.jpg')
+    set_bg('static/Light blue background.jpg')
     st.markdown("""
         <style>
         body {
