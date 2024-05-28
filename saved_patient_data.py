@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import base64
 import os
-from utils import load_saved_patient_data, save_patient_data, append_to_csv
+from utils import save_patient_data, append_to_csv
 
 def saved_patient_data_page():
     
