@@ -55,8 +55,8 @@ def risk_model_development_page():
             st.empty()
         with col2:
             st.markdown("#### ICU Train and Test Accuracy")
-            st.image("static/ICU Train Test Accuracy of Different Models.png", use_column_width=True)
+            st.image("static/ICU Train Test Accuracy of Different Models.png")
             st.markdown("#### Mortality Train and Test Accuracy")
-            st.image("static/Mortality Train Test Accuracy of Different Models.png", use_column_width=True)
+            st.image("static/Mortality Train Test Accuracy of Different Models.png")
         with col3:
             st.empty()
