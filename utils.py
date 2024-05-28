@@ -13,11 +13,9 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('dscp-saved-patient-dat
 client = gspread.authorize(creds)
 
 def save_patient_data(data):
-    st.sidebar.write("Saving patient data...")
     df = load_saved_patient_data()
     df = df.append(data, ignore_index=True)
     df.to_csv("saved_data.csv", index=False)
-    print("Data saved successfully.")
 
 def append_to_csv(data, csv_file):
     st.sidebar.write("Appending data...")
