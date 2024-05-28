@@ -48,3 +48,4 @@ def update_patient_data(patient_id, icu_status, mortality_status):
         print("Patient data updated successfully.")
     else:
         print("Patient ID not found.")
+    return load_saved_patient_data()
