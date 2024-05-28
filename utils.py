@@ -80,3 +80,22 @@ def delete_patient_data(patient_id):
         return records_df, True
     else:
         return records_df, False
+
+
+def set_bg(main_bg):
+    # set bg name
+    main_bg_ext = "png"
+        
+    st.markdown(
+         f"""
+         <style>
+         .stApp {{
+             background: url(data:static/{main_bg_ext};base64,{base64.b64encode(open(main_bg, "rb").read()).decode()});
+             background-size: cover
+         }}
+         </style>
+         """,
+         unsafe_allow_html=True
+     )
+
+set_bg_hack('dqw_background.png')
