@@ -1,4 +1,4 @@
-'''import pandas as pd
+import pandas as pd
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -46,4 +46,3 @@ def update_patient_data(patient_id, icu_status, mortality_status):
         sheet_instance.update_cell(row, icu_col, icu_status)
         sheet_instance.update_cell(row, mortality_col, mortality_status)
     return load_saved_patient_data()
-'''
