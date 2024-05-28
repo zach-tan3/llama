@@ -13,32 +13,16 @@ def risk_model_development_page():
     logo3('static/ICURISK_Logo.png')
     CSS_styling()
 
-    # Sidebar menu
+    # Sidebar menu with smaller font sizes
     with st.sidebar:
-        st.markdown(
-            """
-            <style>
-            .sidebar-title {
-                font-size: 16px;
-                font-weight: bold;
-            }
-            .menu-option {
-                font-size: 14px;
-            }
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
-
-        st.markdown('<div class="sidebar-title">Model Comparisons</div>', unsafe_allow_html=True)
-        
         selected_option = option_menu(
-            menu_title='',
+            menu_title='Model Comparisons',
             menu_icon='list-columns-reverse',
             icons=['bar-chart-line', 'diagram-3'],
             options=['ROC Curve Comparisons', 'Confusion Matrix Comparisons'],
             styles={
                 "container": {"padding": "5px"},
+                "nav-title": {"font-size": "18px", "font-weight": "bold"},
                 "nav-link": {"font-size": "14px", "text-align": "left", "margin": "0px", "padding": "10px", "border-radius": "5px"},
                 "nav-link-selected": {"background-color": "#6eb52f", "color": "white"}
             }
