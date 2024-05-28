@@ -23,5 +23,5 @@ def risk_model_development_page():
         st.image("static/ICU Confusion Matrix.png")
     if model3_button:
         st.image("static/Mortality ROC Curve.png")
-    if model3_button:
+    if model4_button:
         st.image("static/Mortality Confusion Matrix.png")
