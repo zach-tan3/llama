@@ -221,9 +221,11 @@ def handle_save_patient_data():
 
         if submit_button:
             if patient_id.lower() == 'exit':
+                risk_model_development_page()
                 st.sidebar.write("Patient data not saved.")
             else:
                 # Collect data from session state
+                risk_model_development_page()
                 prediction_data = st.session_state.get('prediction_data', {})
                 prediction_data["Patient ID"] = patient_id
                 save_patient_data(prediction_data)
