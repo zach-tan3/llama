@@ -9,7 +9,7 @@ from utils import set_bg
 def risk_model_development_page():
     
     # Custom CSS for styling
-    set_bg('static/Light blue background.jpg')
+    set_bg('Light blue background.jpg')
     st.markdown("""
         <style>
         body {
