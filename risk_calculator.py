@@ -12,7 +12,7 @@ from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 import openai
 import base64
 from dotenv import load_dotenv
-from utils import save_patient_data, update_patient_data, load_saved_patient_data
+from utils import save_patient_data, update_patient_data, load_saved_patient_data, set_bg
 
 # Function to clear chat history
 def clear_chat_history():
