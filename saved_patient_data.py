@@ -159,7 +159,6 @@ def saved_patient_data_page():
     
     # Load saved data
     data = load_saved_patient_data()
-    st.write("Loaded data:", data)  # Debugging line
 
     if data.empty:
         st.write("No saved patient data found. The table will appear here when you save patient data.")
