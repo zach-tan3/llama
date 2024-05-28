@@ -238,6 +238,9 @@ def handle_save_patient_data():
     if patient_id:
         if patient_id.lower() == 'exit':
             st.sidebar.write("Patient data not saved.")
+            # Reset saving state
+            st.session_state.saving = False
+            st.session_state.show_patient_form = False
         else:
             # Collect data from session state
             prediction_data = st.session_state.get('prediction_data', {})
