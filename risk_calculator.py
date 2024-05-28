@@ -57,7 +57,6 @@ def risk_calculator_page():
     load_dotenv()
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
-    '''
     # Verify if API key is set
     if not openai.api_key:
         st.error("OpenAI API key is missing! Please set the API key in the .env file.")
@@ -70,7 +69,6 @@ def risk_calculator_page():
             st.write(response)
         except openai.error.AuthenticationError:
             st.error("Invalid OpenAI API key! Please check your API key and try again.")
-    '''
     
     if "messages" not in st.session_state:
         st.session_state.messages = []
