@@ -12,7 +12,7 @@ from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 import openai
 import base64
 from dotenv import load_dotenv
-from utils import save_patient_data, update_patient_data, load_saved_patient_data, set_bg, logo
+from utils import save_patient_data, update_patient_data, load_saved_patient_data, set_bg, logo1
 
 # Function to clear chat history
 def clear_chat_history():
@@ -43,7 +43,7 @@ def handle_save_patient_data():
 def risk_calculator_page():
     # Title and description with logo
     set_bg('static/Light blue background.jpg')
-    logo('static/ICURISK_Logo.png')
+    logo1('static/ICURISK_Logo.png')
     
     load_dotenv()
     openai.api_key = os.getenv("OPENAI_API_KEY")
