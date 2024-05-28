@@ -87,17 +87,13 @@ def set_bg(main_bg):
      )
 
 def logo(image):
-    # set bg name
-    main_bg_ext = "jpg"
-        
     st.markdown(
-         f"""
-         <style>
-         .stApp {{
-             background: url(data:image/{main_bg_ext};base64,{base64.b64encode(open(main_bg, "rb").read()).decode()});
-             background-size: cover
-         }}
-         </style>
-         """,
-         unsafe_allow_html=True
-     )
+        f"""
+        <div class="header-container">
+            <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(image, "rb").read()).decode()}">
+            <div class='vertical-line'></div>
+            <p class="logo-text">Risk Calculator w/ ChatGPT! 🤖</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
