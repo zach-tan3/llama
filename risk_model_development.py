@@ -63,7 +63,7 @@ def risk_model_development_page():
 
     if selected_option == 'Feature Selection':
         st.markdown("### Feature Selection: Random Forest and Logistic Regression")
-        col1, col2, col3 = st.columns([1, 5, 1])
+        col1, col2, col3 = st.columns([1, 7, 1])
         with col1:
             st.empty()
         with col2:
