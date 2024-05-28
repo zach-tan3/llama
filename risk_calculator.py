@@ -251,6 +251,8 @@ def handle_save_patient_data():
             st.session_state.saving = False
             st.session_state.show_patient_form = False
             
+        st.session_state.show_save_button = False
+            
 # Function for main risk calculator
 def risk_calculator_page():
     # Title and description with logo
