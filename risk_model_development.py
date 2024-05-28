@@ -18,7 +18,7 @@ def risk_model_development_page():
         selected_option = option_menu(
             menu_title='Model Comparisons',
             menu_icon='list-columns-reverse',
-            icons=['bar-chart-line', 'diagram-3', 'bar-chart'],
+            icons=['graph-up', 'diagram-3', 'bar-chart'],
             options=['ROC Curve', 'Confusion Matrix', 'Model Performance'],
             styles={
                 "container": {"padding": "5px"},
