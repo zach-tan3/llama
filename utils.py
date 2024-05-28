@@ -55,7 +55,6 @@ def delete_patient_data(patient_id):
     # Find the row with the given patient_id
     cell = sheet_instance.find(str(patient_id))
     if cell:
-        cell.row = ''
         # Delete the row with the given patient_id
-        sheet_instance.update_cells(cell.row)
+        sheet_instance.delete_row(cell.row)
     return load_saved_patient_data()
