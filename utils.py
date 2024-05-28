@@ -35,6 +35,7 @@ def load_saved_patient_data():
     records_data = sheet_instance.get_all_records()
     # convert the json to dataframe
     records_df = pd.DataFrame.from_dict(records_data)
+    return records_df
     
     '''
     print("Loading saved patient data...")
