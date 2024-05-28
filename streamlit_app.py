@@ -42,14 +42,6 @@ st.markdown("""
     .stSidebar .stSelectbox, .stSidebar .stSlider {
         margin-bottom: 20px;
     }
-    .stChatMessage {
-        margin-bottom: 20px;
-    }
-    .header-container {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-    }
     .header-container img {
         width: 200px;
         margin-right: 20px;
