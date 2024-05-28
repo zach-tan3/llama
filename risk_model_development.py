@@ -16,7 +16,7 @@ def risk_model_development_page():
     # Sidebar menu with smaller font sizes
     with st.sidebar:
         selected_option = option_menu(
-            menu_title='<div style="font-size: 14px;">Model Comparisons</div>',
+            menu_title='Model Comparisons',
             menu_icon='line-chart',
             icons=['bar-chart-line', 'diagram-3', 'bar-chart'],
             options=['ROC Curve Comparisons', 'Confusion Matrix Comparisons', 'Model Performance Comparisons'],
@@ -60,6 +60,3 @@ def risk_model_development_page():
             st.image("static/Mortality Train Test Accuracy of Different Models.png", use_column_width=True)
         with col1:
             st.empty()
-
-# Run the risk model development page
-risk_model_development_page()
