@@ -13,6 +13,10 @@ def risk_model_development_page():
     logo3('static/ICURISK_Logo.png')
     CSS_styling()
 
+    with st.sidebar:
+    selected = option_menu("Main Menu", ["Home", 'Settings'], 
+        icons=['house', 'gear'], menu_icon="cast", default_index=1)
+    selected
 
     main_page_sidebar = st.sidebar.empty()
     with main_page_sidebar:
