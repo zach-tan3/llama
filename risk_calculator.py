@@ -186,16 +186,16 @@ def risk_calculator_page():
                 # Show the "Save Patient Data" button
                 st.session_state.show_save_button = True
 
-    # Conditionally display the "Save Patient Data" button
-    if st.session_state.get('show_save_button', False):
-        if st.sidebar.button('Save Patient Data'):
-            st.session_state.show_patient_form = True
-    
-    # Conditionally display the patient ID form
-    if st.session_state.get('show_patient_form', False):
-        with st.sidebar.form(key='patient_id_form'):
-            st.session_state.patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
-            submit_button = st.form_submit_button("Submit ID")
-
-        if submit_button:
-            handle_save_patient_data()
+               # Conditionally display the "Save Patient Data" button
+               if st.session_state.get('show_save_button', False):
+                   if st.sidebar.button('Save Patient Data'):
+                       st.session_state.show_patient_form = True
+               
+               # Conditionally display the patient ID form
+               if st.session_state.get('show_patient_form', False):
+                   with st.sidebar.form(key='patient_id_form'):
+                       st.session_state.patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
+                       submit_button = st.form_submit_button("Submit ID")
+           
+                   if submit_button:
+                       handle_save_patient_data()
