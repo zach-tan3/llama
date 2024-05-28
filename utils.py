@@ -1,6 +1,17 @@
 import pandas as pd
 import os
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+'''
+# define the scope
+scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 
+# add credentials to the account
+creds = ServiceAccountCredentials.from_json_keyfile_name('add_json_file_here.json', scope)
+
+# authorize the clientsheet 
+client = gspread.authorize(creds)
+'''
 def save_patient_data(data):
     print("Saving patient data:", data)
     st.sidebar.write("Saving patient data")
