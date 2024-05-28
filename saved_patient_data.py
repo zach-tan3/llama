@@ -3,11 +3,12 @@ import pandas as pd
 import numpy as np
 import base64
 import os
-from utils import load_saved_patient_data, update_patient_data, delete_patient_data
+from utils import load_saved_patient_data, update_patient_data, delete_patient_data, set_bg
 
 def saved_patient_data_page():
     
     # Custom CSS for styling
+    set_bg('static/Light-Blue-Background-Science-Medical-with-Gradient-and-Wavy-Lines-by-SlidesCorner.com_.jpg')
     st.markdown("""
         <style>
         body {
