@@ -12,37 +12,17 @@ def risk_model_development_page():
     logo3('static/ICURISK_Logo.png')
     CSS_styling()
 
-    st.markdown("""
-        <style>
-        .stButton button {
-            background-color: #6eb52f;
-            color: white;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            border: none;
-            padding: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            width: 100%;
-        }
-        .stButton button:hover {
-            background-color: #5ca024;
-        }
-        .stButton button:active {
-            background-color: #4b8520;
-        }
-        .image-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .image-container img {
-            width: 48%;
-            height: auto;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+
+    main_page_sidebar = st.sidebar.empty()
+    with main_page_sidebar:
+        selected_option = option_menu(
+            menu_title = 'Navigation',
+            menu_icon = 'list-columns-reverse',
+            icons = ['box-arrow-in-right', 'person-plus', 'x-circle','arrow-counterclockwise'],
+            options = ['Login', 'Create Account', 'Forgot Password?', 'Reset Password'],
+            styles = {
+                "container": {"padding": "5px"},
+                "nav-link": {"font-size": "14px", "text-align": "left", "margin":"0px"}} )
     
     roc_button = st.sidebar.button('ROC Curve Comparisons', key='roc_button')
     cm_button = st.sidebar.button('Confusion Matrix Comparisons', key='cm_button')
