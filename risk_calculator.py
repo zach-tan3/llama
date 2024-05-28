@@ -12,6 +12,7 @@ from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 import openai
 import base64
 from dotenv import load_dotenv
+
 from utils import save_patient_data, append_to_csv
 
 # Function to clear chat history
@@ -23,6 +24,9 @@ def handle_save_patient_data():
     patient_id = st.sidebar.text_input("Enter Patient ID (type 'exit' to cancel):")
     if st.sidebar.button("Submit ID"):
         if patient_id.lower() == 'exit':
+            if "messages" not in st.session_state:
+                st.session_state.messages = [{"role": "assistant", "content": "Patient data not saved."}]
+    
             st.write("Patient data not saved.")
         else:
             # Collect data from session state
