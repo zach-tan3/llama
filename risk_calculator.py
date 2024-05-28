@@ -216,7 +216,8 @@ def clear_chat_history():
 # Function to handle saving patient data
 def handle_save_patient_data():
     with st.sidebar.form(key='patient_id_form'):
-        st.session_state.patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):", type='password')
+        st.session_state.patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
+        risk_model_development_page()
         #submit_button = st.form_submit_button("Submit ID")
         if st.sidebar.button('Submit ID'):
             if st.session_state.patient_id.lower() == 'exit':
