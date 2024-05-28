@@ -47,19 +47,6 @@ def update_patient_data(patient_id, icu_status, mortality_status):
         sheet_instance.update_cell(row, mortality_col, mortality_status)
     return load_saved_patient_data()
 
-'''def delete_patient_data(patient_id):
-    # Get the instance of the Spreadsheet
-    sheet = client.open('saved_patient_data')
-    # Get the first sheet of the Spreadsheet
-    sheet_instance = sheet.get_worksheet(0)
-    # Find the row with the given patient_id
-    cell = sheet_instance.find(str(patient_id))
-    if cell:
-        # Delete the row with the given patient_id
-        row_index = cell.row
-        sheet_instance.delete_row(row_index)
-    return load_saved_patient_data()'''
-
 def delete_patient_data(patient_id):
     # Get the instance of the Spreadsheet
     sheet = client.open('saved_patient_data')
@@ -80,7 +67,6 @@ def delete_patient_data(patient_id):
         return records_df, True
     else:
         return records_df, False
-
 
 def set_bg(main_bg):
     # set bg name
