@@ -4,5 +4,3 @@ streamlit
 replicate
 openai
 python-dotenv
-gspread
-gspread oauth2client
