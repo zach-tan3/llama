@@ -43,4 +43,4 @@ def update_patient_data(patient_id, icu_status, mortality_status):
         # Update the ICU Admission and Mortality status
         sheet_instance.update_cell(row, sheet_instance.find("ICU Admission >24 hours").col, icu_status)
         sheet_instance.update_cell(row, sheet_instance.find("Mortality").col, mortality_status)
-    load_saved_patient_data()
+    return load_saved_patient_data()
