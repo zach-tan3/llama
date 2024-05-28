@@ -18,12 +18,12 @@ def risk_model_development_page():
         selected_option = option_menu(
             menu_title='Model Comparisons',
             menu_icon='ui-radios',
-            icons=['graph-up', 'diagram-3', 'bar-chart'],
-            options=['ROC Curve', 'Confusion Matrix', 'Model Performance'],
+            icons=['graph-up', 'diagram-3', 'bar-chart', 'sliders'],
+            options=['ROC Curve', 'Confusion Matrix', 'Model Performance', 'Feature Selection'],
             styles={
                 "container": {"padding": "5px"},
-                "nav-title": {"font-size": "14px", "font-weight": "bold"},
-                "nav-link": {"font-size": "14px", "text-align": "left", "margin": "0px", "padding": "10px", "border-radius": "5px"},
+                "nav-title": {"font-size": "12px", "font-weight": "bold"},
+                "nav-link": {"font-size": "12px", "text-align": "left", "margin": "0px", "padding": "10px", "border-radius": "5px"},
                 "nav-link-selected": {"background-color": "#6eb52f", "color": "white"}
             }
         )
@@ -58,5 +58,18 @@ def risk_model_development_page():
             st.image("static/ICU Train Test Accuracy of Different Models.png", use_column_width=True)
             st.markdown("#### Mortality Train and Test Accuracy")
             st.image("static/Mortality Train Test Accuracy of Different Models.png", use_column_width=True)
+        with col3:
+            st.empty()
+
+    if selected_option == 'Feature Selection':
+        st.markdown("### Feature Selection: Random Forest and Logistic Regression")
+        col1, col2, col3 = st.columns([1, 5, 1])
+        with col1:
+            st.empty()
+        with col2:
+            st.markdown("#### ICU Feature Importance")
+            st.image("static/ICU Feature Importance.png", use_column_width=True)
+            st.markdown("#### Mortality Feature Importance")
+            st.image("static/Mortality Feature Importance.png", use_column_width=True)
         with col3:
             st.empty()
