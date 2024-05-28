@@ -17,6 +17,28 @@ client = gspread.authorize(creds)
 def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
 
+# Function to handle the saving of patient data
+def handle_save_patient_data():
+    patient_id = st.session_state.get('patient_id', '')
+    if patient_id:
+        if patient_id.lower() == 'exit':
+            st.sidebar.write("Patient data not saved.")
+            # Reset saving state
+            st.session_state.saving = False
+            st.session_state.show_patient_form = False
+            st.session_state.show_save_button = False
+        else:
+            # Collect data from session state
+            prediction_data = st.session_state.get('prediction_data', {})
+            prediction_data["Patient ID"] = patient_id
+            
+             # Reset saving state
+            st.session_state.saving = False
+            st.session_state.show_patient_form = False
+            st.session_state.show_save_button = False
+            save_patient_data(prediction_data)
+            st.sidebar.write("Patient data saved successfully.")
+
 # Function to load saved patient data
 def load_saved_patient_data():
     # Get the instance of the Spreadsheet
