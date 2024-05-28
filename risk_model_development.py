@@ -50,7 +50,7 @@ def risk_model_development_page():
 
     if selected_option == 'Model Performance':
         st.markdown("### Model Performance Comparison: Train and Test Accuracy")
-        col1, col2, col3 = st.columns([1, 2, 1])
+        col1, col2, col3 = st.columns([1, 4, 1])
         with col1:
             st.empty()
         with col2:
