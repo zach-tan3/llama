@@ -13,37 +13,86 @@ def risk_model_development_page():
     logo3('static/ICURISK_Logo.png')
     CSS_styling()
 
-    model1_button = st.sidebar.markdown(
-        """
-        <button class="icon-button">
-            <img src="data:image/png;base64,{}" width="20"/>
-            <span>Model 1</span>
-        </button>
-        """.format(base64.b64encode(open("static/model1_icon.png", "rb").read()).decode()),
-        unsafe_allow_html=True
-    )
-    model2_button = st.sidebar.markdown(
-        """
-        <button class="icon-button">
-            <img src="data:image/png;base64,{}" width="20"/>
-            <span>Model 2</span>
-        </button>
-        """.format(base64.b64encode(open("static/model2_icon.png", "rb").read()).decode()),
-        unsafe_allow_html=True
-    )
-    model3_button = st.sidebar.markdown(
-        """
-        <button class="icon-button">
-            <img src="data:image/png;base64,{}" width="20"/>
-            <span>Model 3</span>
-        </button>
-        """.format(base64.b64encode(open("static/model3_icon.png", "rb").read()).decode()),
-        unsafe_allow_html=True
-    )
+    st.markdown("""
+        <style>
+        body {
+            font-family: "sans serif";
+            background-color: #f0f0f5;
+        }
+        .stButton button {
+            background-color: #6eb52f;
+            color: white;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: none;
+            padding: 10px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+        }
+        .stButton button:hover {
+            background-color: #5ca024;
+        }
+        .stButton button:active {
+            background-color: #4b8520;
+        }
+        .stSidebar {
+            background-color: #e0e0ef;
+        }
+        .stSidebar .stButton button {
+            background-color: transparent;
+            color: black;
+            text-align: left;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .stSidebar .stButton button:hover {
+            background-color: #dcdcdc;
+        }
+        .stSidebar .stButton button:active {
+            background-color: #bcbcbc;
+        }
+        .stSidebar .stSelectbox, .stSidebar .stSlider {
+            margin-bottom: 20px;
+        }
+        .stChatMessage {
+            margin-bottom: 20px;
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header-container img {
+            width: 200px;
+            margin-right: 20px;
+        }
+        .vertical-line {
+            border-left: 2px solid #6eb52f;
+            height: 80px;
+            margin-right: 20px;
+        }
+        .logo-text {
+            font-weight: 700;
+            font-size: 40px;
+            color: #000000;
+            padding-top: 18px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
 
-    if st.sidebar.button('Model 1'):
+
+
+    model1_button = st.sidebar.button('Model 1', key='model1_button')
+    model2_button = st.sidebar.button('Model 2', key='model2_button')
+    model3_button = st.sidebar.button('Model 3', key='model3_button')
+
+    if model1_button:
         st.image("static/model1.png")
-    if st.sidebar.button('Model 2'):
+    if model2_button:
         st.image("static/model2.png")
-    if st.sidebar.button('Model 3'):
+    if model3_button:
         st.image("static/model3.png")
