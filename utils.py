@@ -86,7 +86,31 @@ def set_bg(main_bg):
          unsafe_allow_html=True
      )
 
-def logo(image):
+def logo1(image):
+    st.markdown(
+        f"""
+        <div class="header-container">
+            <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(image, "rb").read()).decode()}">
+            <div class='vertical-line'></div>
+            <p class="logo-text">Risk Calculator w/ ChatGPT! 🤖</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+def logo2(image):
+    st.markdown(
+        f"""
+        <div class="header-container">
+            <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(image, "rb").read()).decode()}">
+            <div class='vertical-line'></div>
+            <p class="logo-text">Risk Calculator w/ ChatGPT! 🤖</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+def logo3(image):
     st.markdown(
         f"""
         <div class="header-container">
