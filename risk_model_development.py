@@ -17,13 +17,13 @@ def risk_model_development_page():
     with st.sidebar:
         selected_option = option_menu(
             menu_title='Model Comparisons',
-            menu_icon='list-columns-reverse',
-            icons=['bar-chart-line', 'diagram-3', 'bar-chart'],
+            menu_icon='bar-chart',
+            icons=['line-chart', 'bar-chart', 'graph-up'],
             options=['ROC Curve Comparisons', 'Confusion Matrix Comparisons', 'Model Performance Comparisons'],
             styles={
                 "container": {"padding": "5px"},
-                "nav-title": {"font-size": "5px", "font-weight": "bold"},
-                "nav-link": {"font-size": "12px", "text-align": "left", "margin": "0px", "padding": "10px", "border-radius": "5px"},
+                "nav-title": {"font-size": "12px", "font-weight": "bold"},
+                "nav-link": {"font-size": "10px", "text-align": "left", "margin": "0px", "padding": "10px", "border-radius": "5px"},
                 "nav-link-selected": {"background-color": "#6eb52f", "color": "white"}
             }
         )
@@ -32,19 +32,23 @@ def risk_model_development_page():
         st.markdown("### ROC Curve Comparison: ICU vs. Mortality")
         col1, col2 = st.columns(2)
         with col1:
-            st.image("static/ICU ROC Curve.png", caption="ICU ROC Curve", use_column_width=True)
+            st.markdown("**ICU ROC Curve**")
+            st.image("static/ICU ROC Curve.png", use_column_width=True)
         with col2:
-            st.image("static/Mortality ROC Curve.png", caption="Mortality ROC Curve", use_column_width=True)
+            st.markdown("**Mortality ROC Curve**")
+            st.image("static/Mortality ROC Curve.png", use_column_width=True)
 
     if selected_option == 'Confusion Matrix Comparisons':
         st.markdown("### Confusion Matrix Comparison: ICU vs. Mortality")
         col1, col2 = st.columns(2)
         with col1:
-            st.image("static/ICU Confusion Matrix.png", caption="ICU Confusion Matrix", use_column_width=True)
+            st.markdown("**ICU Confusion Matrix**")
+            st.image("static/ICU Confusion Matrix.png", use_column_width=True)
         with col2:
-            st.image("static/Mortality Confusion Matrix.png", caption="Mortality Confusion Matrix", use_column_width=True)
+            st.markdown("**Mortality Confusion Matrix**")
+            st.image("static/Mortality Confusion Matrix.png", use_column_width=True)
 
     if selected_option == 'Model Performance Comparisons':
         st.markdown("### Model Performance Comparison: Train and Test Accuracy")
-        st.image("static/ICU Train Test Accuracy of Different Models.png", caption="ICU Train and Test Accuracy", use_column_width=True)
-        st.image("static/Mortality Train Test Accuracy of Different Models.png", caption="Mortality Train and Test Accuracy", use_column_width=True)
+        st.image("static/ICU Train Test Accuracy of Different Models.png", caption="ICU Train and Test Accuracy", use_column_width=False, width=500)
+        st.image("static/Mortality Train Test Accuracy of Different Models.png", caption="Mortality Train and Test Accuracy", use_column_width=False, width=500)
