@@ -18,7 +18,7 @@ def risk_model_development_page():
         selected_option = option_menu(
             menu_title='Model Comparisons',
             menu_icon='list-columns-reverse',
-            icons=['bar-line-chart', 'diagram-3', 'bar-chart'],
+            icons=['line-chart', 'diagram-3', 'bar-chart'],
             options=['ROC Curve', 'Confusion Matrix', 'Model Performance'],
             styles={
                 "container": {"padding": "5px"},
@@ -28,7 +28,7 @@ def risk_model_development_page():
             }
         )
 
-    if selected_option == 'ROC Curve Comparisons':
+    if selected_option == 'ROC Curve':
         st.markdown("### ROC Curve Comparison: ICU vs. Mortality")
         col1, col2 = st.columns(2)
         with col1:
@@ -38,7 +38,7 @@ def risk_model_development_page():
             st.markdown("#### Mortality ROC Curve")
             st.image("static/Mortality ROC Curve.png", use_column_width=True)
 
-    if selected_option == 'Confusion Matrix Comparisons':
+    if selected_option == 'Confusion Matrix':
         st.markdown("### Confusion Matrix Comparison: ICU vs. Mortality")
         col1, col2 = st.columns(2)
         with col1:
@@ -48,7 +48,7 @@ def risk_model_development_page():
             st.markdown("#### Mortality Confusion Matrix")
             st.image("static/Mortality Confusion Matrix.png", use_column_width=True)
 
-    if selected_option == 'Model Performance Comparisons':
+    if selected_option == 'Model Performance':
         st.markdown("### Model Performance Comparison: Train and Test Accuracy")
         col1, col2, col3 = st.columns([1, 2, 1])
         with col1:
