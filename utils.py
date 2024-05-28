@@ -48,12 +48,6 @@ def update_patient_data(patient_id, icu_status, mortality_status):
         sheet_instance.update_cell(row, mortality_col, mortality_status)
     return load_saved_patient_data()
 
-def write_cells(spreadsheet_id, update_data):
-    # Function to execute batchUpdate request
-    updating = sheet.spreadsheets().batchUpdate(
-        spreadsheetId=spreadsheet_id, body=update_data)
-    updating.execute()
-
 def delete_patient_data(patient_id):
     # Get the instance of the Spreadsheet
     sheet = client.open('saved_patient_data')
@@ -62,22 +56,6 @@ def delete_patient_data(patient_id):
     # Find the row with the given patient_id
     cell = sheet_instance.find(str(patient_id))
     if cell:
-        row = cell.row
-        # Prepare the batch update request body
-        body = {
-            "requests": [
-                {
-                    "deleteDimension": {
-                        "range": {
-                            "sheetId": sheet_instance.id,
-                            "dimension": "ROWS",
-                            "startIndex": row - 1,
-                            "endIndex": row
-                        }
-                    }
-                }
-            ]
-        }
-        # Execute the batch update request
-        write_cells(sheet_instance, body)
+        # Delete the row with the given patient_id
+        sheet_instance.delete_row(cell.row)
     return load_saved_patient_data()
