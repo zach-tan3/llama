@@ -4,12 +4,14 @@ import pandas as pd
 import numpy as np
 import base64
 import os
-from utils import set_bg
+from utils import set_bg, logo
 
 def risk_model_development_page():
     
     # Custom CSS for styling
     set_bg('static/Light blue background.jpg')
+    logo('static/ICURISK_Logo.png')
+    
     st.markdown("""
         <style>
         body {
