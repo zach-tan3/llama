@@ -20,7 +20,6 @@ def load_saved_patient_data():
     records_data = sheet_instance.get_all_records()
     # Convert the json to dataframe
     records_df = pd.DataFrame.from_dict(records_data)
-    print("Data loaded from Google Sheets:", records_df)  # Debugging line
     return records_df
 
 def save_patient_data(data):
