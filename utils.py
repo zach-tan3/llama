@@ -18,10 +18,8 @@ def save_patient_data(data):
     df.to_csv("saved_data.csv", index=False)
 
 def append_to_csv(data, csv_file):
-    st.sidebar.write("Appending data...")
     df = pd.DataFrame([data])
     df.to_csv(csv_file, mode='a', index=False, header=not os.path.exists(csv_file))
-    print("Data appended successfully.")
 
 def load_saved_patient_data():
     # get the instance of the Spreadsheet
