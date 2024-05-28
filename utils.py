@@ -67,6 +67,7 @@ def load_saved_patient_data():
     records_data = sheet_instance.get_all_records()
     # Convert the json to dataframe
     records_df = pd.DataFrame.from_dict(records_data)
+    print("Data loaded from Google Sheets:", records_df)  # Debugging line
     return records_df
 
 def save_patient_data(data):
@@ -85,7 +86,7 @@ def update_patient_data(patient_id, icu_status, mortality_status):
     # Get the first sheet of the Spreadsheet
     sheet_instance = sheet.get_worksheet(0)
     # Find the row with the given patient_id
-    cell = sheet_instance.find(patient_id)
+    cell = sheet_instance.find(str(patient_id))
     if cell:
         row = cell.row
         # Update the ICU Admission and Mortality status
