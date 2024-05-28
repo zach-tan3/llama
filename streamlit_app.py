@@ -17,56 +17,13 @@ from dotenv import load_dotenv
 from risk_calculator import risk_calculator_page
 from saved_patient_data import saved_patient_data_page
 from risk_model_development import risk_model_development_page
+from utils import CSS_styling
 
 # Set Streamlit configuration
 st.set_page_config(layout="wide")
 
 # Custom CSS for styling
-st.markdown("""
-    <style>
-    body {
-        font-family: "sans serif";
-        background-color: #f0f0f5;
-    }
-    .stButton button {
-        background-color: #6eb52f;
-        color: white;
-    }
-    .stSidebar {
-        background-color: #e0e0ef;
-    }
-    .stSidebar .stButton button {
-        background-color: #6eb52f;
-        color: white;
-    }
-    .stSidebar .stSelectbox, .stSidebar .stSlider {
-        margin-bottom: 20px;
-    }
-    .stChatMessage {
-        margin-bottom: 20px;
-    }
-    .header-container {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-    .header-container img {
-        width: 200px;
-        margin-right: 20px;
-    }
-    .vertical-line {
-        border-left: 2px solid #6eb52f;
-        height: 80px;
-        margin-right: 20px;
-    }
-    .logo-text {
-        font-weight: 700;
-        font-size: 40px;
-        color: #000000;
-        padding-top: 18px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+CSS_styling()
 
 # Sidebar navigation dropdown
 st.sidebar.header("Navigation")
