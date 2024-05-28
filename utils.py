@@ -47,7 +47,7 @@ def update_patient_data(patient_id, icu_status, mortality_status):
         sheet_instance.update_cell(row, mortality_col, mortality_status)
     return load_saved_patient_data()
 
-def delete_patient_data(patient_id):
+'''def delete_patient_data(patient_id):
     # Get the instance of the Spreadsheet
     sheet = client.open('saved_patient_data')
     # Get the first sheet of the Spreadsheet
@@ -58,4 +58,21 @@ def delete_patient_data(patient_id):
         # Delete the row with the given patient_id
         row_index = cell.row
         sheet_instance.delete_row(row_index)
+    return load_saved_patient_data()'''
+
+def delete_patient_data(patient_id):
+    # Get the instance of the Spreadsheet
+    sheet = client.open('saved_patient_data')
+    # Get the first sheet of the Spreadsheet
+    sheet_instance = sheet.get_worksheet(0)
+    # Get all the records of the data
+    records_data = sheet_instance.get_all_records()
+    # Convert the json to dataframe
+    records_df = pd.DataFrame.from_dict(records_data)
+    # Find the row with the given patient_id and delete it
+    records_df = records_df[records_df['Patient ID'].astype(str) != str(patient_id)]
+    # Clear the existing sheet
+    sheet_instance.clear()
+    # Set the headers
+    sheet_instance.update([records_df.columns.values.tolist()] + records_df.values.tolist())
     return load_saved_patient_data()
