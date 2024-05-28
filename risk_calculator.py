@@ -211,7 +211,9 @@ def risk_calculator_page():
                     "SurgicalRiskCategory": SurgicalRiskCategory,
                     "AnesthesiaTypeCategory": AnesthesiaTypeCategory,
                     "GradeofKidneyDisease": GradeofKidneyDisease,
-                    "PriorityCategory": PriorityCategory
+                    "PriorityCategory": PriorityCategory,
+                    "ICU Admission >24 hours": '',
+                    "Mortality": ''
                 }
 
                 # Show the "Save Patient Data" button
