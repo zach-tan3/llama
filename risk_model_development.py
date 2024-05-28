@@ -17,7 +17,7 @@ def risk_model_development_page():
     with st.sidebar:
         selected_option = option_menu(
             menu_title='Model Comparisons',
-            menu_icon='list-columns-reverse',
+            menu_icon='ui-radios',
             icons=['graph-up', 'diagram-3', 'bar-chart'],
             options=['ROC Curve', 'Confusion Matrix', 'Model Performance'],
             styles={
