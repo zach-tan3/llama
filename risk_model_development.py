@@ -60,3 +60,6 @@ def risk_model_development_page():
             st.image("static/Mortality Train Test Accuracy of Different Models.png", use_column_width=True)
         with col1:
             st.empty()
+
+# Run the risk model development page
+risk_model_development_page()
