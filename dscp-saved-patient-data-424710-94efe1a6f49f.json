@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "dscp-saved-patient-data-424710",
+  "private_key_id": "94efe1a6f49fd186bf52a5c3eff25ba960e940ea",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC1a86WQ0eDlgQA\niPTihbhlpoBjMPwnXRINHdvS6ZD7ZKKFnJwE5/kZZtausLlWEgo9pomCkQfqsvxF\naW0LOG6Z0cuunjZGWp0rMGUBEmR+IdDalt/3hIeSfCdsdvPsB0P708dvi6fO2aA/\nSHsVgP0T/6pcE3whntUvju4qSyiw03BP+K9xMWyqtKvVahDejx7ONKNK2k4fbwOL\ncufD1xv+pj1fKhjKQBUqS2Fb+K+/n+SnTQF8snv9hA2skX5bD8/VOKylfFCyVKAz\n5fqLMy+tbjjJiODZiGhe018aYdF6nid8p1ZB94QmA33yhv/unN2W/8a+75geEFqi\n6MsdWCHrAgMBAAECggEAGJh+EIccie1rq3rl4FQKtNVG8Kuyc8+9Y8PZipWZz0tM\ncVrTGCMu9U+o6VQSPGYDt2n9mJL7BMmxQ+PQIcZL0FTODWVrrEwapMFR4DxTHXqO\nKyRrRs5T5vsoCR9zYFt3zwteLXQ8kuGURSAZd8feB7kQqp0FpjU3Z9Qz284GvToi\nchzMZcA5bBycN6HEEXK1MS8WmeDF/3VdYCawgL3vLo/oGj25qBkXqydCXxRcg/dN\nQkUA1YIBGI1u6UWDhdu2KjdyOVER+ciFhQqo7UnjDYTSWeShq4isSy1K3IbLxCj/\nmCpLbiQga+kDpTR0eFLTABq5I9OcWGvg+79qLJmkGQKBgQDuljNThH7Nss6oEhCG\nvEVWcsnVh0/9UeLBD3JE36jW/HV+XoE3tFgSpXocUoEGVjB2v0D78THOq8cAWLKk\nQ5QsUX0o7OY4Wfi1bZExulB9V9UL0wuhlpTjZ01OlEsa3kHAJLC2m/cNLbyrNQXL\nr4AMc2XJ24wnxz+uR0lbfvOsLwKBgQDCqYN6kL0h8Nal6dgJGtxrnMjw1GnnsBdJ\nCe53K5DW9XtD4c5szZCoIGhZDU6k77xwXivMifOQdjqTQdJTCUznbY7XoVN40GDH\nFqfSwf6p8C58fm14a8TRsv2Mn/jpo6Dl+GUpEm+5CTwWwrAmMT7HFeUJoum6u3rb\nkE9AthxLBQKBgCf9oyLHnZ2K8Bq51G1RF2ozGWOiJ6U1WYW0uhmTR7CpZmRFIPGe\nV/jgJcSji57tSXhN/G1+czPKFTQYqfDgpvB6xDjc5IXjhs2aTPEB4sXvt/Ugbd2q\n6M/pG8slDiW1xV2YiMpDADkERpCH9a27gAIWQaSBGU/9lM34gvJEKEHfAoGAWueo\nk7s157y9sJtknNPjbYm5OOYpUt4j8aLmrtY0fH4FA21W5e6ViD4iHLwfJt0hxePk\nVk9x49uifRQ28TodpNG/7CjVf0zodPC6jKy1jYyxWMf9vUeukTMiPuKR7iHQyLRY\nIXcPn3yViBeBBUToCTbLT9W5is90j0Z0DEc/LTUCgYApBGTnqVGMJKODqFrIOJLG\nDRfyVWToC+s35+BSuo12byikPd51oe0DyI0Y4yqMyXR7K5k+1STj6vxQjwB0Gko3\nXGWse7xGceEU2lIoVOFdiZ/2iv9xkRohZ73go6P/9uwkF5ZKTBaDyhRtwNnOSCEL\nm+fVzYpO3+AwENDy9aG1bw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "my-service-account@dscp-saved-patient-data-424710.iam.gserviceaccount.com",
+  "client_id": "106340386023879736041",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40dscp-saved-patient-data-424710.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
