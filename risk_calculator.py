@@ -19,7 +19,7 @@ def risk_calculator_page():
     # Title and description with logo
     set_bg('static/Light blue background.jpg')
     logo1('static/ICURISK_Logo.png')
-    
+    '''
     load_dotenv()
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -35,7 +35,7 @@ def risk_calculator_page():
             st.write(response)
         except openai.error.AuthenticationError:
             st.error("Invalid OpenAI API key! Please check your API key and try again.")
-    
+    '''
     if "messages" not in st.session_state:
         st.session_state.messages = []
     
