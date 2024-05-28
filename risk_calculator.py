@@ -31,12 +31,12 @@ def handle_save_patient_data():
             # Collect data from session state
             prediction_data = st.session_state.get('prediction_data', {})
             prediction_data["Patient ID"] = patient_id
-
+            
              # Reset saving state
             st.session_state.saving = False
             st.session_state.show_patient_form = False
             st.session_state.show_save_button = False
-            
+            st.sidebar.write("Patient data saved successfully.")
             save_patient_data(prediction_data)
             st.sidebar.write("Patient data saved successfully.")
            
@@ -211,9 +211,7 @@ def risk_calculator_page():
                     "SurgicalRiskCategory": SurgicalRiskCategory,
                     "AnesthesiaTypeCategory": AnesthesiaTypeCategory,
                     "GradeofKidneyDisease": GradeofKidneyDisease,
-                    "PriorityCategory": PriorityCategory,
-                    "ICU Admission>24 hours": '',
-                    "Mortality": ''
+                    "PriorityCategory": PriorityCategory
                 }
 
                 # Show the "Save Patient Data" button
