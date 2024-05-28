@@ -193,13 +193,10 @@ def saved_patient_data_page():
     st.sidebar.header("Delete Patient Data")
     delete_patient_id = st.sidebar.text_input("Patient ID to Delete")
     
-    if st.sidebar.button("Delete Row", key="delete_button", help="Delete the row with the specified Patient ID", use_container_width=True):
-        if delete_patient_id.lower() == 'cancel':
-            st.sidebar.write("Deletion canceled.")
+    if st.sidebar.button("Delete Row", key="delete_button"):
+        data = delete_patient_data(delete_patient_id)
+        if str(delete_patient_id) in data["Patient ID"].astype(str).values:
+            st.sidebar.write("Patient ID not found in saved data.")
         else:
-            data = delete_patient_data(delete_patient_id)
-            if str(delete_patient_id) in data["Patient ID"].astype(str).values:
-                st.sidebar.write("Patient ID not found in saved data.")
-            else:
-                st.sidebar.write("Patient data deleted successfully.")
-                table_placeholder.dataframe(data)  # Update the table in the same placeholder
+            st.sidebar.write("Patient data deleted successfully.")
+            table_placeholder.dataframe(data)  # Update the table in the same placeholder
