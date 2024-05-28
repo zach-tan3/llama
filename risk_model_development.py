@@ -10,7 +10,7 @@ def risk_model_development_page():
     # Custom CSS for styling
     set_bg('static/Light blue background.jpg')
     logo3('static/ICURISK_Logo.png')
-     st.markdown("""
+    st.markdown("""
         <style>
         body {
             font-family: "sans serif";
