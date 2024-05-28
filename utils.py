@@ -3,6 +3,7 @@ import os
 
 def save_patient_data(data):
     print("Saving patient data:", data)
+    st.sidebar.write("Saving patient data")
     df = load_saved_patient_data()
     df = df.append(data, ignore_index=True)
     df.to_csv("saved_data.csv", index=False)
