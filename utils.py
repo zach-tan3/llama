@@ -1,8 +1,6 @@
 import pandas as pd
 import os
 import gspread
-
-'''
 from oauth2client.service_account import ServiceAccountCredentials
 
 # define the scope
@@ -13,7 +11,6 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('dscp-saved-patient-dat
 
 # authorize the clientsheet 
 client = gspread.authorize(creds)
-'''
 
 def save_patient_data(data):
     print("Saving patient data:", data)
