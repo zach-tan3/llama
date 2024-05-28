@@ -21,7 +21,7 @@ def risk_model_development_page():
             icons=['bar-chart-line', 'diagram-3'],
             options=['ROC Curve Comparisons', 'Confusion Matrix Comparisons'],
             styles={
-                "container": {"padding": "5px"},
+                "container": {"padding": "4px"},
                 "nav-title": {"font-size": "12px", "font-weight": "bold"},
                 "nav-link": {"font-size": "12px", "text-align": "left", "margin": "0px", "padding": "10px", "border-radius": "5px"},
                 "nav-link-selected": {"background-color": "#6eb52f", "color": "white"}
