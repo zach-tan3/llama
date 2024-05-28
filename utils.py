@@ -1,6 +1,7 @@
 import pandas as pd
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from googleapiclient.discovery import build
 
 # Define the scope
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
@@ -56,6 +57,21 @@ def delete_patient_data(patient_id):
     cell = sheet_instance.find(str(patient_id))
     if cell:
         row = cell.row
-        # Delete the row with the given patient_id
-        sheet_instance.delete_row(row)
+        # Prepare the batch update request body
+        body = {
+            "requests": [
+                {
+                    "deleteDimension": {
+                        "range": {
+                            "sheetId": sheet_instance.id,
+                            "dimension": "ROWS",
+                            "startIndex": row - 1,
+                            "endIndex": row
+                        }
+                    }
+                }
+            ]
+        }
+        # Execute the batch update request
+        service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
     return load_saved_patient_data()
