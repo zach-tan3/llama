@@ -69,10 +69,14 @@ def delete_patient_data(patient_id):
     records_data = sheet_instance.get_all_records()
     # Convert the json to dataframe
     records_df = pd.DataFrame.from_dict(records_data)
-    # Find the row with the given patient_id and delete it
-    records_df = records_df[records_df['Patient ID'].astype(str) != str(patient_id)]
-    # Clear the existing sheet
-    sheet_instance.clear()
-    # Set the headers
-    sheet_instance.update([records_df.columns.values.tolist()] + records_df.values.tolist())
-    return load_saved_patient_data()
+    # Check if the patient ID exists in the data
+    if str(patient_id) in records_df["Patient ID"].astype(str).values:
+        # Find the row with the given patient_id and delete it
+        records_df = records_df[records_df['Patient ID'].astype(str) != str(patient_id)]
+        # Clear the existing sheet
+        sheet_instance.clear()
+        # Set the headers
+        sheet_instance.update([records_df.columns.values.tolist()] + records_df.values.tolist())
+        return records_df, True
+    else:
+        return records_df, False
