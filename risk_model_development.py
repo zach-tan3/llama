@@ -6,8 +6,9 @@ import base64
 import os
 
 def risk_model_development_page():
-
+	
 # Custom CSS for styling
+	set_bg('static/Light-Blue-Background-Science-Medical-with-Gradient-and-Wavy-Lines-by-SlidesCorner.com_.jpg')
     st.markdown("""
         <style>
         body {
@@ -44,10 +45,6 @@ def risk_model_development_page():
             border-left: 2px solid #6eb52f;
             height: 80px;
             margin-right: 20px;
-        }
-        .stApp {
-	       background: url(data:image/{main_bg_ext};base64,{base64.b64encode(open(main_bg, "rb").read()).decode()});
-	       background-size: cover
         }
         .logo-text {
             font-weight: 700;
