@@ -13,18 +13,19 @@ def risk_model_development_page():
     logo3('static/ICURISK_Logo.png')
     CSS_styling()
 
-    selected_option = option_menu(
-        menu_title='Model Comparisons',
-        menu_icon='list-columns-reverse',
-        icons=['bar-chart-line', 'diagram-3'],
-        options=['ROC Curve Comparisons', 'Confusion Matrix Comparisons'],
-        styles={
-            "container": {"padding": "5px"},
-            "nav-link": {"font-size": "16px", "text-align": "left", "margin": "0px", "padding": "10px", "border-radius": "5px"},
-            "nav-link-selected": {"background-color": "#6eb52f", "color": "white"}
-        },
-        orientation='vertical'
-    )
+    # Sidebar menu
+    with st.sidebar:
+        selected_option = option_menu(
+            menu_title='Model Comparisons',
+            menu_icon='list-columns-reverse',
+            icons=['bar-chart-line', 'diagram-3'],
+            options=['ROC Curve Comparisons', 'Confusion Matrix Comparisons'],
+            styles={
+                "container": {"padding": "5px"},
+                "nav-link": {"font-size": "16px", "text-align": "left", "margin": "0px", "padding": "10px", "border-radius": "5px"},
+                "nav-link-selected": {"background-color": "#6eb52f", "color": "white"}
+            }
+        )
 
     if selected_option == 'ROC Curve Comparisons':
         st.markdown("### ROC Curve Comparison: ICU vs. Mortality")
