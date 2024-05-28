@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-'''
+
 # define the scope
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 
@@ -11,7 +11,7 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('dscp-saved-patient-dat
 
 # authorize the clientsheet 
 client = gspread.authorize(creds)
-'''
+
 def save_patient_data(data):
     print("Saving patient data:", data)
     st.sidebar.write("Saving patient data")
@@ -27,6 +27,16 @@ def append_to_csv(data, csv_file):
     print("Data appended successfully.")
 
 def load_saved_patient_data():
+    # get the instance of the Spreadsheet
+    sheet = client.open('saved_patient_data')
+    # get the first sheet of the Spreadsheet
+    sheet_instance = sheet.get_worksheet(0)
+    # get all the records of the data
+    records_data = sheet_instance.get_all_records()
+    # convert the json to dataframe
+    records_df = pd.DataFrame.from_dict(records_data)
+    
+    '''
     print("Loading saved patient data...")
     if os.path.exists("saved_data.csv"):
         try:
@@ -39,3 +49,4 @@ def load_saved_patient_data():
     else:
         print("File not found. Returning empty dataframe.")
         return pd.DataFrame(columns=["Patient ID", "Age", "PreopEGFRMDRD", "Intraop", "ASACategoryBinned", "AnemiaCategoryBinned", "RDW15.7", "SurgicalRiskCategory", "AnesthesiaTypeCategory", "GradeofKidneyDisease", "PriorityCategory", "ICU Probability", "Mortality Probability", "ICU Admission >24 hours", "Mortality"])
+'''
