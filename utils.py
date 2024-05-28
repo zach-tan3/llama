@@ -73,5 +73,5 @@ def delete_patient_data(patient_id):
             ]
         }
         # Execute the batch update request
-        service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
+        sheet.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
     return load_saved_patient_data()
