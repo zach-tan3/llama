@@ -427,14 +427,14 @@ def risk_calculator_page():
                     "Mortality": ''
                 }
 
-    # Handle saving patient data
-    if st.sidebar.button('Save Patient Data'):
-        st.session_state.show_patient_form = True
+        # Handle saving patient data
+        if st.sidebar.button('Save Patient Data'):
+            st.session_state.show_patient_form = True
+        
+        if st.session_state.get('show_patient_form', False):
+            with st.sidebar.form(key='patient_id_form'):
+                st.session_state.patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
+                submit_button = st.form_submit_button("Submit ID")
     
-    if st.session_state.get('show_patient_form', False):
-        with st.sidebar.form(key='patient_id_form'):
-            st.session_state.patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
-            submit_button = st.form_submit_button("Submit ID")
-
-        if submit_button:
-            handle_save_patient_data()
+            if submit_button:
+                handle_save_patient_data()
