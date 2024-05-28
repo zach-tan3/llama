@@ -21,12 +21,25 @@ def clear_chat_history():
 
 # Function to handle saving patient data
 def handle_save_patient_data():
+    with st.sidebar.form(key='patient_id_form'):
+        patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
+        submit_button = st.form_submit_button("Submit ID")
+
+        if submit_button:
+            if patient_id.lower() == 'exit':
+                st.sidebar.write("Patient data not saved.")
+            else:
+                # Collect data from session state
+                prediction_data = st.session_state.get('prediction_data', {})
+                prediction_data["Patient ID"] = patient_id
+                save_patient_data(prediction_data)
+                st.sidebar.write("Patient data saved successfully.")
+                # Reset saving state
+                st.session_state.saving = False
+'''def handle_save_patient_data():
     patient_id = st.sidebar.text_input("Enter Patient ID (type 'exit' to cancel):")
     if st.sidebar.button("Submit ID"):
         if patient_id.lower() == 'exit':
-            if "messages" not in st.session_state:
-                st.session_state.messages = [{"role": "assistant", "content": "Patient data not saved."}]
-    
             st.write("Patient data not saved.")
         else:
             # Collect data from session state
@@ -35,7 +48,7 @@ def handle_save_patient_data():
             save_patient_data(prediction_data)
             st.write("Patient data saved successfully.")
             # Reset saving state
-            st.session_state.saving = False
+            st.session_state.saving = False'''
             
 # Function for main risk calculator
 def risk_calculator_page():
