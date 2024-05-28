@@ -428,5 +428,5 @@ def risk_calculator_page():
                 }
 
     # Handle saving patient data
-    #if st.sidebar.button('Save Patient Data'):
-    handle_save_patient_data()
+    if st.sidebar.button('Save Patient Data'):
+        handle_save_patient_data()
