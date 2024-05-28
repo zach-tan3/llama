@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import base64
 import os
+from streamlit_option_menu import option_menu
 from utils import set_bg, logo3, CSS_styling
 
 def risk_model_development_page():
