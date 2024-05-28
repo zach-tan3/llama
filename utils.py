@@ -48,8 +48,13 @@ def update_patient_data(patient_id, icu_status, mortality_status):
     return load_saved_patient_data()
 
 def delete_patient_data(patient_id):
+    # Get the instance of the Spreadsheet
     sheet = client.open('saved_patient_data')
-    cell = sheet.find(patient_id)
+    # Get the first sheet of the Spreadsheet
+    sheet_instance = sheet.get_worksheet(0)
+    # Find the row with the given patient_id
+    cell = sheet_instance.find(str(patient_id))
     if cell:
-        sheet.delete_row(cell.row)
+        # Delete the row with the given patient_id
+        sheet_instance.delete_row(cell.row)
     return load_saved_patient_data()
