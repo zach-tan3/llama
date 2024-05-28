@@ -3,21 +3,7 @@ import pandas as pd
 import numpy as np
 import base64
 import os
-from utils import save_patient_data, append_to_csv
-
-def load_saved_patient_data():
-    print("Loading saved patient data...")
-    if os.path.exists("saved_data.csv"):
-        try:
-            data = pd.read_csv("saved_data.csv")
-            print("Data loaded successfully.")
-            return data
-        except pd.errors.EmptyDataError:
-            print("Empty data error encountered. Returning empty dataframe.")
-            return pd.DataFrame(columns=["Patient ID", "Age", "PreopEGFRMDRD", "Intraop", "ASACategoryBinned", "AnemiaCategoryBinned", "RDW15.7", "SurgicalRiskCategory", "AnesthesiaTypeCategory", "GradeofKidneyDisease", "PriorityCategory", "ICU Probability", "Mortality Probability", "ICU Admission >24 hours", "Mortality"])
-    else:
-        print("File not found. Returning empty dataframe.")
-        return pd.DataFrame(columns=["Patient ID", "Age", "PreopEGFRMDRD", "Intraop", "ASACategoryBinned", "AnemiaCategoryBinned", "RDW15.7", "SurgicalRiskCategory", "AnesthesiaTypeCategory", "GradeofKidneyDisease", "PriorityCategory", "ICU Probability", "Mortality Probability", "ICU Admission >24 hours", "Mortality"])
+from utils import load_saved_patient_data, save_patient_data, append_to_csv
 
 def saved_patient_data_page():
     
