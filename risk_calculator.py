@@ -430,18 +430,18 @@ def risk_calculator_page():
     # Handle saving patient data
     if st.sidebar.button('Save Patient Data'):
         with st.sidebar.form(key='patient_id_form'):
-        patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
-        submit_button = st.form_submit_button("Submit ID")
-
-        if submit_button:
-            if patient_id.lower() == 'exit':
-                risk_model_development_page()
-                st.sidebar.write("Patient data not saved.")
-            else:
-                # Collect data from session state
-                prediction_data = st.session_state.get('prediction_data', {})
-                prediction_data["Patient ID"] = patient_id
-                save_patient_data(prediction_data)
-                st.sidebar.write("Patient data saved successfully.")
-                # Reset saving state
-                st.session_state.saving = False
+            patient_id = st.text_input("Enter Patient ID (type 'exit' to cancel):")
+            submit_button = st.form_submit_button("Submit ID")
+    
+            if submit_button:
+                if patient_id.lower() == 'exit':
+                    risk_model_development_page()
+                    st.sidebar.write("Patient data not saved.")
+                else:
+                    # Collect data from session state
+                    prediction_data = st.session_state.get('prediction_data', {})
+                    prediction_data["Patient ID"] = patient_id
+                    save_patient_data(prediction_data)
+                    st.sidebar.write("Patient data saved successfully.")
+                    # Reset saving state
+                    st.session_state.saving = False
