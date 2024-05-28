@@ -45,7 +45,4 @@ def update_patient_data(patient_id, icu_status, mortality_status):
         mortality_col = sheet_instance.find("Mortality").col
         sheet_instance.update_cell(row, icu_col, icu_status)
         sheet_instance.update_cell(row, mortality_col, mortality_status)
-        print("Patient data updated successfully.")
-    else:
-        print("Patient ID not found.")
     return load_saved_patient_data()
