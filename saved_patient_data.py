@@ -3,12 +3,13 @@ import pandas as pd
 import numpy as np
 import base64
 import os
-from utils import load_saved_patient_data, update_patient_data, delete_patient_data, set_bg
+from utils import load_saved_patient_data, update_patient_data, delete_patient_data, set_bg, logo
 
 def saved_patient_data_page():
     
     # Custom CSS for styling
     set_bg('static/Light blue background.jpg')
+    logo('static/ICURISK_Logo.png')
     st.markdown("""
         <style>
         body {
