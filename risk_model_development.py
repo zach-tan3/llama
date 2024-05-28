@@ -10,7 +10,7 @@ from utils import set_bg
 def risk_model_development_page():
 	
 # Custom CSS for styling
-	set_bg('static/Light-Blue-Background-Science-Medical-with-Gradient-and-Wavy-Lines-by-SlidesCorner.com_.jpg')
+    set_bg('static/Light-Blue-Background-Science-Medical-with-Gradient-and-Wavy-Lines-by-SlidesCorner.com_.jpg')
     st.markdown("""
         <style>
         body {
