@@ -46,3 +46,10 @@ def update_patient_data(patient_id, icu_status, mortality_status):
         sheet_instance.update_cell(row, icu_col, icu_status)
         sheet_instance.update_cell(row, mortality_col, mortality_status)
     return load_saved_patient_data()
+
+def delete_patient_data(patient_id):
+    sheet = client.open('saved_patient_data').sheet1
+    cell = sheet.find(patient_id)
+    if cell:
+        sheet.delete_row(cell.row)
+    return load_saved_patient_data()
