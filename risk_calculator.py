@@ -42,7 +42,7 @@ def handle_save_patient_data():
 # Function for main risk calculator
 def risk_calculator_page():
     # Title and description with logo
-    set_bg('static/istockphoto-1331579485-612x612.jpg')
+    set_bg('static/Light blue background.jpg')
     LOGO_IMAGE = "static/ICURISK_Logo.png"
     st.markdown(
         f"""
