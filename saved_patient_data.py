@@ -85,6 +85,6 @@ def saved_patient_data_page():
         data = update_patient_data(patient_id, icu_status, mortality_status)
         if str(patient_id) in data["Patient ID"].astype(str).values:
             st.sidebar.write("Patient data updated successfully.")
-            #st.dataframe(data)
+            st.dataframe(data)
         else:
             st.sidebar.write("Patient ID not found in saved data.")
