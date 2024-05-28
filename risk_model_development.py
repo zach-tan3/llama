@@ -16,7 +16,7 @@ def risk_model_development_page():
     # Sidebar menu with smaller font sizes
     with st.sidebar:
         selected_option = option_menu(
-            menu_subtitle='Model Comparisons',
+            menu_title='Model Comparisons',
             menu_icon='list-columns-reverse',
             icons=['bar-chart-line', 'diagram-3'],
             options=['ROC Curve Comparisons', 'Confusion Matrix Comparisons'],
