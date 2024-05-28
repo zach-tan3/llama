@@ -3,62 +3,14 @@ import pandas as pd
 import numpy as np
 import base64
 import os
-from utils import load_saved_patient_data, update_patient_data, delete_patient_data, set_bg, logo2
+from utils import load_saved_patient_data, update_patient_data, delete_patient_data, set_bg, logo2, CSS_styling
 
 def saved_patient_data_page():
     
     # Custom CSS for styling
     set_bg('static/Light blue background.jpg')
     logo2('static/ICURISK_Logo.png')
-    st.markdown("""
-        <style>
-        body {
-            font-family: "sans serif";
-            background-color: #f0f0f5;
-        }
-        .stButton button {
-            background-color: #6eb52f;
-            color: white;
-        }
-        .stButton.red-button button {
-            background-color: #ff4d4d;
-            color: white;
-        }
-        .stSidebar {
-            background-color: #e0e0ef;
-        }
-        .stSidebar .stButton button {
-            background-color: #6eb52f;
-            color: white;
-        }
-        .stSidebar .stSelectbox, .stSidebar .stSlider {
-            margin-bottom: 20px;
-        }
-        .stChatMessage {
-            margin-bottom: 20px;
-        }
-        .header-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .header-container img {
-            width: 200px;
-            margin-right: 20px;
-        }
-        .vertical-line {
-            border-left: 2px solid #6eb52f;
-            height: 80px;
-            margin-right: 20px;
-        }
-        .logo-text {
-            font-weight: 700;
-            font-size: 40px;
-            color: #000000;
-            padding-top: 18px;
-        }
-        </style>
-        """, unsafe_allow_html=True)
+    CSS_styling()
     
     # Load saved data
     data = load_saved_patient_data()
