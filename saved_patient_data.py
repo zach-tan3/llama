@@ -159,7 +159,8 @@ def saved_patient_data_page():
     
     # Load saved data
     data = load_saved_patient_data()
-    
+    st.write("Loaded data:", data)  # Debugging line
+
     if data.empty:
         st.write("No saved patient data found. The table will appear here when you save patient data.")
     else:
@@ -173,8 +174,10 @@ def saved_patient_data_page():
     
     if st.sidebar.button("Update Status"):
         data = update_patient_data(patient_id, icu_status, mortality_status)
-        if patient_id in data["Patient ID"].values:
+        st.write("Updated data:", data)  # Debugging line
+        if str(patient_id) in data["Patient ID"].astype(str).values:
             st.sidebar.write("Patient data updated successfully.")
             st.dataframe(data)
         else:
             st.sidebar.write("Patient ID not found in saved data.")
+
