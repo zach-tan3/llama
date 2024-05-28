@@ -3,13 +3,13 @@ import os
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-# define the scope
+# Define the scope
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 
-# add credentials to the account
+# Add credentials to the account
 creds = ServiceAccountCredentials.from_json_keyfile_name('dscp-saved-patient-data-424710-94efe1a6f49f.json', scope)
 
-# authorize the clientsheet 
+# Authorize the clientsheet 
 client = gspread.authorize(creds)
 
 def save_patient_data(data):
