@@ -4,3 +4,5 @@ streamlit
 replicate
 openai
 python-dotenv
+gspread
+--upgrade google-api-python-client oauth2client
