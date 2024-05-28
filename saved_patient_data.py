@@ -1,4 +1,4 @@
-'''import streamlit as st
+import streamlit as st
 import pandas as pd
 import numpy as np
 import base64
@@ -88,4 +88,3 @@ def saved_patient_data_page():
             st.dataframe(data)
         else:
             st.sidebar.write("Patient ID not found in saved data.")
-'''
