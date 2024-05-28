@@ -64,7 +64,6 @@ def save_patient_data(data):
     # Append the new row to Google Sheets
     row = [data.get(col) for col in load_saved_patient_data().columns]
     sheet_instance.append_row(row)
-    print("Data saved successfully.")
 
 def update_patient_data(patient_id, icu_status, mortality_status):
     # Get the instance of the Spreadsheet
@@ -78,6 +77,4 @@ def update_patient_data(patient_id, icu_status, mortality_status):
         # Update the ICU Admission and Mortality status
         sheet_instance.update_cell(row, sheet_instance.find("ICU Admission >24 hours").col, icu_status)
         sheet_instance.update_cell(row, sheet_instance.find("Mortality").col, mortality_status)
-        print("Patient data updated successfully.")
-    else:
-        print("Patient ID not found.")
+    load_saved_patient_data()
