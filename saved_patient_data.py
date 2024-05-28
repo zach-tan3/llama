@@ -39,7 +39,7 @@ def saved_patient_data_page():
         .header-container {
             display: flex;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         .header-container img {
             width: 200px;
