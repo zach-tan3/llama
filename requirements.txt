@@ -2,7 +2,7 @@ scikit-learn
 torch==1.13.0
 streamlit
 replicate
-openai
+openai==0.28
 python-dotenv
 pygsheets
 gspread
