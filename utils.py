@@ -79,5 +79,5 @@ def delete_patient_data(patient_id):
             ]
         }
         # Execute the batch update request
-        write_cells(spreadsheet_id, body)
+        write_cells(sheet_instance, body)
     return load_saved_patient_data()
