@@ -45,6 +45,10 @@ def risk_model_development_page():
             height: 80px;
             margin-right: 20px;
         }
+        .stApp {
+	       background: url(data:image/{main_bg_ext};base64,{base64.b64encode(open(main_bg, "rb").read()).decode()});
+	       background-size: cover
+        }
         .logo-text {
             font-weight: 700;
             font-size: 40px;
