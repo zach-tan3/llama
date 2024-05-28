@@ -70,11 +70,10 @@ def saved_patient_data_page():
     # Load saved data
     data = load_saved_patient_data()
 
-    data_placeholder = st.empty()
     if data.empty:
-        data_placeholder.write("No saved patient data found. The table will appear here when you save patient data.")
+        st.write("No saved patient data found. The table will appear here when you save patient data.")
     else:
-        data_placeholder.dataframe(data)
+        st.dataframe(data)
     
     # Allow updating ICU and Mortality status
     st.sidebar.header("Update Patient Data")
@@ -86,7 +85,6 @@ def saved_patient_data_page():
         data = update_patient_data(patient_id, icu_status, mortality_status)
         if str(patient_id) in data["Patient ID"].astype(str).values:
             st.sidebar.write("Patient data updated successfully.")
-            data_placeholder.empty()  # Clear the old table
-            data_placeholder.dataframe(data)  # Display the updated table
+            st.dataframe(data)
         else:
             st.sidebar.write("Patient ID not found in saved data.")
