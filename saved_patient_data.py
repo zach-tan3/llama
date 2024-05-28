@@ -312,4 +312,3 @@ def saved_patient_data_page():
         else:
             st.sidebar.write("Patient data deleted successfully.")
             table_placeholder.dataframe(data)  # Update the table in the same placeholder
-
