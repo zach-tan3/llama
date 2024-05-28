@@ -30,7 +30,6 @@ def save_patient_data(data):
     # Append the new row to Google Sheets
     row = [data.get(col) for col in load_saved_patient_data().columns]
     sheet_instance.append_row(row)
-    print("Data saved successfully.")
 
 def update_patient_data(patient_id, icu_status, mortality_status):
     # Get the instance of the Spreadsheet
