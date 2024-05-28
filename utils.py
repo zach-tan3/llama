@@ -1,6 +1,7 @@
 import pandas as pd
 import gspread
 import streamlit as st
+import base64
 from oauth2client.service_account import ServiceAccountCredentials
 
 # Define the scope
