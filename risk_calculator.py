@@ -12,11 +12,7 @@ from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 import openai
 import base64
 from dotenv import load_dotenv
-from utils import save_patient_data, update_patient_data, load_saved_patient_data, set_bg, logo1
-
-# Function to clear chat history
-def clear_chat_history():
-    st.session_state.messages = [{"role": "assistant", "content": "This is a risk calculator for need for admission into an Intensive Care Unit (ICU) of a patient post-surgery and for Mortality. Ask me anything."}]
+from utils import save_patient_data, update_patient_data, load_saved_patient_data, set_bg, logo1, clear_chat_history
 
 def handle_save_patient_data():
     patient_id = st.session_state.get('patient_id', '')
