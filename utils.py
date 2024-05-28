@@ -50,7 +50,7 @@ def update_patient_data(patient_id, icu_status, mortality_status):
 
 def write_cells(spreadsheet_id, update_data):
     # Function to execute batchUpdate request
-    updating = sheet_instance.spreadsheets().batchUpdate(
+    updating = sheet.spreadsheets().batchUpdate(
         spreadsheetId=spreadsheet_id, body=update_data)
     updating.execute()
 
