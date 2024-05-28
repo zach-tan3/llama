@@ -19,11 +19,11 @@ def risk_model_development_page():
             menu_title='Model Comparisons',
             menu_icon='list-columns-reverse',
             icons=['line-chart', 'diagram-3', 'bar-chart'],
-            options=['ROC Curve Comparisons', 'Confusion Matrix Comparisons', 'Model Performance Comparisons'],
+            options=['ROC Curve', 'Confusion Matrix', 'Model Performance'],
             styles={
                 "container": {"padding": "5px"},
-                "nav-title": {"font-size": "12px", "font-weight": "bold"},
-                "nav-link": {"font-size": "12px", "text-align": "left", "margin": "0px", "padding": "10px", "border-radius": "5px"},
+                "nav-title": {"font-size": "14px", "font-weight": "bold"},
+                "nav-link": {"font-size": "14px", "text-align": "left", "margin": "0px", "padding": "10px", "border-radius": "5px"},
                 "nav-link-selected": {"background-color": "#6eb52f", "color": "white"}
             }
         )
