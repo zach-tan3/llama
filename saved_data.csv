@@ -1,2 +1,0 @@
-Patient ID,Age,PreopEGFRMDRD,Intraop,ASACategoryBinned,AnemiaCategoryBinned,RDW157,SurgicalRiskCategory,AnesthesiaTypeCategory,GradeofKidneyDisease,PriorityCategory,ICU Admission >24 hours,Mortality
-123,40,80,0,i,Mild,<= 15.7,Low,Ga,G1,Elective,No,No
