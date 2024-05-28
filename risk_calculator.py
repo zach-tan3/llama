@@ -19,7 +19,6 @@ def risk_calculator_page():
     # Title and description with logo
     set_bg('static/Light blue background.jpg')
     logo1('static/ICURISK_Logo.png')
-    clear_chat_history()
            
     openai.api_key = ''
     
