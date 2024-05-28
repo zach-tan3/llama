@@ -122,7 +122,7 @@ def risk_calculator_page():
     Age = st.sidebar.slider('Age', 18, 99, 40)
     PreopEGFRMDRD = st.sidebar.slider('PreopEGFRMDRD', 0, 160, 80)
     Intraop = st.sidebar.slider('Intraop', 0, 1, 0)
-    ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['I', 'Ii', 'Iii', 'Iv-Vi'])
+    ASACategoryBinned = st.sidebar.selectbox('ASA Category Binned', ['i', 'ii', 'iii', 'iv-vi'])
     AnemiaCategoryBinned = st.sidebar.selectbox('Anemia Category Binned', ['None', 'Mild', 'Moderate/Severe'])
     RDW157 = st.sidebar.selectbox('RDW15.7', ['<= 15.7', '>15.7'])
     SurgicalRiskCategory = st.sidebar.selectbox('Surgical Risk', ['Low', 'Moderate', 'High'])
@@ -162,7 +162,7 @@ def risk_calculator_page():
                                             'PriorityCategory': [PriorityCategory]})    
 
                 # Mappings of categorical values
-                ASAcategorybinned_mapper = {"I": 0, "Ii": 1, 'Iii': 2, 'Iv-Vi': 3}
+                ASAcategorybinned_mapper = {"i": 0, "ii": 1, 'iii': 2, 'iv-vi': 3}
                 GradeofKidneydisease_mapper = {"Blank": 0, "G1": 1, "G2": 2, "G3a": 3, "G3b": 4, "G4": 5, "G5": 6}
                 Anemiacategorybinned_mapper = {"None": 0, "Mild": 1, "Moderate/Severe": 2}
                 RDW157_mapper = {"<= 15.7": 0, ">15.7": 1}
