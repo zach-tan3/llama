@@ -48,7 +48,7 @@ def update_patient_data(patient_id, icu_status, mortality_status):
     return load_saved_patient_data()
 
 def delete_patient_data(patient_id):
-    sheet = client.open('saved_patient_data').sheet1
+    sheet = client.open('saved_patient_data')
     cell = sheet.find(patient_id)
     if cell:
         sheet.delete_row(cell.row)
